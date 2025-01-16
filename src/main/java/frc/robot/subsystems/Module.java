@@ -37,7 +37,6 @@ public class Module {
     public static boolean slow;
 
     private SwerveModuleState currentSpeeds;
-    // I am testing this for github purposes
 
     // turning and driving power/distance
     private double turnOutput;

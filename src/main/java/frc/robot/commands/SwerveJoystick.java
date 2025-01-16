@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 import frc.robot.subsystems.SwerveSubsystem;
@@ -34,12 +32,12 @@ public class SwerveJoystick extends Command {
     @Override
     public void execute() {
         // Get joystick inputs
-        double xSpeed = -mController.getRawAxis(Constants.Controllers.LeftYPort);
-        double ySpeed = -mController.getRawAxis(Constants.Controllers.LeftXPort);
-        double turningSpeed = -mController.getRawAxis(Constants.Controllers.RightXPort) / 2; 
-
+        double xSpeed = -mController.getRawAxis(Constants.Controllers.selected.LeftYPort);
+        double ySpeed = -mController.getRawAxis(Constants.Controllers.selected.LeftXPort);
+        double turningSpeed = -mController.getRawAxis(Constants.Controllers.selected.RightXPort) / 2; 
+        System.out.println(turningSpeed);
         // Calculate joystick hypotenuse for speed
-        double joystickHypotense = Math.pow((Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2)), 1/2);
+        double joystickHypotense = Math.sqrt((Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2)));
         
         // Field oriented calculations
         double robotRotation = mSwerveSubsystem.getHeading();
@@ -47,12 +45,12 @@ public class SwerveJoystick extends Command {
         double rotation = (90 - robotRotation) + joystickAngle;
         xSpeed = Math.sin(Math.toRadians(rotation));
         ySpeed = Math.cos(Math.toRadians(rotation));
-
+        
         // Make Driving Smoother using Slew Rate Limiter - less jerky by accelerating slowly
         xSpeed = xLimiter.calculate(xSpeed);
         ySpeed = yLimiter.calculate(ySpeed);
         turningSpeed = turningLimiter.calculate(turningSpeed);
-
+        
         // Calculate speed in m/s
         xSpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
         ySpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;

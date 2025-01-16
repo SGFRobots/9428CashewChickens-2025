@@ -26,7 +26,7 @@ public class RobotContainer {
 
   // Instances of controllers
   // public final XboxController mController;
-  public static final GenericHID mController = new GenericHID(0);;
+  public static final GenericHID mController = new GenericHID(0);
   private final SendableChooser<Command> autoChooser;
   // Subsystems and commands
   private final SwerveSubsystem mSwerveSubsystem;
@@ -46,15 +46,20 @@ public class RobotContainer {
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
     new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    mController.getType();
+
+    System.out.println(mController.getName() + "  " + mController.getType());
+    SmartDashboard.putString("name", mController.getName());
+    SmartDashboard.putString("type", mController.toString());
     // Bind buttons and commands
     configureButtonBindings();
   }
 
   // Assign buttons to commands
   private void configureButtonBindings() {
-    new JoystickButton(mController, Constants.Controllers.ButtonAPort).onTrue(mResetRotations);
-    new JoystickButton(mController, Constants.Controllers.UpperC).whileTrue(mSpeeds.fast);
-    new JoystickButton(mController, Constants.Controllers.LowerC).whileTrue(mSpeeds.slow);
+    new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
+    new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
+    new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
   }
 
 

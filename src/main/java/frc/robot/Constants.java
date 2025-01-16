@@ -126,7 +126,7 @@ public final class Constants {
             kModulePositions[3]);
         
         // Deadzone
-        public static final double kDeadzone = 0.05;
+        public static final double kDeadzone = 0.1;
     
         // Speeds and Accelerations
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5.0292;
@@ -139,28 +139,59 @@ public final class Constants {
 
     // XBox Controller
     public static final class Controllers {
-        // Joysticks and triggers
-        public static final int LeftXPort = 0;
-        public static final int LeftYPort = 1;
-        public static final int RightXPort = 2;
-        public static final int RightYPort = 3;
 
-        // Dials
-        public static final int s1DialPort = 4;
-        public static final int s2DialPort = 5;
+        // Black drone controller
+        public static final class selected {
+            // Joysticks and triggers
+            public static final int LeftXPort = 0;
+            public static final int LeftYPort = 1;
+            public static final int RightXPort = 2;
+            public static final int RightYPort = 3;
+            
+            // Dials
+            public static final int s1DialPort = 4;
+            public static final int s2DialPort = 5;
+            
+            // Switches
+            public static final int SwitchE = 6;
+            public static final int SwitchF = 7;
+            public static final int UpperB = 1;
+            public static final int MiddleB = 2;
+            public static final int LowerB = 3;
+            public static final int UpperC = 4;
+            public static final int MiddleC = 5;
+            public static final int LowerC = 6;
+            
+            // Buttons
+            public static final int ButtonAPort = 7;
+            public static final int ButtonDPort = 8;
+        }
+        
+        // White drone controller
+        public static final class backup {
+            // Joysticks and triggers
+            public static final int LeftXPort = 3;
+            public static final int LeftYPort = 2;
+            public static final int RightXPort = 0;
+            public static final int RightYPort = 1;
 
-        // Switches
-        public static final int SwitchE = 6;
-        public static final int SwitchF = 7;
-        public static final int UpperB = 1;
-        public static final int MiddleB = 2;
-        public static final int LowerB = 3;
-        public static final int UpperC = 4;
-        public static final int MiddleC = 5;
-        public static final int LowerC = 6;
+            // // Dials
+            // public static final int s1DialPort = 4;
+            // public static final int s2DialPort = 5;
 
-        // Buttons
-        public static final int ButtonAPort = 7;
-        public static final int ButtonDPort = 8;
+            // Switches
+            public static final int SwitchE = 6;
+            public static final int SwitchF = 7;
+            public static final int UpperB = 1;
+            public static final int MiddleB = 2;
+            public static final int LowerB = 3;
+            public static final int UpperC = 4;
+            public static final int MiddleC = 5;
+            public static final int LowerC = 6;
+
+            // Buttons
+            public static final int ButtonAPort = 7;
+            public static final int ButtonDPort = 8;
+        }
   }
 }

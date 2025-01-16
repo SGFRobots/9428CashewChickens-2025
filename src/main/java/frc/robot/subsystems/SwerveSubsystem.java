@@ -223,7 +223,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // DRIVE the robot
     public void drive(ChassisSpeeds newChassisSpeed) {
-        if (RobotContainer.mController.getRawButton(Constants.Controllers.ButtonDPort)) {
+        if (RobotContainer.mController.getRawButton(Constants.Controllers.selected.ButtonDPort)) {
             this.chassisSpeeds = new ChassisSpeeds(0, 0, 0);
         } else {
             this.chassisSpeeds = newChassisSpeed;
