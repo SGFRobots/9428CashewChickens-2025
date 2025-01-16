@@ -37,12 +37,11 @@ public class SwerveJoystick extends Command {
         double xSpeed = -mController.getRawAxis(Constants.Controllers.LeftYPort);
         double ySpeed = -mController.getRawAxis(Constants.Controllers.LeftXPort);
         double turningSpeed = -mController.getRawAxis(Constants.Controllers.RightXPort) / 2; 
-           
-        // Apply Deadzone
-        xSpeed = Math.abs(xSpeed) > Constants.Mechanical.kDeadzone ? xSpeed : 0.0;
-        ySpeed = Math.abs(ySpeed) > Constants.Mechanical.kDeadzone ? ySpeed : 0.0;
-        turningSpeed = Math.abs(turningSpeed) > Constants.Mechanical.kDeadzone ? turningSpeed : 0.0;
+
+        // Calculate joystick hypotenuse for speed
+        double joystickHypotense = Math.pow((Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2)), 1/2);
         
+        // Field oriented calculations
         double robotRotation = mSwerveSubsystem.getHeading();
         double joystickAngle = Math.toDegrees(Math.atan2(xSpeed, ySpeed));
         double rotation = (90 - robotRotation) + joystickAngle;
@@ -55,11 +54,16 @@ public class SwerveJoystick extends Command {
         turningSpeed = turningLimiter.calculate(turningSpeed);
 
         // Calculate speed in m/s
-        xSpeed *= Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
-        ySpeed *= Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
+        xSpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
+        ySpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
         turningSpeed *= Constants.Mechanical.kTeleDriveMaxAngularSpeedRadiansPerSecond;
         // SmartDashboard.putNumber("joystickangle", joystickAngle);
         // SmartDashboard.putNumber("rot", rotation);
+        
+        // Apply Deadzone
+        xSpeed = Math.abs(xSpeed) > Constants.Mechanical.kDeadzone ? xSpeed : 0.0;
+        ySpeed = Math.abs(ySpeed) > Constants.Mechanical.kDeadzone ? ySpeed : 0.0;
+        turningSpeed = Math.abs(turningSpeed) > Constants.Mechanical.kDeadzone ? turningSpeed : 0.0;
 
         // Set desire chassis speeds based on field or robot relative
         ChassisSpeeds chassisSpeed;
