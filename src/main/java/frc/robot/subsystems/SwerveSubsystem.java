@@ -229,7 +229,6 @@ public class SwerveSubsystem extends SubsystemBase {
             stopModules(); // it we got hit, we need robot stop 
             mGyro.reset(); // and detection where he at
             resetOdometry(getPose()); 
-            SmartDashboard.putString("Collision Detected", "Recalibration Complete");
         }
     }
 
