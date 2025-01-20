@@ -106,6 +106,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
         mGyro = new AHRS(AHRS.NavXComType.kUSB1);
         
+        mGyro.reset();
+        
         try{
             pathPlannerConfig = RobotConfig.fromGUISettings();
         } catch (Exception e) {
@@ -167,19 +169,35 @@ public class SwerveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // Update modules' positions
-        mOdometer.update(new Rotation2d(), new SwerveModulePosition[] {
+        // mOdometer.update(new Rotation2d(), new SwerveModulePosition[] {
+        //         modules[0].getPosition(),
+        //         modules[1].getPosition(),
+        //         modules[2].getPosition(),
+        //         modules[3].getPosition() });
+
+        // I think we should get the lastest location of the robot
+        mOdometer.update(
+            mGyro.getRotation2d(),
+            new SwerveModulePosition[] {
                 modules[0].getPosition(),
                 modules[1].getPosition(),
                 modules[2].getPosition(),
-                modules[3].getPosition() });
+                modules[3].getPosition()
+            });
+
 
         // Update Pose for swerve modules - Position of the rotation and the translation matters
         for (int i = 0; i < modules.length; i++) {
-            // No gyro - new Rotation2d() instead
-            Translation2d updatedModulePosition = kModulePositions[i].rotateBy(new Rotation2d()).plus(getPose().getTranslation());
-            // Module heading is the angle relative to the chasis heading
-            mModulePose[i] = new Pose2d(updatedModulePosition, modules[i].getState().angle.plus(getPose().getRotation()));
+            // // No gyro - new Rotation2d() instead
+            // Translation2d updatedModulePosition = kModulePositions[i].rotateBy(new Rotation2d()).plus(getPose().getTranslation());
+            // // Module heading is the angle relative to the chasis heading
+            // mModulePose[i] = new Pose2d(updatedModulePosition, modules[i].getState().angle.plus(getPose().getRotation()));
 
+            // Same thing here
+            Translation2d updatedModulePosition = kModulePositions[i]
+            .rotateBy(mGyro.getRotation2d())
+            .plus(getPose().getTranslation());
+            mModulePose[i] = new Pose2d(updatedModulePosition, modules[i].getState().angle.plus(getPose().getRotation()));
             modules[i].periodic();
         }
 
@@ -198,12 +216,23 @@ public class SwerveSubsystem extends SubsystemBase {
         // Debug telemetry
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Gyro", getGyroRotation2d().toString());
-        // SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
         SmartDashboard.putNumber("xSpeed", getRobotRelativeSpeeds().vxMetersPerSecond);
         SmartDashboard.putNumber("ySpeed", getRobotRelativeSpeeds().vyMetersPerSecond);
         SmartDashboard.putNumber("turningSpeed", getRobotRelativeSpeeds().omegaRadiansPerSecond);
         SmartDashboard.putNumberArray("SwerveModuleLOGGINGStates", loggingState);
     }
+
+    // I think we should consider the case when Robot got hit or sth,
+    // where its acceleration > 1.5
+    public void detectCollisionAndRecover() {
+        if (Math.abs(mGyro.getWorldLinearAccelX()) > 1.5 || Math.abs(mGyro.getWorldLinearAccelY()) > 1.5) {
+            stopModules(); // it we got hit, we need robot stop 
+            mGyro.reset(); // and detection where he at
+            resetOdometry(getPose()); 
+            SmartDashboard.putString("Collision Detected", "Recalibration Complete");
+        }
+    }
+
 
     // Reset odometer
     public void resetOdometry(Pose2d pose) {
