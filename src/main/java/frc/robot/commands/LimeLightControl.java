@@ -8,6 +8,7 @@ public class LimeLightControl extends Command{
 
     public LimeLightControl(Limelight limelight) {
         mLimelight = limelight;
+        addRequirements(mLimelight);
     }
 
     @Override
@@ -22,5 +23,7 @@ public class LimeLightControl extends Command{
     public void end(boolean isFinished) {}
 
     @Override
-    public boolean isFinished() {return false;}
+    public boolean isFinished() {
+        return false;
+    }
 }

@@ -197,12 +197,12 @@ public class SwerveSubsystem extends SubsystemBase {
 
         // Debug telemetry
         SmartDashboard.putNumber("Robot Heading", getHeading());
-        SmartDashboard.putString("Gyro", getGyroRotation2d().toString());
+        // SmartDashboard.putString("Gyro", getGyroRotation2d().toString());
         // SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
         SmartDashboard.putNumber("xSpeed", getRobotRelativeSpeeds().vxMetersPerSecond);
         SmartDashboard.putNumber("ySpeed", getRobotRelativeSpeeds().vyMetersPerSecond);
         SmartDashboard.putNumber("turningSpeed", getRobotRelativeSpeeds().omegaRadiansPerSecond);
-        SmartDashboard.putNumberArray("SwerveModuleLOGGINGStates", loggingState);
+        // SmartDashboard.putNumberArray("SwerveModuleLOGGINGStates", loggingState);
     }
 
     // Reset odometer

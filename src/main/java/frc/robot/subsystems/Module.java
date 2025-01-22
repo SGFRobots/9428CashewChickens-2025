@@ -64,9 +64,9 @@ public class Module {
             //PID Controller - change PID values when get feedback
             turningPID = new PIDController(0.008, 0, 0);
             turningPID.enableContinuousInput(-Math.PI, Math.PI); // minimize rotations to 180
-            // P = rate of change
-            // I = rate of change of D
-            // D = rate of change of P (slow when get closer)
+            // P = Proportional error
+            // I = Integral of errors
+            // D = Derivative (rate of change) of P (slow when get closer)
 
             currentSpeeds = new SwerveModuleState(Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond, new Rotation2d(getCurrentAngleRad()));
             PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
@@ -98,8 +98,8 @@ public class Module {
 
             // Optimize angle
             pNewState.optimize(new Rotation2d(getCurrentAngleRad()));
-            currentSpeeds = pNewState;
-            
+            currentSpeeds = pNewState;   
+
             // Set power to motor
             driveOutput = (currentSpeeds.speedMetersPerSecond * Math.cos(turningPID.getError())) / Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond * 3;
             turnOutput = turningPID.calculate(getCurrentAngleRad(), currentSpeeds.angle.getRadians()) * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond * 2;
