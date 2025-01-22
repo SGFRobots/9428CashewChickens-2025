@@ -14,10 +14,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-
+import frc.robot.subsystems.Limelight;
 // Subsystems and commands
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.SwerveJoystick;
+import frc.robot.commands.LimeLightControl;
 import frc.robot.commands.ResetRotations;
 import frc.robot.commands.SpeedControl;
 
@@ -32,6 +33,7 @@ public class RobotContainer {
   private final SwerveSubsystem mSwerveSubsystem;
   private final ResetRotations mResetRotations;
   private final SpeedControl mSpeeds;
+  private final Limelight mLimelight;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Subsystems and commands
@@ -39,12 +41,13 @@ public class RobotContainer {
     mSwerveSubsystem.setDefaultCommand(new SwerveJoystick(mSwerveSubsystem, mController));
     mResetRotations = new ResetRotations(mSwerveSubsystem);
     mSpeeds = new SpeedControl(mSwerveSubsystem);
+    mLimelight = new Limelight();
+    mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
 
     // Autonomous
     autoChooser = AutoBuilder.buildAutoChooser();
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
-    new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
     SmartDashboard.putData("Auto Chooser", autoChooser);
     mController.getType();
 
