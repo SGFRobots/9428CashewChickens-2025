@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Limelight;
 
 import com.studica.frc.AHRS;
 
@@ -70,6 +71,8 @@ public class SwerveSubsystem extends SubsystemBase {
             
 
     };
+
+    private boolean findingPos = false;
 
     // Positions stored in mOdometer
     private final SwerveDriveOdometry mOdometer;
@@ -223,7 +226,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // DRIVE the robot
     public void drive(ChassisSpeeds newChassisSpeed) {
-        if (RobotContainer.mController.getRawButton(Constants.Controllers.selected.ButtonDPort)) {
+        if (RobotContainer.mController.getRawAxis(Constants.Controllers.selected.SwitchF) == -1) {
             this.chassisSpeeds = new ChassisSpeeds(0, 0, 0);
         } else {
             this.chassisSpeeds = newChassisSpeed;
@@ -285,4 +288,21 @@ public class SwerveSubsystem extends SubsystemBase {
         }
         return true;
     }
+
+    public void toggleFindingPos() {
+        findingPos = !findingPos;
+    }
+
+    public boolean getFindingPos() {
+        return findingPos;
+    }
+
+    // Lock on to an april tag
+    // If x is greater or less than a desired value (range around 0) rotate until it reaches value
+    // public void apriltagLockOn(){
+    //     ChassisSpeeds speed;
+    //     Limelight visionSensor = new Limelight();
+        
+        
+    // }
 }

@@ -7,6 +7,7 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.events.EventTrigger;
 
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,6 +19,7 @@ import frc.robot.subsystems.Limelight;
 // Subsystems and commands
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.SwerveJoystick;
+import frc.robot.commands.AprilTagLock;
 import frc.robot.commands.LimeLightControl;
 import frc.robot.commands.ResetRotations;
 import frc.robot.commands.SpeedControl;
@@ -32,6 +34,7 @@ public class RobotContainer {
   // Subsystems and commands
   private final SwerveSubsystem mSwerveSubsystem;
   private final ResetRotations mResetRotations;
+  private final AprilTagLock mAprilTagLock;
   private final SpeedControl mSpeeds;
   private final Limelight mLimelight;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -43,6 +46,7 @@ public class RobotContainer {
     mSpeeds = new SpeedControl(mSwerveSubsystem);
     mLimelight = new Limelight();
     mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
+    mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight);
 
     // Autonomous
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -63,6 +67,7 @@ public class RobotContainer {
     new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
     new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
     new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
+    new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAprilTagLock);
   }
 
 
