@@ -44,7 +44,7 @@ public class RobotContainer {
     mSpeeds = new SpeedControl(mSwerveSubsystem);
     mLimelight = new Limelight();
     mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
-    mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, -5, 1);
+    mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, -5, 1, 0);
 
     // Autonomous
     autoChooser = AutoBuilder.buildAutoChooser();
