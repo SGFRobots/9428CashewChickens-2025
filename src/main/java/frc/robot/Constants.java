@@ -127,6 +127,7 @@ public final class Constants {
         
         // Deadzone
         public static final double kDeadzone = 0.1;
+        public static final double AprilTagDeadzone = 3;
     
         // Speeds and Accelerations
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5.0292;

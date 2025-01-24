@@ -44,8 +44,8 @@ public class SwerveJoystick extends Command {
             double robotRotation = mSwerveSubsystem.getHeading();
             double joystickAngle = Math.toDegrees(Math.atan2(xSpeed, ySpeed));
             double rotation = (90 - robotRotation) + joystickAngle;
-            xSpeed = Math.sin(Math.toRadians(rotation));
-            ySpeed = Math.cos(Math.toRadians(rotation));
+            // xSpeed = Math.sin(Math.toRadians(rotation));
+            // ySpeed = Math.cos(Math.toRadians(rotation));
             
             // Make Driving Smoother using Slew Rate Limiter - less jerky by accelerating slowly
             xSpeed = xLimiter.calculate(xSpeed);
@@ -53,8 +53,8 @@ public class SwerveJoystick extends Command {
             turningSpeed = turningLimiter.calculate(turningSpeed);
             
             // Calculate speed in m/s
-            xSpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
-            ySpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
+            // xSpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
+            // ySpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
             turningSpeed *= Constants.Mechanical.kTeleDriveMaxAngularSpeedRadiansPerSecond;
             // SmartDashboard.putNumber("joystickangle", joystickAngle);
             // SmartDashboard.putNumber("rot", rotation);
