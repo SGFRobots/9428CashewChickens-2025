@@ -21,6 +21,8 @@ import frc.robot.commands.AprilTagLock;
 import frc.robot.commands.LimeLightControl;
 import frc.robot.commands.ResetRotations;
 import frc.robot.commands.SpeedControl;
+import com.pathplanner.lib.events.EventTrigger;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 
 public class RobotContainer {
@@ -35,6 +37,7 @@ public class RobotContainer {
   private final AprilTagLock mAprilTagLock;
   private final SpeedControl mSpeeds;
   private final Limelight mLimelight;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Subsystems and commands
@@ -44,9 +47,12 @@ public class RobotContainer {
     mSpeeds = new SpeedControl(mSwerveSubsystem);
     mLimelight = new Limelight();
     mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
-    mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, -5, 1, 0);
+    mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, 0, 9, 0);
 
     // Autonomous
+    // Auto commands
+    new EventTrigger("lockOn").onTrue(Commands.runOnce(()->{System.out.println("Locking on");}));
+    // Auto chooser
     autoChooser = AutoBuilder.buildAutoChooser();
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");

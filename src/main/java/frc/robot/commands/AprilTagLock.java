@@ -68,9 +68,9 @@ public class AprilTagLock extends Command {
 
     @Override
     public boolean isFinished() {
-        // if (((x<3) && (x>-3)) && ((yaw<2) && (yaw>-2)) && (area >= 6)) {
-        //     return true;
-        // }
+        if (((x > targetX-2) && (x < targetX+2)) && ((yaw>targetYaw-3) && (yaw<targetYaw+2)) && ((area > targetArea-1 && area < targetArea+1))) {
+            return true;
+        }
         return false;
     }
 }
