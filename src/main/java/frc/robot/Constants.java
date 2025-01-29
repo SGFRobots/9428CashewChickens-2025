@@ -31,6 +31,9 @@ public final class Constants {
         public static final int kBLTurningMotorID = 12;
         public static final int kFRTurningMotorID = 11;
         public static final int kBRTurningMotorID = 10;
+
+        public static final int kLElevator = 2;
+        public static final int kRElevator = 3;
         
         // CAN IDs of CANCoders
         public static final int kFLDriveAbsoluteEncoderID = 6;
@@ -98,6 +101,7 @@ public final class Constants {
         public static final double kVoltSecondsSquaredPerRadian = 0.111;
         public static final DCMotor kDriveGearBox = DCMotor.getKrakenX60(1);
         public static final DCMotor kTurnGearBox = DCMotor.getKrakenX60(1);
+
         
         // Distance between right and left wheels (in meters)
         public static final double kRobotWidthMeters = 0.6731;

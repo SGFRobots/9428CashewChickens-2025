@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.apriltag.AprilTag;
@@ -23,6 +26,8 @@ import frc.robot.commands.ResetRotations;
 import frc.robot.commands.SpeedControl;
 import com.pathplanner.lib.events.EventTrigger;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.Elevator;
+import frc.robot.commands.ElevatorCommands;
 
 
 public class RobotContainer {
@@ -37,6 +42,7 @@ public class RobotContainer {
   private final AprilTagLock mAprilTagLock;
   private final SpeedControl mSpeeds;
   private final Limelight mLimelight;
+  private final ElevatorCommands mElevatorCommands;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -48,7 +54,9 @@ public class RobotContainer {
     mLimelight = new Limelight();
     mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
     mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, 0, 9, 0);
-
+    final Elevator elevatorSubsystem = new Elevator();
+    mElevatorCommands = new ElevatorCommands(elevatorSubsystem, null); // Come back to this
+    
     // Autonomous
     // Auto commands
     new EventTrigger("lockOn").onTrue(Commands.runOnce(()->{System.out.println("Locking on");}));
@@ -72,6 +80,7 @@ public class RobotContainer {
     new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
     new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
     new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAprilTagLock);
+    new JoystickButton(mController,Constants.Controllers.selected.UpperB).whileTrue(mElevatorCommands);
   }
 
 
