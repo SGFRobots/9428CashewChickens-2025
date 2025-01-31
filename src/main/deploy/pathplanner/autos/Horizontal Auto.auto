@@ -5,9 +5,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Horizontal"
+            "name": "lockOn"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Horizontal"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "lockOn"
+                }
+              }
+            ]
           }
         }
       ]

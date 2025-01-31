@@ -27,7 +27,8 @@ import frc.robot.commands.SpeedControl;
 import com.pathplanner.lib.events.EventTrigger;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Elevator;
-import frc.robot.commands.ElevatorCommands;
+import frc.robot.commands.ElevatorControl;
+import frc.robot.commands.ElevatorDesiredPosition;
 
 
 public class RobotContainer {
@@ -42,7 +43,11 @@ public class RobotContainer {
   private final AprilTagLock mAprilTagLock;
   private final SpeedControl mSpeeds;
   private final Limelight mLimelight;
-  private final ElevatorCommands mElevatorCommands;
+  private final ElevatorDesiredPosition mElevatorPosition1;
+  private final ElevatorDesiredPosition mElevatorPosition2;
+  private final ElevatorDesiredPosition mElevatorPosition3;
+  private final ElevatorDesiredPosition mElevatorPosition4;
+  // private final ElevatorControl mElevatorControl;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -55,7 +60,12 @@ public class RobotContainer {
     mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
     mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, 0, 9, 0);
     final Elevator elevatorSubsystem = new Elevator();
-    mElevatorCommands = new ElevatorCommands(elevatorSubsystem, null); // Come back to this
+    elevatorSubsystem.setDefaultCommand(new ElevatorControl(elevatorSubsystem, mController));
+    mElevatorPosition1 = new ElevatorDesiredPosition(elevatorSubsystem, Constants.Mechanical.ElevatorLevelOneHeight);
+    mElevatorPosition2 = new ElevatorDesiredPosition(elevatorSubsystem, Constants.Mechanical.ElevatorLevelTwoHeight);
+    mElevatorPosition3 = new ElevatorDesiredPosition(elevatorSubsystem, Constants.Mechanical.ElevatorLevelThreeHeight);
+    mElevatorPosition4 = new ElevatorDesiredPosition(elevatorSubsystem, Constants.Mechanical.ElevatorLevelFourHeight);
+    // mElevatorControl = new ElevatorControl(elevatorSubsystem, mController); // Come back to this
     
     // Autonomous
     // Auto commands
@@ -80,7 +90,10 @@ public class RobotContainer {
     new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
     new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
     new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAprilTagLock);
-    new JoystickButton(mController,Constants.Controllers.selected.UpperB).whileTrue(mElevatorCommands);
+    new JoystickButton(mController, Constants.Controllers.selected.UpperB).toggleOnTrue(mElevatorPosition4);
+    new JoystickButton(mController, Constants.Controllers.selected.MiddleB).toggleOnTrue(mElevatorPosition3);
+    new JoystickButton(mController, Constants.Controllers.selected.LowerB).toggleOnTrue(mElevatorPosition2);
+    // new JoystickButton(mController,Constants.Controllers.selected.UpperB).whileTrue(mElevatorControl);
   }
 
 

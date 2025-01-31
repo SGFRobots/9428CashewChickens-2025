@@ -32,8 +32,13 @@ public final class Constants {
         public static final int kFRTurningMotorID = 11;
         public static final int kBRTurningMotorID = 10;
 
-        public static final int kLElevator = 2;
-        public static final int kRElevator = 3;
+        // CAN IDs of Elevator
+        public static final int kLElevator = 6;
+        public static final int kRElevator = 5;
+
+        // CAN IDs of Coral scorer
+        public static final int kLCoral = 0;
+        public static final int kRCoral = 1;
         
         // CAN IDs of CANCoders
         public static final int kFLDriveAbsoluteEncoderID = 6;
@@ -140,6 +145,16 @@ public final class Constants {
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 10;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 10;
+
+
+        // Elevator
+        public static final double ElevatorLowestPosition = -23.5;
+        public static final double ElevatorHighestPosition = 8.8;
+        public static final double ElevatorLevelOneHeight = -10;
+        public static final double ElevatorLevelTwoHeight = -5;
+        public static final double ElevatorLevelThreeHeight = 0;
+        public static final double ElevatorLevelFourHeight = 5;
+        public static final double ElevatorHalfPosition = (ElevatorHighestPosition - ElevatorLowestPosition) / 2 + ElevatorLowestPosition;
     }
 
     // XBox Controller
@@ -180,23 +195,15 @@ public final class Constants {
             public static final int RightXPort = 0;
             public static final int RightYPort = 1;
 
-            // // Dials
-            // public static final int s1DialPort = 4;
-            // public static final int s2DialPort = 5;
-
             // Switches
-            public static final int SwitchE = 6;
-            public static final int SwitchF = 7;
-            public static final int UpperB = 1;
-            public static final int MiddleB = 2;
-            public static final int LowerB = 3;
-            public static final int UpperC = 4;
-            public static final int MiddleC = 5;
-            public static final int LowerC = 6;
+            public static final int SwitchA = 4;
+            public static final int SwitchB = 5;
+            public static final int SwitchC = 7;
+            public static final int SwitchD = 6;
 
             // Buttons
-            public static final int ButtonAPort = 7;
-            public static final int ButtonDPort = 8;
+            public static final int ButtonEPort = 1;
+            public static final int ButtonFPort = 2;
         }
   }
 }
