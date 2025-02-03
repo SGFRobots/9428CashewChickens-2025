@@ -28,7 +28,7 @@ public class CoralScore extends Command {
 
     @Override 
     public void execute() {
-        double joystick = mController.getRawAxis(Constants.Controllers.selected.RightYPort);
+        double joystick = -mController.getRawAxis(Constants.Controllers.selected.SwitchF);
         joystick = (Math.abs(joystick) < 0.01) ? 0 : joystick/2;
         mCoral.setPower(joystick);
     }

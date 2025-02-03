@@ -28,11 +28,12 @@ public class Elevator extends SubsystemBase {
             RightMotor.set(power);
             SmartDashboard.putNumber("Elevator left position", LeftMotor.getEncoder().getPosition());
             SmartDashboard.putNumber("Elevator right position", RightMotor.getEncoder().getPosition());
+            SmartDashboard.putNumber("Elevator position relative to 0", getPosition() - Constants.Mechanical.ElevatorLowestPosition);
         }
     }
 
     public double getPosition() {
-        return RightMotor.getEncoder().getPosition();
+        return LeftMotor.getEncoder().getPosition();
     }
 
     public void stop() {
@@ -41,7 +42,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void resetPositions() {
-        lowestPos = LeftMotor.getEncoder().getPosition();
+        lowestPos =getPosition();
         highestPos = lowestPos + Constants.Mechanical.ElevatorMaxHeight;
         System.out.println("reset: " + lowestPos + " and " + highestPos);
     }
