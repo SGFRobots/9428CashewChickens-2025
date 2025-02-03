@@ -37,8 +37,8 @@ public final class Constants {
         public static final int kRElevator = 5;
 
         // CAN IDs of Coral scorer
-        public static final int kLCoral = 0;
-        public static final int kRCoral = 1;
+        public static final int kLCoral = 8;
+        public static final int kRCoral = 2;
         
         // CAN IDs of CANCoders
         public static final int kFLDriveAbsoluteEncoderID = 6;
@@ -155,6 +155,7 @@ public final class Constants {
         public static final double ElevatorLevelThreeHeight = 0;
         public static final double ElevatorLevelFourHeight = 5;
         public static final double ElevatorHalfPosition = (ElevatorHighestPosition - ElevatorLowestPosition) / 2 + ElevatorLowestPosition;
+        public static final double ElevatorMaxHeight = 32.3;
     }
 
     // XBox Controller
@@ -190,20 +191,22 @@ public final class Constants {
         // White drone controller
         public static final class backup {
             // Joysticks and triggers
-            public static final int LeftXPort = 3;
-            public static final int LeftYPort = 2;
-            public static final int RightXPort = 0;
-            public static final int RightYPort = 1;
+            // public static final int LeftXPort = 3;
+            // public static final int LeftYPort = 2;
+            // public static final int RightXPort = 0;
+            // public static final int RightYPort = 1;
 
-            // Switches
-            public static final int SwitchA = 4;
-            public static final int SwitchB = 5;
-            public static final int SwitchC = 7;
-            public static final int SwitchD = 6;
+            // // Switches
+            // public static final int SwitchA = 4;
+            // public static final int SwitchB = 5;
+            // public static final int SwitchC = 7;
+            // public static final int SwitchD = 6;
 
-            // Buttons
-            public static final int ButtonEPort = 1;
-            public static final int ButtonFPort = 2;
+            // // Buttons
+            // public static final int ButtonEPort = 1;
+            // public static final int ButtonFPort = 2;
+            public static final int buttonB = 1;
+            public static final int buttonA = 2;
         }
   }
 }

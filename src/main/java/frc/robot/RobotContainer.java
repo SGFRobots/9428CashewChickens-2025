@@ -21,11 +21,16 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.SwerveJoystick;
 import frc.robot.commands.AprilTagLock;
+import frc.robot.commands.CoralScore;
 import frc.robot.commands.LimeLightControl;
 import frc.robot.commands.ResetRotations;
 import frc.robot.commands.SpeedControl;
 import com.pathplanner.lib.events.EventTrigger;
+import com.revrobotics.spark.config.MAXMotionConfig;
+
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commands.ElevatorControl;
 import frc.robot.commands.ElevatorDesiredPosition;
@@ -47,6 +52,9 @@ public class RobotContainer {
   private final ElevatorDesiredPosition mElevatorPosition2;
   private final ElevatorDesiredPosition mElevatorPosition3;
   private final ElevatorDesiredPosition mElevatorPosition4;
+  private final Elevator mElevator;
+  private final Coral mCoral;
+  // private final CoralScore mCoralScore;
   // private final ElevatorControl mElevatorControl;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -59,12 +67,15 @@ public class RobotContainer {
     mLimelight = new Limelight();
     mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
     mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, 0, 9, 0);
-    final Elevator elevatorSubsystem = new Elevator();
-    elevatorSubsystem.setDefaultCommand(new ElevatorControl(elevatorSubsystem, mController));
-    mElevatorPosition1 = new ElevatorDesiredPosition(elevatorSubsystem, Constants.Mechanical.ElevatorLevelOneHeight);
-    mElevatorPosition2 = new ElevatorDesiredPosition(elevatorSubsystem, Constants.Mechanical.ElevatorLevelTwoHeight);
-    mElevatorPosition3 = new ElevatorDesiredPosition(elevatorSubsystem, Constants.Mechanical.ElevatorLevelThreeHeight);
-    mElevatorPosition4 = new ElevatorDesiredPosition(elevatorSubsystem, Constants.Mechanical.ElevatorLevelFourHeight);
+    mElevator = new Elevator();
+    mElevator.setDefaultCommand(new ElevatorControl(mElevator, mController));
+    mElevatorPosition1 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelOneHeight);
+    mElevatorPosition2 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelTwoHeight);
+    mElevatorPosition3 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelThreeHeight);
+    mElevatorPosition4 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelFourHeight);
+    mCoral = new Coral();
+    mCoral.setDefaultCommand(new CoralScore(mCoral, mController));
+
     // mElevatorControl = new ElevatorControl(elevatorSubsystem, mController); // Come back to this
     
     // Autonomous
@@ -86,14 +97,22 @@ public class RobotContainer {
 
   // Assign buttons to commands
   private void configureButtonBindings() {
-    new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
-    new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
-    new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
+    // new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
+    new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
+    // new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
+    // new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
     new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAprilTagLock);
     new JoystickButton(mController, Constants.Controllers.selected.UpperB).toggleOnTrue(mElevatorPosition4);
     new JoystickButton(mController, Constants.Controllers.selected.MiddleB).toggleOnTrue(mElevatorPosition3);
     new JoystickButton(mController, Constants.Controllers.selected.LowerB).toggleOnTrue(mElevatorPosition2);
+    // new JoystickButton(mController, Constants.Controllers.selected.UpperC).onTrue(mCoralScore);
+    // new JoystickButton(mController, Constants.Controllers.selected.LowerC).onTrue(mCoralScore);
+    // new JoystickButton(mController, Constants.Controllers.selected.)
     // new JoystickButton(mController,Constants.Controllers.selected.UpperB).whileTrue(mElevatorControl);
+  }
+
+  public void updateCoralStatus() {
+    // mCoral.updateCoralStatus();
   }
 
 

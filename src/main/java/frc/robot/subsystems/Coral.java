@@ -14,13 +14,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Coral extends SubsystemBase {
     private final SparkMax leftMotor;
     private final SparkMax rightMotor;
-    private final ColorSensorV3 sensor;
+    private final ColorSensorV3 inSensor;
+    private final ColorSensorV3 outSensor;
+    public boolean coralIn;
 
     public Coral() {
         leftMotor = new SparkMax(Constants.MotorPorts.kLCoral, MotorType.kBrushless);
         rightMotor = new SparkMax(Constants.MotorPorts.kRCoral, MotorType.kBrushless);
-        sensor = new ColorSensorV3(I2C.Port.kMXP);
-        sensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
+        inSensor = new ColorSensorV3(I2C.Port.kMXP);
+        inSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
+        outSensor = new ColorSensorV3(I2C.Port.kMXP);
+        outSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
+        coralIn = false;
     }
 
     public void setPower(double power) {
@@ -33,8 +38,19 @@ public class Coral extends SubsystemBase {
         rightMotor.set(0);
     }
 
-    public double getSensorDist(){
-        return sensor.getProximity();
+    public double getInSensorDist(){
+        return inSensor.getProximity();
     }
     
+    public double getOutSensorDist(){
+        return outSensor.getProximity();
+    }
+
+    public void updateCoralStatus() {
+        if ((getInSensorDist() < 500) && (getOutSensorDist() < 500)) {
+            coralIn = true;
+        } else if ((getInSensorDist() > 500) && (getOutSensorDist() > 500)) {
+            coralIn = false;
+        }
+    }
 }
