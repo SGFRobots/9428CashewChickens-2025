@@ -31,6 +31,17 @@ public class AprilTagLock extends Command {
         targetYaw = pTargetYaw;
     }
 
+    public AprilTagLock(SwerveSubsystem pSubsystem, Limelight pLimelight) {
+        mSubsystem = pSubsystem;
+        mLimelight = pLimelight;
+        rotationSpeed = 0.005 * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond;
+        strafeSpeed = 0.0065 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
+        driveSpeed = 0.001 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
+        targetX = 0;
+        targetArea = 9;
+        targetYaw = 0;
+    }
+
     @Override
     public void initialize() {
         mSubsystem.toggleFindingPos();

@@ -21,6 +21,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.SwerveJoystick;
 import frc.robot.commands.AprilTagLock;
+import frc.robot.commands.AprilTagScore;
 import frc.robot.commands.CoralScore;
 import frc.robot.commands.LimeLightControl;
 import frc.robot.commands.ResetRotations;
@@ -48,6 +49,7 @@ public class RobotContainer {
   private final AprilTagLock mAprilTagLock;
   private final SpeedControl mSpeeds;
   private final Limelight mLimelight;
+  private final AprilTagScore mAprilTagScore;
   private final ElevatorDesiredPosition mElevatorPosition1;
   private final ElevatorDesiredPosition mElevatorPosition2;
   private final ElevatorDesiredPosition mElevatorPosition3;
@@ -67,6 +69,7 @@ public class RobotContainer {
     mLimelight = new Limelight();
     mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
     mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, 0, 9, 0);
+    mAprilTagScore = new AprilTagScore(mSwerveSubsystem, mLimelight, mController);
     mElevator = new Elevator();
     mElevator.setDefaultCommand(new ElevatorControl(mElevator, mController));
     mElevatorPosition1 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelOneHeight);
@@ -86,11 +89,7 @@ public class RobotContainer {
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    mController.getType();
-
-    System.out.println(mController.getName() + "  " + mController.getType());
-    SmartDashboard.putString("name", mController.getName());
-    SmartDashboard.putString("type", mController.toString());
+    
     // Bind buttons and commands
     configureButtonBindings();
   }
@@ -101,7 +100,7 @@ public class RobotContainer {
     new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
     // new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
     // new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
-    new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAprilTagLock);
+    new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAprilTagScore);
     new JoystickButton(mController, Constants.Controllers.selected.UpperB).toggleOnTrue(mElevatorPosition4);
     new JoystickButton(mController, Constants.Controllers.selected.MiddleB).toggleOnTrue(mElevatorPosition3);
     new JoystickButton(mController, Constants.Controllers.selected.LowerB).toggleOnTrue(mElevatorPosition2);
