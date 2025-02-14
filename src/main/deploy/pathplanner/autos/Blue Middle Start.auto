@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blue Left Start to Reef2"
+                  "pathName": "Blue Middle Start to Reef3"
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blue Ree2 to Top Source"
+                  "pathName": "Blue Reef3 to Bottom Source"
                 }
               },
               {
@@ -61,7 +61,57 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blue Top Source to Reef1"
+                  "pathName": "Blue Bottom Source to Reef5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "goToLevel4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScoreLeft"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Blue Reef5 to Bottom Source"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "gotToSourceLevel"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralIntake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Blue Bottom Source to Reef5"
                 }
               },
               {
@@ -77,56 +127,6 @@
           "type": "named",
           "data": {
             "name": "coralScoreRight"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Blue Reef1 to Top Source"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "gotToSourceLevel"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralIntake"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Blue Top Source to Reef1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "goToLevel4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralScoreLeft"
           }
         }
       ]

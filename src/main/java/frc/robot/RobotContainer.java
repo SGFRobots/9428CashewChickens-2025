@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -35,7 +36,8 @@ import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commands.ElevatorControl;
 import frc.robot.commands.ElevatorDesiredPosition;
-
+import frc.robot.commands.AutoScore;
+import frc.robot.commands.CoralIntake;
 
 public class RobotContainer {
 
@@ -54,6 +56,9 @@ public class RobotContainer {
   private final ElevatorDesiredPosition mElevatorPosition2;
   private final ElevatorDesiredPosition mElevatorPosition3;
   private final ElevatorDesiredPosition mElevatorPosition4;
+  private final AutoScore mAutoScoreRight;
+  private final AutoScore mAutoScoreLeft;
+  private final CoralIntake mCoralIntake;
   private final Elevator mElevator;
   private final Coral mCoral;
   // private final CoralScore mCoralScore;
@@ -76,14 +81,23 @@ public class RobotContainer {
     mElevatorPosition2 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelTwoHeight);
     mElevatorPosition3 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelThreeHeight);
     mElevatorPosition4 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelFourHeight);
+    mAutoScoreRight = new AutoScore(mSwerveSubsystem, mLimelight, "right");
+    mAutoScoreLeft = new AutoScore(mSwerveSubsystem, mLimelight, "left");
     mCoral = new Coral();
     mCoral.setDefaultCommand(new CoralScore(mCoral, mController));
+    mCoralIntake = new CoralIntake(mCoral);
 
     // mElevatorControl = new ElevatorControl(elevatorSubsystem, mController); // Come back to this
     
     // Autonomous
     // Auto commands
     new EventTrigger("lockOn").onTrue(Commands.runOnce(()->{System.out.println("Locking on");}));
+    NamedCommands.registerCommand("goToLevel4", mElevatorPosition4);
+    NamedCommands.registerCommand("goToSourceLevel", mElevatorPosition1);
+    NamedCommands.registerCommand("coralScoreLeft", mAutoScoreLeft);
+    NamedCommands.registerCommand("coralScoreRight", mAutoScoreRight);
+    NamedCommands.registerCommand("coralIntake", mCoralIntake);
+
     // Auto chooser
     autoChooser = AutoBuilder.buildAutoChooser();
     // Another option that allows you to specify the default auto by its name

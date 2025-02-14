@@ -27,18 +27,18 @@ public final class Constants {
         public static final int kBRDriveMotorID = 4;
 
         // CAN IDs of turning motors
-        public static final int kFLTurningMotorID = 9;
-        public static final int kBLTurningMotorID = 12;
-        public static final int kFRTurningMotorID = 11;
-        public static final int kBRTurningMotorID = 10;
+        public static final int kFLTurningMotorID = 12;
+        public static final int kBLTurningMotorID = 5;
+        public static final int kFRTurningMotorID = 2;
+        public static final int kBRTurningMotorID = 9;
 
         // CAN IDs of Elevator
-        public static final int kLElevator = 6;
-        public static final int kRElevator = 5;
+        public static final int kLElevator = 3;
+        public static final int kRElevator = 7;
 
         // CAN IDs of Coral scorer
-        public static final int kLCoral = 8;
-        public static final int kRCoral = 2;
+        public static final int kLCoral = 6;
+        public static final int kRCoral = 8;
         
         // CAN IDs of CANCoders
         public static final int kFLDriveAbsoluteEncoderID = 6;
