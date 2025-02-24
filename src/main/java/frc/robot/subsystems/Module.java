@@ -62,7 +62,7 @@ public class Module {
             absoluteEncoderOffset = pAbsoluteEncoderOffset;
             
             //PID Controller - change PID values when get feedback
-            turningPID = new PIDController(0.004, 0, 0);
+            turningPID = new PIDController(0.008, 0, 0);
             turningPID.enableContinuousInput(-Math.PI, Math.PI); // minimize rotations to 180
             // P = Proportional error
             // I = Integral of errors
@@ -105,8 +105,8 @@ public class Module {
             turnOutput = turningPID.calculate(getCurrentAngleRad(), currentSpeeds.angle.getRadians()) * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond * 2;
             speedChange();
             
-            // mDriveMotor.set(driveOutput/3);
-            mTurnMotor.set(turnOutput); 
+            mDriveMotor.set(driveOutput/3);
+            mTurnMotor.set(turnOutput*2); 
             
             // Telemetry
             // SmartDashboard.putNumber("before" + mDriveMotor.getDeviceID(), pNewState.angle.getDegrees());
@@ -145,10 +145,11 @@ public class Module {
         //     // SmartDashboard.putNumber("sv: drive motor" + mDriveMotor.getDeviceID(), mDriveMotor.getSupplyVoltage().getValueAsDouble());
         //     SmartDashboard.putNumber("mv: turn motor" + mTurnMotor.getDeviceId(), turnOutput);
         //     // SmartDashboard.putNumber("drive motor" + mDriveMotor.getDeviceID(), mDriveMotor.getPosition().getValueAsDouble());
-        //     SmartDashboard.putNumber("absolute encoder" + mDriveMotor.getDeviceID(), absoluteEncoder.getAbsolutePosition().getValueAsDouble());
+            // SmartDashboard.putNumber("currentAngle" + mDriveMotor.getDeviceID(), absoluteEncoder.getAbsolutePosition().getValueAsDouble());
         //     SmartDashboard.putBoolean("resetting", resetting);
         // }
-        SmartDashboard.putNumber("currentAngle" + mDriveMotor.getDeviceID(), Math.toDegrees(getCurrentAngleRad()));
+        // SmartDashboard.putNumber("currentAngle" + mDriveMotor.getDeviceID(), Math.toDegrees(getCurrentAngleRad()));
+        // System.out.println("drive: " + mDriveMotor.getDeviceID() + "  turn: " + mTurnMotor.getDeviceId() + "  encoder: " + absoluteEncoder.getDeviceID());
     }
 
     // Turn module back to 0 position

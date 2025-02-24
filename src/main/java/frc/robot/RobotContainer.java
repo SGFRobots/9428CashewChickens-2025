@@ -40,6 +40,7 @@ import frc.robot.commands.ElevatorDesiredPosition;
 import frc.robot.commands.AutoScore;
 import frc.robot.commands.CoralIntake;
 import frc.robot.commands.AlgaeIntake;
+import frc.robot.commands.AlgaeWheel;
 
 public class RobotContainer {
 
@@ -65,6 +66,7 @@ public class RobotContainer {
   private final Coral mCoral;
   private final Algae mAlgae;
   private final AlgaeIntake mAlgaeIntake;
+  private final AlgaeWheel mAlgaeWheel;
 
   // private final CoralScore mCoralScore;
   // private final ElevatorControl mElevatorControl;
@@ -93,7 +95,8 @@ public class RobotContainer {
     mCoralIntake = new CoralIntake(mCoral);
     mAlgae = new Algae();
     mAlgaeIntake = new AlgaeIntake(mAlgae);
-
+    mAlgaeWheel = new AlgaeWheel(mAlgae, mController);
+    // mAlgae.setDefaultCommand(mAlgaeWheel);
 
     // mElevatorControl = new ElevatorControl(elevatorSubsystem, mController); // Come back to this
     
@@ -120,8 +123,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
     // new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
-    // new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
-    // new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
+    new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
+    new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
     new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAlgaeIntake);
     new JoystickButton(mController, Constants.Controllers.selected.UpperB).toggleOnTrue(mElevatorPosition4);
     new JoystickButton(mController, Constants.Controllers.selected.MiddleB).toggleOnTrue(mElevatorPosition3);

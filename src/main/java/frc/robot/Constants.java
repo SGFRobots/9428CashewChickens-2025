@@ -41,13 +41,14 @@ public final class Constants {
         public static final int kRCoral = 5;
 
         // CAN IDs of Algae scorer
-        public static final int kAlgaePosMotorID = 10;
+        public static final int kAlgaePosMotorID = 0;
+        public static final int kAlgaeWheelMotor = 10;
         
         // CAN IDs of CANCoders
-        public static final int kFLDriveAbsoluteEncoderID = 6;
-        public static final int kBLDriveAbsoluteEncoderID = 7;
-        public static final int kFRDriveAbsoluteEncoderID = 5;
-        public static final int kBRDriveAbsoluteEncoderID = 8;
+        public static final int kFLDriveAbsoluteEncoderID = 8;
+        public static final int kBLDriveAbsoluteEncoderID = 5;
+        public static final int kFRDriveAbsoluteEncoderID = 7;
+        public static final int kBRDriveAbsoluteEncoderID = 6;
 
         // Gyro
         public static final int kGyroPort = 2;
@@ -117,10 +118,10 @@ public final class Constants {
         public static final double kRobotLengthMeters = 0.6731;
 
         // CANCoders' offsets
-        public static final double kFLDriveAbsoluteEncoderOffset = 0.70996; 
-        public static final double kBLDriveAbsoluteEncoderOffset = 0.83764;
-        public static final double kFRDriveAbsoluteEncoderOffset = 0.52612; 
-        public static final double kBRDriveAbsoluteEncoderOffset = 0.78564; 
+        public static final double kFLDriveAbsoluteEncoderOffset = -0.20215; 
+        public static final double kBLDriveAbsoluteEncoderOffset = -0.48193;
+        public static final double kFRDriveAbsoluteEncoderOffset = -0.16211; 
+        public static final double kBRDriveAbsoluteEncoderOffset = -0.28857; 
 
         // Module Positions on Robot
         public static final Translation2d[] kModulePositions = {

@@ -17,7 +17,7 @@ public class ElevatorControl extends Command {
 
     @Override
     public void execute() {
-        double joystick = mController.getRawAxis(Constants.Controllers.selected.RightYPort);
+        double joystick = -mController.getRawAxis(Constants.Controllers.selected.RightYPort);
         joystick = (Math.abs(joystick) < 0.01) ? 0 : joystick/2;
         mElevator.setPower(joystick);
     }

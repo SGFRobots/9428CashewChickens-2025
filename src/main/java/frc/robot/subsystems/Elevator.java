@@ -21,14 +21,15 @@ public class Elevator extends SubsystemBase {
 
     public void setPower(double power) {
         // System.out.println(power);
-        if (((getPosition() > highestPos) && (power > 0)) || ((getPosition() < lowestPos) && (power < 0))) {
+        if (((getPosition() > highestPos) && (power < 0)) || ((getPosition() < lowestPos) && (power > 0))) {
             stop();
         } else {
             LeftMotor.set(power);
             RightMotor.set(power);
+            SmartDashboard.putNumber("Elevator power", power);
             SmartDashboard.putNumber("Elevator left position", LeftMotor.getEncoder().getPosition());
             SmartDashboard.putNumber("Elevator right position", RightMotor.getEncoder().getPosition());
-            SmartDashboard.putNumber("Elevator position relative to 0", getPosition() - Constants.Mechanical.ElevatorLowestPosition);
+            SmartDashboard.putNumber("Elevator position relative to 0", getPosition() - lowestPos);
         }
     }
 

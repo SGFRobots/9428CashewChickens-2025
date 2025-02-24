@@ -22,7 +22,7 @@ public class AlgaeIntake extends Command {
     @Override 
     public void execute() {
         timer.start();
-        mAlgae.setPower(0.10);
+        mAlgae.setPosPower(0.10);
     }
 
     @Override
