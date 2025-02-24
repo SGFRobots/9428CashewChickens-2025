@@ -21,24 +21,27 @@ public final class Constants {
     
     public static final class MotorPorts {
         // CAN IDs of driving motors
-        public static final int kFLDriveMotorID = 2;
-        public static final int kBLDriveMotorID = 3;
-        public static final int kFRDriveMotorID = 1;
-        public static final int kBRDriveMotorID = 4;
+        public static final int kFLDriveMotorID = 4;
+        public static final int kBLDriveMotorID = 1;
+        public static final int kFRDriveMotorID = 3;
+        public static final int kBRDriveMotorID = 2;
 
         // CAN IDs of turning motors
-        public static final int kFLTurningMotorID = 12;
-        public static final int kBLTurningMotorID = 5;
-        public static final int kFRTurningMotorID = 2;
+        public static final int kFLTurningMotorID = 3;
+        public static final int kBLTurningMotorID = 11;
+        public static final int kFRTurningMotorID = 12;
         public static final int kBRTurningMotorID = 9;
 
         // CAN IDs of Elevator
-        public static final int kLElevator = 3;
+        public static final int kLElevator = 2;
         public static final int kRElevator = 7;
 
         // CAN IDs of Coral scorer
         public static final int kLCoral = 6;
-        public static final int kRCoral = 8;
+        public static final int kRCoral = 5;
+
+        // CAN IDs of Algae scorer
+        public static final int kAlgaePosMotorID = 10;
         
         // CAN IDs of CANCoders
         public static final int kFLDriveAbsoluteEncoderID = 6;
@@ -65,7 +68,7 @@ public final class Constants {
         public static final boolean kBRDriveReversed = false;
 
         // Turning encoders
-        public static final boolean kFLTurningEncoderReversed = true;
+        public static final boolean kFLTurningEncoderReversed = false;
         public static final boolean kBLTurningEncoderReversed = true;
         public static final boolean kFRTurningEncoderReversed = true;
         public static final boolean kBRTurningEncoderReversed = true;

@@ -20,7 +20,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void setPower(double power) {
-        System.out.println(power);
+        // System.out.println(power);
         if (((getPosition() > highestPos) && (power > 0)) || ((getPosition() < lowestPos) && (power < 0))) {
             stop();
         } else {
@@ -44,7 +44,7 @@ public class Elevator extends SubsystemBase {
     public void resetPositions() {
         lowestPos =getPosition();
         highestPos = lowestPos + Constants.Mechanical.ElevatorMaxHeight;
-        System.out.println("reset: " + lowestPos + " and " + highestPos);
+        // System.out.println("reset: " + lowestPos + " and " + highestPos);
     }
 
 }

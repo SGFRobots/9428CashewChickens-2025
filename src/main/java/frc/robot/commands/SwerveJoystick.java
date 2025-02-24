@@ -53,8 +53,8 @@ public class SwerveJoystick extends Command {
             turningSpeed = turningLimiter.calculate(turningSpeed);
             
             // Calculate speed in m/s
-            // xSpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
-            // ySpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
+            xSpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
+            ySpeed *= joystickHypotense * Constants.Mechanical.kTeleDriveMaxSpeedMetersPerSecond;
             turningSpeed *= Constants.Mechanical.kTeleDriveMaxAngularSpeedRadiansPerSecond;
             // SmartDashboard.putNumber("joystickangle", joystickAngle);
             // SmartDashboard.putNumber("rot", rotation);
@@ -83,7 +83,7 @@ public class SwerveJoystick extends Command {
             // mSwerveSubsystem.driveIndividualModule(xSpeed, turningSpeed);
 
         }
-        System.out.println(mSwerveSubsystem.getFindingPos());
+        // System.out.println(mSwerveSubsystem.getFindingPos());
     }
 
     @Override

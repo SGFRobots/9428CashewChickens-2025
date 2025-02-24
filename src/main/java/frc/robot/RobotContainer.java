@@ -34,10 +34,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Algae;
 import frc.robot.commands.ElevatorControl;
 import frc.robot.commands.ElevatorDesiredPosition;
 import frc.robot.commands.AutoScore;
 import frc.robot.commands.CoralIntake;
+import frc.robot.commands.AlgaeIntake;
 
 public class RobotContainer {
 
@@ -61,6 +63,9 @@ public class RobotContainer {
   private final CoralIntake mCoralIntake;
   private final Elevator mElevator;
   private final Coral mCoral;
+  private final Algae mAlgae;
+  private final AlgaeIntake mAlgaeIntake;
+
   // private final CoralScore mCoralScore;
   // private final ElevatorControl mElevatorControl;
 
@@ -86,6 +91,9 @@ public class RobotContainer {
     mCoral = new Coral();
     mCoral.setDefaultCommand(new CoralScore(mCoral, mController));
     mCoralIntake = new CoralIntake(mCoral);
+    mAlgae = new Algae();
+    mAlgaeIntake = new AlgaeIntake(mAlgae);
+
 
     // mElevatorControl = new ElevatorControl(elevatorSubsystem, mController); // Come back to this
     
@@ -110,11 +118,11 @@ public class RobotContainer {
 
   // Assign buttons to commands
   private void configureButtonBindings() {
-    // new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
-    new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
+    new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
+    // new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
     // new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
     // new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
-    new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAprilTagScore);
+    new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAlgaeIntake);
     new JoystickButton(mController, Constants.Controllers.selected.UpperB).toggleOnTrue(mElevatorPosition4);
     new JoystickButton(mController, Constants.Controllers.selected.MiddleB).toggleOnTrue(mElevatorPosition3);
     new JoystickButton(mController, Constants.Controllers.selected.LowerB).toggleOnTrue(mElevatorPosition2);

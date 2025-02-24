@@ -30,14 +30,14 @@ public class AprilTagScore extends Command{
     @Override
     public void initialize() {
         aprilTagLock.schedule();
-        System.out.println("scheduled 1");
+        // System.out.println("scheduled 1");
     }
 
     @Override 
     public void execute() {
-        System.out.println("execute");
+        // System.out.println("execute");
         if (aprilTagLock.isFinished() && !moveOffset.isScheduled()) {
-            System.out.println("next");
+            // System.out.println("next");
             double offset = mController.getRawAxis(Constants.Controllers.selected.SwitchE);
             moveOffset = new AutoDrive(mSwerveSubsystem, 0, offset / 2, 0, 0);
             moveOffset.schedule();
@@ -50,7 +50,7 @@ public class AprilTagScore extends Command{
 
     @Override
     public boolean isFinished() {
-        System.out.println(moveOffset.isFinished());
+        // System.out.println(moveOffset.isFinished());
         return moveOffset.isFinished();
     }
 }
