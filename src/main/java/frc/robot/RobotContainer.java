@@ -20,13 +20,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Limelight;
 // Subsystems and commands
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.commands.SwerveJoystick;
-import frc.robot.commands.AprilTagLock;
-import frc.robot.commands.AprilTagScore;
-import frc.robot.commands.CoralScore;
-import frc.robot.commands.LimeLightControl;
-import frc.robot.commands.ResetRotations;
-import frc.robot.commands.SpeedControl;
+import frc.robot.commands.Driving.ResetRotations;
+import frc.robot.commands.Driving.SpeedControl;
+import frc.robot.commands.Driving.SwerveJoystick;
+import frc.robot.commands.Limelight.AprilTagLock;
+import frc.robot.commands.Limelight.AprilTagScore;
+import frc.robot.commands.Limelight.LimeLightControl;
+
 import com.pathplanner.lib.events.EventTrigger;
 import com.revrobotics.spark.config.MAXMotionConfig;
 
@@ -35,12 +35,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Algae;
-import frc.robot.commands.ElevatorControl;
-import frc.robot.commands.ElevatorDesiredPosition;
-import frc.robot.commands.AutoScore;
-import frc.robot.commands.CoralIntake;
-import frc.robot.commands.AlgaeIntake;
-import frc.robot.commands.AlgaeWheel;
+import frc.robot.commands.Arm.AlgaeIntake;
+import frc.robot.commands.Arm.AlgaeWheel;
+import frc.robot.commands.Arm.CoralIntake;
+import frc.robot.commands.Arm.CoralScore;
+import frc.robot.commands.Arm.ElevatorControl;
+import frc.robot.commands.Arm.ElevatorDesiredPosition;
+import frc.robot.commands.Auto.AutoScore;
 
 public class RobotContainer {
 
@@ -55,10 +56,10 @@ public class RobotContainer {
   private final SpeedControl mSpeeds;
   private final Limelight mLimelight;
   private final AprilTagScore mAprilTagScore;
+  private final ElevatorDesiredPosition mElevatorPosition0;
   private final ElevatorDesiredPosition mElevatorPosition1;
   private final ElevatorDesiredPosition mElevatorPosition2;
   private final ElevatorDesiredPosition mElevatorPosition3;
-  private final ElevatorDesiredPosition mElevatorPosition4;
   private final AutoScore mAutoScoreRight;
   private final AutoScore mAutoScoreLeft;
   private final CoralIntake mCoralIntake;
@@ -84,10 +85,10 @@ public class RobotContainer {
     mAprilTagScore = new AprilTagScore(mSwerveSubsystem, mLimelight, mController);
     mElevator = new Elevator();
     mElevator.setDefaultCommand(new ElevatorControl(mElevator, mController));
-    mElevatorPosition1 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelOneHeight);
-    mElevatorPosition2 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelTwoHeight);
-    mElevatorPosition3 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelThreeHeight);
-    mElevatorPosition4 = new ElevatorDesiredPosition(mElevator, Constants.Mechanical.ElevatorLevelFourHeight);
+    mElevatorPosition0 = new ElevatorDesiredPosition(mElevator, 0);
+    mElevatorPosition1 = new ElevatorDesiredPosition(mElevator, 1);
+    mElevatorPosition2 = new ElevatorDesiredPosition(mElevator, 2);
+    mElevatorPosition3 = new ElevatorDesiredPosition(mElevator, 3);
     mAutoScoreRight = new AutoScore(mSwerveSubsystem, mLimelight, "right");
     mAutoScoreLeft = new AutoScore(mSwerveSubsystem, mLimelight, "left");
     mCoral = new Coral();
@@ -96,14 +97,14 @@ public class RobotContainer {
     mAlgae = new Algae();
     mAlgaeIntake = new AlgaeIntake(mAlgae);
     mAlgaeWheel = new AlgaeWheel(mAlgae, mController);
-    // mAlgae.setDefaultCommand(mAlgaeWheel);
+    mAlgae.setDefaultCommand(mAlgaeWheel);
 
     // mElevatorControl = new ElevatorControl(elevatorSubsystem, mController); // Come back to this
     
     // Autonomous
     // Auto commands
     new EventTrigger("lockOn").onTrue(Commands.runOnce(()->{System.out.println("Locking on");}));
-    NamedCommands.registerCommand("goToLevel4", mElevatorPosition4);
+    NamedCommands.registerCommand("goToLevel4", mElevatorPosition3);
     NamedCommands.registerCommand("goToSourceLevel", mElevatorPosition1);
     NamedCommands.registerCommand("coralScoreLeft", mAutoScoreLeft);
     NamedCommands.registerCommand("coralScoreRight", mAutoScoreRight);
@@ -121,14 +122,14 @@ public class RobotContainer {
 
   // Assign buttons to commands
   private void configureButtonBindings() {
-    new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
-    // new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
+    // new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
+    new JoystickButton(mController, Constants.Controllers.selected.ButtonAPort).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
     new JoystickButton(mController, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
     new JoystickButton(mController, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
     new JoystickButton(mController, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(mAlgaeIntake);
-    new JoystickButton(mController, Constants.Controllers.selected.UpperB).toggleOnTrue(mElevatorPosition4);
-    new JoystickButton(mController, Constants.Controllers.selected.MiddleB).toggleOnTrue(mElevatorPosition3);
-    new JoystickButton(mController, Constants.Controllers.selected.LowerB).toggleOnTrue(mElevatorPosition2);
+    new JoystickButton(mController, Constants.Controllers.selected.UpperB).whileTrue(mElevatorPosition3);
+    new JoystickButton(mController, Constants.Controllers.selected.MiddleB).whileTrue(mElevatorPosition2);
+    new JoystickButton(mController, Constants.Controllers.selected.LowerB).whileTrue(mElevatorPosition1);
     // new JoystickButton(mController, Constants.Controllers.selected.UpperC).onTrue(mCoralScore);
     // new JoystickButton(mController, Constants.Controllers.selected.LowerC).onTrue(mCoralScore);
     // new JoystickButton(mController, Constants.Controllers.selected.)

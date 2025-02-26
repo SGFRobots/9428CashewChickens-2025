@@ -154,16 +154,18 @@ public final class Constants {
         // Elevator
         public static final double ElevatorLowestPosition = -23.5;
         public static final double ElevatorHighestPosition = 8.8;
-        public static final double ElevatorLevelOneHeight = -10;
-        public static final double ElevatorLevelTwoHeight = -5;
-        public static final double ElevatorLevelThreeHeight = 0;
-        public static final double ElevatorLevelFourHeight = 5;
+        public static final double ElevatorLevelZeroHeight = 0;
+        public static final double ElevatorLevelOneHeight = -161;
+        public static final double ElevatorLevelTwoHeight = -360;
         public static final double ElevatorHalfPosition = (ElevatorHighestPosition - ElevatorLowestPosition) / 2 + ElevatorLowestPosition;
-        public static final double ElevatorMaxHeight = 32.3;
+        public static final double ElevatorMaxHeight = -610;
     }
 
     // XBox Controller
     public static final class Controllers {
+        // Controller ports
+        public static final int DrivingControllerPort = 0;
+        public static final int XBoxControllerPort = 1;
 
         // Black drone controller
         public static final class selected {
@@ -211,6 +213,29 @@ public final class Constants {
             // public static final int ButtonFPort = 2;
             public static final int buttonB = 1;
             public static final int buttonA = 2;
+        }
+
+        public static final class XBox {
+            // Joysticks
+            public static final int LeftXPort = 0;
+            public static final int LeftYPort = 1;
+            public static final int RightXPort = 4;
+            public static final int RightYPort = 5;
+
+            // Triggers
+            public static final int LeftTriggerPort = 2;
+            public static final int RightTriggerPort = 3;
+
+            // Bumpers
+            public static final int LeftBumper = 5;
+            public static final int RightBumper = 6;
+
+            // Buttons
+            public static final int buttonB = 1;
+            public static final int buttonA = 2;
+            public static final int buttonY = 3;
+            public static final int buttonX = 4;
+
         }
   }
 }

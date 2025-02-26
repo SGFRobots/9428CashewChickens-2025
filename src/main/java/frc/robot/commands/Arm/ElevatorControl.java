@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,6 +19,8 @@ public class ElevatorControl extends Command {
     public void execute() {
         double joystick = -mController.getRawAxis(Constants.Controllers.selected.RightYPort);
         joystick = (Math.abs(joystick) < 0.01) ? 0 : joystick/2;
+        boolean override = joystick == 0 ? false : true;
+        mElevator.setOverride(override);
         mElevator.setPower(joystick);
     }
 

@@ -1,11 +1,11 @@
-package frc.robot.commands;
+package frc.robot.commands.Auto;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.commands.Limelight.AprilTagLock;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.commands.AprilTagLock;
 
 public class AutoScore extends Command{
     private final Limelight mLimelight;

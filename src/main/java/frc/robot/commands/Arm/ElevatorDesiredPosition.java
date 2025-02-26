@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
@@ -11,10 +11,11 @@ public class ElevatorDesiredPosition extends Command {
     private final double level;
     private final PIDController levelPID;
 
-    public ElevatorDesiredPosition(Elevator pElevator, double pLevel) {
+    public ElevatorDesiredPosition(Elevator pElevator, int pLevel) {
         mElevator = pElevator;
-        level = pLevel;
-        levelPID = new PIDController(0.075, 0, 0);
+        // level = pLevel;
+        level = mElevator.getDesiredPosition(pLevel);
+        levelPID = new PIDController(0.0035, 0, 0);
     }
 
     @Override
@@ -24,6 +25,7 @@ public class ElevatorDesiredPosition extends Command {
     public void execute() {
         // double power = (mElevator.getPosition() < level) ? 0.35 : -0.35;
         double power = levelPID.calculate(mElevator.getPosition(), level);
+        // double power = -0.5;
         mElevator.setPower(power);
     }
 
@@ -34,9 +36,6 @@ public class ElevatorDesiredPosition extends Command {
 
     @Override
     public boolean isFinished() {
-        if (mElevator.getPosition() > level-1 && mElevator.getPosition() < level+1){
-            return true;
-        }
-        return false;
+        return mElevator.getOverride();
     }
 }

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -15,6 +16,7 @@ public class Algae extends SubsystemBase{
     public Algae() {
         positionMotor = new TalonFX(Constants.MotorPorts.kAlgaePosMotorID);
         wheelMotor = new SparkMax(Constants.MotorPorts.kAlgaeWheelMotor, MotorType.kBrushless);
+        positionMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
     public void setPosPower(double power) {

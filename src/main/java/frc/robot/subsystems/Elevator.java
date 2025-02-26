@@ -9,32 +9,58 @@ import frc.robot.Constants;
 public class Elevator extends SubsystemBase {
     private final SparkMax LeftMotor;
     private final SparkMax RightMotor;
-    private double lowestPos;
-    private double highestPos;
+    private double pos0;
+    private double pos1;
+    private double pos2;
+    private double pos3;
+    private double[] positionsList;
+    private boolean override;
 
     public Elevator() {
         LeftMotor = new SparkMax(Constants.MotorPorts.kLElevator, MotorType.kBrushless);
         RightMotor = new SparkMax(Constants.MotorPorts.kRElevator, MotorType.kBrushless);
-        lowestPos = LeftMotor.getEncoder().getPosition();
-        highestPos = lowestPos + Constants.Mechanical.ElevatorMaxHeight;
+        pos0 = getPosition();
+        pos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
+        pos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
+        pos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
+        positionsList = new double[]{pos0, pos1, pos2, pos3};
+        override = false;
     }
 
     public void setPower(double power) {
         // System.out.println(power);
-        if (((getPosition() > highestPos) && (power < 0)) || ((getPosition() < lowestPos) && (power > 0))) {
+        if (((getPosition() < pos3) && (power < 0)) || ((getPosition() > pos0) && (power > 0))) {
             stop();
+            System.out.println("stop");
         } else {
             LeftMotor.set(power);
             RightMotor.set(power);
             SmartDashboard.putNumber("Elevator power", power);
             SmartDashboard.putNumber("Elevator left position", LeftMotor.getEncoder().getPosition());
             SmartDashboard.putNumber("Elevator right position", RightMotor.getEncoder().getPosition());
-            SmartDashboard.putNumber("Elevator position relative to 0", getPosition() - lowestPos);
+            SmartDashboard.putNumber("Elevator position relative to 0", getPositionRelativeToZero());
+            SmartDashboard.putNumber("Elevator Position 3", pos3);
         }
+    }
+
+    public void setOverride(boolean override) {
+        this.override = override;
+    }
+
+    public boolean getOverride() {
+        return override;
     }
 
     public double getPosition() {
         return LeftMotor.getEncoder().getPosition();
+    }
+    
+    public double getPositionRelativeToZero() {
+        return LeftMotor.getEncoder().getPosition() - pos0;
+    }
+
+    public double getDesiredPosition(int level){
+        return positionsList[level];
     }
 
     public void stop() {
@@ -43,9 +69,12 @@ public class Elevator extends SubsystemBase {
     }
 
     public void resetPositions() {
-        lowestPos =getPosition();
-        highestPos = lowestPos + Constants.Mechanical.ElevatorMaxHeight;
-        // System.out.println("reset: " + lowestPos + " and " + highestPos);
+        pos0 = getPosition();
+        pos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
+        pos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
+        pos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
+        positionsList = new double[]{pos0, pos1, pos2, pos3};
+        // System.out.println("reset: " + pos0 + " and " + pos3);
     }
 
 }

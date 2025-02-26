@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,7 +22,7 @@ public class AlgaeWheel extends Command{
 
     @Override 
     public void execute() {
-        double dial = mController.getRawAxis(Constants.Controllers.selected.s2DialPort);
+        double dial = mController.getRawAxis(Constants.Controllers.selected.SwitchE);
         dial = Math.abs(dial) < 0.1 ? 0 : dial;
         mAlgae.setWheelPower(dial);
         SmartDashboard.putNumber("dial", dial);
