@@ -6,6 +6,7 @@ import com.revrobotics.ColorSensorV3.ProximitySensorResolution;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 import frc.robot.Constants;
 
@@ -16,6 +17,8 @@ public class Coral extends SubsystemBase {
     private final SparkMax rightMotor;
     private final ColorSensorV3 inSensor;
     private final ColorSensorV3 outSensor;
+    private final DigitalInput inBeamBreakSensor;
+    private final DigitalInput outBeamBreakSensor;
     public boolean coralIn;
 
     public Coral() {
@@ -25,6 +28,8 @@ public class Coral extends SubsystemBase {
         inSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
         outSensor = new ColorSensorV3(I2C.Port.kMXP);
         outSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
+        inBeamBreakSensor = new DigitalInput(1);
+        outBeamBreakSensor = new DigitalInput(2);
         coralIn = false;
     }
 
@@ -38,19 +43,17 @@ public class Coral extends SubsystemBase {
         rightMotor.set(0);
     }
 
-    public double getInSensorDist(){
-        return inSensor.getProximity();
+    public boolean getInSensorBroken(){
+        return !inBeamBreakSensor.get();
     }
     
-    public double getOutSensorDist(){
-        return outSensor.getProximity();
+    public boolean getOutSensorBroken(){
+        return !outBeamBreakSensor.get();
     }
 
     public void updateCoralStatus() {
-        if ((getInSensorDist() < 500) && (getOutSensorDist() < 500)) {
+        if (getInSensorBroken() || getOutSensorBroken()){
             coralIn = true;
-        } else if ((getInSensorDist() > 500) && (getOutSensorDist() > 500)) {
-            coralIn = false;
         }
     }
 }

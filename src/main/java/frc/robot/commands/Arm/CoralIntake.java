@@ -20,7 +20,7 @@ public class CoralIntake extends Command{
     @Override 
     public void execute() {
         mCoral.setPower(.5);
-        if (mCoral.getInSensorDist() < 500){
+        if (mCoral.getInSensorBroken()){
             mCoral.coralIn = true;
         }
     }
@@ -32,7 +32,7 @@ public class CoralIntake extends Command{
 
     @Override
     public boolean isFinished() {
-        if (mCoral.coralIn && mCoral.getInSensorDist() > 500){
+        if (mCoral.coralIn && !mCoral.getInSensorBroken()){
             return true;
         }
         return false;

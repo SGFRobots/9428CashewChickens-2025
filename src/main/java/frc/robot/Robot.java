@@ -18,6 +18,7 @@ import frc.robot.subsystems.Module;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private Command m_elevatorCommand;
 
   private RobotContainer m_robotContainer;
 
@@ -80,11 +81,14 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_elevatorCommand = m_robotContainer.getElevatorCommand();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    m_robotContainer.displayLimelightData();
+    m_elevatorCommand.schedule();
     SmartDashboard.putBoolean("FastMode", Module.fast);
     SmartDashboard.putBoolean("SlowMode", Module.slow);
     SmartDashboard.putBoolean("NormalMode", !(Module.slow || Module.fast));

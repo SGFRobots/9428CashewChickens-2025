@@ -13,6 +13,7 @@ public class Elevator extends SubsystemBase {
     private double pos1;
     private double pos2;
     private double pos3;
+    private double desiredPosition;
     private double[] positionsList;
     private boolean override;
 
@@ -23,6 +24,7 @@ public class Elevator extends SubsystemBase {
         pos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
         pos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
         pos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
+        desiredPosition = pos0;
         positionsList = new double[]{pos0, pos1, pos2, pos3};
         override = false;
     }
@@ -31,7 +33,6 @@ public class Elevator extends SubsystemBase {
         // System.out.println(power);
         if (((getPosition() < pos3) && (power < 0)) || ((getPosition() > pos0) && (power > 0))) {
             stop();
-            System.out.println("stop");
         } else {
             LeftMotor.set(power);
             RightMotor.set(power);
@@ -59,8 +60,16 @@ public class Elevator extends SubsystemBase {
         return LeftMotor.getEncoder().getPosition() - pos0;
     }
 
-    public double getDesiredPosition(int level){
-        return positionsList[level];
+    public double getDesiredPosition(){
+        return desiredPosition;
+    }
+    
+    public void setDesiredPosition(int level){
+        desiredPosition = positionsList[level];
+    }
+
+    public void setDesiredPosition(double height){
+        desiredPosition = height;
     }
 
     public void stop() {

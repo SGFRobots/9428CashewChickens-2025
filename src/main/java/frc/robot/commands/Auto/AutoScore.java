@@ -28,9 +28,9 @@ public class AutoScore extends Command{
     public AutoScore(SwerveSubsystem pSubsystem, Limelight pLimelight, String coralSide) {
         mLimelight = pLimelight;
         mSwerveSubsystem = pSubsystem;
-        scoringX = (coralSide == "right") ? -1 : 1;
-        scoringYaw = (coralSide == "right") ? 12 : -12;
-        scoringArea = (coralSide == "right") ? 20 : 25;
+        scoringX = (coralSide == "right") ? -1 : 13.8;
+        scoringYaw = (coralSide == "right") ? 12 : -142.5;        
+        scoringArea = (coralSide == "right") ? 20 : 2.6;
         scoringAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, scoringX, scoringArea, scoringYaw);
     }
 
@@ -46,7 +46,7 @@ public class AutoScore extends Command{
     public void execute() {
         scoringAprilTagLock.schedule();
         System.out.println("Score");
-        initialAprilTagLock.schedule();
+        // initialAprilTagLock.schedule();
     }
 
     @Override

@@ -21,8 +21,8 @@ public class AlgaeIntake extends Command {
 
     @Override 
     public void execute() {
-        timer.start();
-        mAlgae.setPosPower(0.10);
+        // timer.start();
+        mAlgae.setPosPower(0.30);
     }
 
     @Override
@@ -32,9 +32,9 @@ public class AlgaeIntake extends Command {
 
     @Override
     public boolean isFinished() {
-        if (timer.get() > 0.5){
-            return true;
-        }
+        // if (timer.get() > 1){
+        //     return true;
+        // }
         return false;
     }
 }

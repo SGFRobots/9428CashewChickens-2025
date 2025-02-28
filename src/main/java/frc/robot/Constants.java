@@ -156,9 +156,14 @@ public final class Constants {
         public static final double ElevatorHighestPosition = 8.8;
         public static final double ElevatorLevelZeroHeight = 0;
         public static final double ElevatorLevelOneHeight = -161;
-        public static final double ElevatorLevelTwoHeight = -360;
+        public static final double ElevatorLevelTwoHeight = -380;
         public static final double ElevatorHalfPosition = (ElevatorHighestPosition - ElevatorLowestPosition) / 2 + ElevatorLowestPosition;
         public static final double ElevatorMaxHeight = -610;
+    }
+
+    public static final class AprilTags {
+        // x, area, yaw
+        public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
     }
 
     // XBox Controller
@@ -168,7 +173,7 @@ public final class Constants {
         public static final int XBoxControllerPort = 1;
 
         // Black drone controller
-        public static final class selected {
+        public static final class backup {
             // Joysticks and triggers
             public static final int LeftXPort = 0;
             public static final int LeftYPort = 1;
@@ -195,22 +200,22 @@ public final class Constants {
         }
         
         // White drone controller
-        public static final class backup {
+        public static final class selected {
             // Joysticks and triggers
-            // public static final int LeftXPort = 3;
-            // public static final int LeftYPort = 2;
-            // public static final int RightXPort = 0;
-            // public static final int RightYPort = 1;
+            public static final int LeftXPort = 3;
+            public static final int LeftYPort = 2;
+            public static final int RightXPort = 0;
+            public static final int RightYPort = 1;
 
-            // // Switches
-            // public static final int SwitchA = 4;
-            // public static final int SwitchB = 5;
-            // public static final int SwitchC = 7;
-            // public static final int SwitchD = 6;
+            // Switches
+            public static final int SwitchA = 4;
+            public static final int SwitchB = 5;
+            public static final int SwitchC = 7;
+            public static final int SwitchD = 6;
 
-            // // Buttons
-            // public static final int ButtonEPort = 1;
-            // public static final int ButtonFPort = 2;
+            // Buttons
+            public static final int ButtonEPort = 1;
+            public static final int ButtonFPort = 2;
             public static final int buttonB = 1;
             public static final int buttonA = 2;
         }
@@ -235,6 +240,8 @@ public final class Constants {
             public static final int buttonA = 2;
             public static final int buttonY = 3;
             public static final int buttonX = 4;
+            public static final int buttonPlus = 8;
+            public static final int buttonMinues = 7;
 
         }
   }

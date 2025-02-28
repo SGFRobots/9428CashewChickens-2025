@@ -4,17 +4,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
 import com.pathplanner.lib.config.PIDConstants;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class ElevatorDesiredPosition extends Command {
     private final Elevator mElevator;
-    private final double level;
     private final PIDController levelPID;
 
-    public ElevatorDesiredPosition(Elevator pElevator, int pLevel) {
+    public ElevatorDesiredPosition(Elevator pElevator) {
         mElevator = pElevator;
-        // level = pLevel;
-        level = mElevator.getDesiredPosition(pLevel);
         levelPID = new PIDController(0.0035, 0, 0);
     }
 
@@ -23,10 +21,10 @@ public class ElevatorDesiredPosition extends Command {
 
     @Override 
     public void execute() {
-        // double power = (mElevator.getPosition() < level) ? 0.35 : -0.35;
-        double power = levelPID.calculate(mElevator.getPosition(), level);
-        // double power = -0.5;
-        mElevator.setPower(power);
+            double power = levelPID.calculate(mElevator.getPosition(), mElevator.getDesiredPosition());
+            mElevator.setPower(power);
+            SmartDashboard.putNumber("desired pos elev", mElevator.getDesiredPosition());
+        
     }
 
     @Override

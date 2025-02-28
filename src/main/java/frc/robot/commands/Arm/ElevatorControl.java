@@ -17,11 +17,12 @@ public class ElevatorControl extends Command {
 
     @Override
     public void execute() {
-        double joystick = -mController.getRawAxis(Constants.Controllers.selected.RightYPort);
-        joystick = (Math.abs(joystick) < 0.01) ? 0 : joystick/2;
-        boolean override = joystick == 0 ? false : true;
-        mElevator.setOverride(override);
-        mElevator.setPower(joystick);
+            double joystick = -mController.getRawAxis(Constants.Controllers.selected.RightYPort);
+            joystick = (Math.abs(joystick) < 0.01) ? 0 : joystick/2;
+            // System.out.println(joystick);
+            // mElevator.setPower(joystick);
+            // mElevator.setDesiredPosition(mElevator.getPosition());
+        
     }
 
     @Override

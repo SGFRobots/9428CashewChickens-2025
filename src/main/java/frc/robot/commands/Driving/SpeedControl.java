@@ -1,66 +1,37 @@
 package frc.robot.commands.Driving;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class SpeedControl {
-    public final SlowMode slow;
-    public final FastMode fast;
+public class SpeedControl extends Command{
+    private final SwerveSubsystem mSubsystem;
+    private final GenericHID mController;
 
-    public SpeedControl(SwerveSubsystem subsystem) {
-        slow = new SlowMode(subsystem);
-        fast = new FastMode(subsystem);
+    public SpeedControl(SwerveSubsystem subsystem, GenericHID pController) {
+        // slow = new SlowMode(subsystem);
+        // fast = new FastMode(subsystem);
+        mController = pController;
+        mSubsystem = subsystem;
     }
 
-    public class SlowMode extends Command {
-        private final SwerveSubsystem mSubsystem;
+    @Override
+    public void initialize() {}
 
-        public SlowMode(SwerveSubsystem subsystem) {
-            mSubsystem = subsystem;
-        }
-
-        @Override
-        public void initialize() {
-            mSubsystem.toggleSlowMode(true);
-        }
-    
-        @Override
-        public void execute() {}
-    
-        @Override
-        public void end(boolean isFinished) {
-            mSubsystem.toggleSlowMode(false);
-        }
-    
-        @Override
-        public boolean isFinished() {
-            return false;
-        }
+    @Override 
+    public void execute() {
+        boolean fast = mController.getRawAxis(Constants.Controllers.selected.SwitchC) == 1;
+        mSubsystem.toggleFastMode(fast);
+        boolean slow = mController.getRawAxis(Constants.Controllers.selected.SwitchC) == -1;
+        mSubsystem.toggleSlowMode(slow);
     }
 
-    public class FastMode extends Command {
-        private final SwerveSubsystem mSubsystem;
+    @Override
+    public void end(boolean isFinished) {}
 
-        public FastMode(SwerveSubsystem subsystem) {
-            mSubsystem = subsystem;
-        }
-
-        @Override
-        public void initialize() {
-            mSubsystem.toggleFastMode(true);
-        }
-    
-        @Override
-        public void execute() {}
-    
-        @Override
-        public void end(boolean isFinished) {
-            mSubsystem.toggleFastMode(false);
-        }
-    
-        @Override
-        public boolean isFinished() {
-            return false;
-        }
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

@@ -22,9 +22,9 @@ public class AlgaeWheel extends Command{
 
     @Override 
     public void execute() {
-        double dial = mController.getRawAxis(Constants.Controllers.selected.SwitchE);
+        double dial = mController.getRawAxis(Constants.Controllers.selected.SwitchD);
         dial = Math.abs(dial) < 0.1 ? 0 : dial;
-        mAlgae.setWheelPower(dial);
+        mAlgae.setWheelPower(0);
         SmartDashboard.putNumber("dial", dial);
         mAlgae.telemetry();
     }

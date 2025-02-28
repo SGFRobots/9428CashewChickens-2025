@@ -39,7 +39,7 @@ public class AprilTagScore extends Command{
         // System.out.println("execute");
         if (aprilTagLock.isFinished() && !moveOffset.isScheduled()) {
             // System.out.println("next");
-            double offset = mController.getRawAxis(Constants.Controllers.selected.SwitchE);
+            double offset = mController.getRawAxis(Constants.Controllers.selected.SwitchA);
             moveOffset = new AutoDrive(mSwerveSubsystem, 0, offset / 2, 0, 0);
             moveOffset.schedule();
         }

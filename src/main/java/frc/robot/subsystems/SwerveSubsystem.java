@@ -226,11 +226,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // DRIVE the robot
     public void drive(ChassisSpeeds newChassisSpeed) {
-        if (RobotContainer.mController.getRawAxis(Constants.Controllers.selected.SwitchF) == -1) {
-            this.chassisSpeeds = new ChassisSpeeds(0, 0, 0);
-        } else {
-            this.chassisSpeeds = newChassisSpeed;
-        }
+        this.chassisSpeeds = newChassisSpeed;
         // Convert chassis speeds to each module states
         SwerveModuleState[] moduleStates = Constants.Mechanical.kDriveKinematics.toSwerveModuleStates(newChassisSpeed);
 

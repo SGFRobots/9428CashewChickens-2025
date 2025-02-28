@@ -27,7 +27,7 @@ public class CoralOutake extends Command{
     
     @Override
     public boolean isFinished() {
-        if (mCoral.getOutSensorDist() > 500){
+        if (!mCoral.getOutSensorBroken()){
             mCoral.coralIn = false;
             return true;
         }
