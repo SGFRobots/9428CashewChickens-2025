@@ -26,6 +26,7 @@ import frc.robot.commands.Driving.ResetRotations;
 import frc.robot.commands.Driving.SpeedControl;
 import frc.robot.commands.Driving.SwerveJoystick;
 import frc.robot.commands.Limelight.AprilTagLock;
+import frc.robot.commands.Limelight.AprilTagLock2;
 import frc.robot.commands.Limelight.AprilTagScore;
 import frc.robot.commands.Limelight.LimeLightControl;
 
@@ -58,6 +59,7 @@ public class RobotContainer {
   private final SwerveSubsystem mSwerveSubsystem;
   private final ResetRotations mResetRotations;
   private final AprilTagLock mAprilTagLock;
+  private final AprilTagLock2 mAprilTagLock2;
   private final Auto lock;
   private final SpeedControl mSpeeds;
   private final Limelight mLimelight;
@@ -90,8 +92,9 @@ public class RobotContainer {
     mLimelight = new Limelight();
     mLimelight.setDefaultCommand(new LimeLightControl(mLimelight));
     lock = new Auto(mSwerveSubsystem, mLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]);
-    mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]);
-    // mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, 0, 5, 30);
+    // mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]);
+    mAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, 5, 5, -40);
+    mAprilTagLock2 = new AprilTagLock2(mSwerveSubsystem, mLimelight, 5, 5, -40);
     mAprilTagScore = new AprilTagScore(mSwerveSubsystem, mLimelight, mDroneComtroller);
     mElevator = new Elevator();
     mElevator.setDefaultCommand(new ElevatorControl(mElevator, mXBoxController));
@@ -139,6 +142,7 @@ public class RobotContainer {
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonX).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(3)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonPlus).toggleOnTrue(new InstantCommand(() -> mElevator.setOverride(!mElevator.getOverride())));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftBumper).toggleOnTrue(mAprilTagLock);
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightBumper).toggleOnTrue(mCoralIntake);
     new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).whileTrue(mAlgaeIntake);
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(3)));
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.UpperC).onTrue(mCoralScore);

@@ -8,7 +8,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class AprilTagLock extends Command {
+public class AprilTagLock2 extends Command {
     private final SwerveSubsystem mSubsystem;
     private final Limelight mLimelight;
     private double x;
@@ -26,26 +26,15 @@ public class AprilTagLock extends Command {
     private double limelightRotation;
     private double robotRotation;
 
-    public AprilTagLock(SwerveSubsystem pSubsystem, Limelight pLimelight, double pTargetX, double pTargetArea, double pTargetYaw) {
+    public AprilTagLock2(SwerveSubsystem pSubsystem, Limelight pLimelight, double pTargetX, double pTargetArea, double pTargetYaw) {
         mSubsystem = pSubsystem;
         mLimelight = pLimelight;
-        rotationSpeed = 0.005 * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond;
-        strafeSpeed = 0.0065 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
-        driveSpeed = 0.05 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
+        rotationSpeed = 0.008 * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond;
+        strafeSpeed = 0.003 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
+        driveSpeed = 0.02 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
         targetX = pTargetX;
         targetArea = pTargetArea;
         targetYaw = pTargetYaw;
-    }
-
-    public AprilTagLock(SwerveSubsystem pSubsystem, Limelight pLimelight) {
-        mSubsystem = pSubsystem;
-        mLimelight = pLimelight;
-        rotationSpeed = 0.005 * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond;
-        strafeSpeed = 0.003 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
-        driveSpeed = 0.006 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
-        targetX = 0;
-        targetArea = 9;
-        targetYaw = 0;
     }
 
     @Override
@@ -68,30 +57,28 @@ public class AprilTagLock extends Command {
         x = (x < targetX-2 || x > targetX+2) ? x : 0;
         area = (area < targetArea-1 || area > targetArea+1) ? area : 0;
         area *= (area > targetArea+1) ? -1 : 1;
-        area = area > 0 ? 70-area : area < 0 ? -70-area : 0;
+        area = area > 0 ? targetArea-area : area < 0 ? -targetArea-area : 0;
 
-        turningSpeed = yaw == 0 ? 0 : rotationSpeed * (yaw-targetYaw);
-        ySpeed = area == 0 ? 0 : area;
-        xSpeed = x == 0 ? 0 : x-targetX;
+        xSpeed = Math.sin(Math.toRadians(44)) * (x - targetX) + Math.sin(Math.toRadians(-46)) * area;
+        ySpeed = Math.cos(Math.toRadians(44)) * (x - targetX) + Math.cos(Math.toRadians(-46)) * area;
 
-        limelightRotation = Math.toDegrees(Math.atan2(ySpeed, xSpeed));
-        robotRotation = (limelightRotation - 46);
-
-        xSpeed = Math.cos(Math.toRadians(robotRotation)) * driveSpeed;
-        ySpeed = Math.sin(Math.toRadians(robotRotation)) * driveSpeed;
+        SmartDashboard.putNumber("ySpeed", yaw-targetYaw);
+        SmartDashboard.putNumber("xSpeed", yaw);
+        turningSpeed = yaw == 0 ? 0: rotationSpeed * (yaw - targetYaw);
+        SmartDashboard.putNumber("turningSpeed", turningSpeed);
+        ySpeed *= area == 0 ? 0: driveSpeed;
+        xSpeed *= x == 0 ? 0: strafeSpeed;
 
         // if (xSpeed != 0){
         //     ySpeed = 0;
         //     turningSpeed = 0;
         // }
 
-        SmartDashboard.putNumber("limelightRotation", limelightRotation);
-        SmartDashboard.putNumber("robotRotation", robotRotation);
-        SmartDashboard.putNumber("xSpeed", xSpeed);
-        SmartDashboard.putNumber("ySpeed", ySpeed);
+        // SmartDashboard.putNumber("limelightRotation", limelightRotation);
+        // SmartDashboard.putNumber("robotRotation", robotRotation);
         // xSpeed = (turningSpeed == 0) && (ySpeed == 0) ? xSpeed : 0;
         // xSpeed = (x == 0) && (yaw ==0) && (area == 0) ? 0.2 : xSpeed;
-        chassisSpeeds = new ChassisSpeeds(ySpeed,-xSpeed,turningSpeed);
+        chassisSpeeds = new ChassisSpeeds(-ySpeed,xSpeed,turningSpeed);
 
         mSubsystem.drive(chassisSpeeds);
     }

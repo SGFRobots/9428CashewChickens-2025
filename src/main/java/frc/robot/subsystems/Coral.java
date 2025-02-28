@@ -28,7 +28,7 @@ public class Coral extends SubsystemBase {
         inSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
         outSensor = new ColorSensorV3(I2C.Port.kMXP);
         outSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
-        inBeamBreakSensor = new DigitalInput(1);
+        inBeamBreakSensor = new DigitalInput(3);
         outBeamBreakSensor = new DigitalInput(2);
         coralIn = false;
     }
