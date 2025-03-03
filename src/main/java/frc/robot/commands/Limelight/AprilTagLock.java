@@ -25,6 +25,8 @@ public class AprilTagLock extends Command {
     private final double driveSpeed;
     private double limelightRotation;
     private double robotRotation;
+    private double errorAllowed;
+    private double areaErrorAllowed;
 
     public AprilTagLock(SwerveSubsystem pSubsystem, Limelight pLimelight, double pTargetX, double pTargetArea, double pTargetYaw) {
         mSubsystem = pSubsystem;
@@ -35,6 +37,8 @@ public class AprilTagLock extends Command {
         targetX = pTargetX;
         targetArea = pTargetArea;
         targetYaw = pTargetYaw;
+        errorAllowed = 0.75;
+        areaErrorAllowed = 0.25;
     }
 
     public AprilTagLock(SwerveSubsystem pSubsystem, Limelight pLimelight) {
@@ -59,27 +63,35 @@ public class AprilTagLock extends Command {
     @Override 
     public void execute() {
         ChassisSpeeds chassisSpeeds;
-        System.out.println("Locking on");
         yaw = mLimelight.getYaw();
         x = mLimelight.getX();
         area = mLimelight.getA();
         
-        yaw = (yaw < targetYaw-3 || yaw > targetYaw+3) ? yaw : 0;
-        x = (x < targetX-2 || x > targetX+2) ? x : 0;
-        area = (area < targetArea-1 || area > targetArea+1) ? area : 0;
-        area *= (area > targetArea+1) ? -1 : 1;
+        // Set the current values to zero if they are within the desired range
+        // If they aren't, set them to the necessary speed variable
+        yaw = (yaw < targetYaw-errorAllowed || yaw > targetYaw+errorAllowed) ? yaw : 0;
+        x = (x < targetX-errorAllowed || x > targetX+errorAllowed) ? x : 0;
+        area = (area < targetArea-areaErrorAllowed || area > targetArea+areaErrorAllowed) ? area : 0;
+        area *= (area > targetArea+areaErrorAllowed) ? -1 : 1;
         area = area > 0 ? 70-area : area < 0 ? -70-area : 0;
 
-        turningSpeed = yaw == 0 ? 0 : rotationSpeed * (yaw-targetYaw);
+        // Set speeds
+        turningSpeed = yaw == 0 ? 0 : rotationSpeed * (targetYaw-yaw);
         ySpeed = area == 0 ? 0 : area;
         xSpeed = x == 0 ? 0 : x-targetX;
 
+        // Convert angle of direction to move in relation to the limelight rather than the robot
         limelightRotation = Math.toDegrees(Math.atan2(ySpeed, xSpeed));
         robotRotation = (limelightRotation - 46);
 
-        xSpeed = Math.cos(Math.toRadians(robotRotation)) * driveSpeed;
-        ySpeed = Math.sin(Math.toRadians(robotRotation)) * driveSpeed;
+        if (xSpeed != 0 || ySpeed != 0){
+            xSpeed = Math.cos(Math.toRadians(robotRotation));
+            ySpeed = Math.sin(Math.toRadians(robotRotation));
+        }
 
+        xSpeed *= driveSpeed;
+        ySpeed *= driveSpeed;
+        
         // if (xSpeed != 0){
         //     ySpeed = 0;
         //     turningSpeed = 0;
@@ -88,7 +100,9 @@ public class AprilTagLock extends Command {
         SmartDashboard.putNumber("limelightRotation", limelightRotation);
         SmartDashboard.putNumber("robotRotation", robotRotation);
         SmartDashboard.putNumber("xSpeed", xSpeed);
-        SmartDashboard.putNumber("ySpeed", ySpeed);
+        SmartDashboard.putNumber("yaw difference", targetYaw - yaw);
+        SmartDashboard.putNumber("turningSpeed", turningSpeed);
+
         // xSpeed = (turningSpeed == 0) && (ySpeed == 0) ? xSpeed : 0;
         // xSpeed = (x == 0) && (yaw ==0) && (area == 0) ? 0.2 : xSpeed;
         chassisSpeeds = new ChassisSpeeds(ySpeed,-xSpeed,turningSpeed);

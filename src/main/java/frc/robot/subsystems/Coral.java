@@ -17,8 +17,8 @@ public class Coral extends SubsystemBase {
     private final SparkMax rightMotor;
     private final ColorSensorV3 inSensor;
     private final ColorSensorV3 outSensor;
-    private final DigitalInput inBeamBreakSensor;
-    private final DigitalInput outBeamBreakSensor;
+    private DigitalInput inBeamBreakSensor;
+    private DigitalInput outBeamBreakSensor;
     public boolean coralIn;
 
     public Coral() {
@@ -28,13 +28,13 @@ public class Coral extends SubsystemBase {
         inSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
         outSensor = new ColorSensorV3(I2C.Port.kMXP);
         outSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate100ms);
-        inBeamBreakSensor = new DigitalInput(3);
-        outBeamBreakSensor = new DigitalInput(2);
+        inBeamBreakSensor = new DigitalInput(2);
+        outBeamBreakSensor = new DigitalInput(5);
         coralIn = false;
     }
 
     public void setPower(double power) {
-        leftMotor.set(power);
+        leftMotor.set(power*0.5);
         rightMotor.set(power);
     }
 

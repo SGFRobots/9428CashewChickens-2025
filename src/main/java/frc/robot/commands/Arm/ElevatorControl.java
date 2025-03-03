@@ -22,7 +22,6 @@ public class ElevatorControl extends Command {
             // System.out.println(joystick);
             // mElevator.setPower(joystick);
             // mElevator.setDesiredPosition(mElevator.getPosition());
-        
     }
 
     @Override

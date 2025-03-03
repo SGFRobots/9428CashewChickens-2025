@@ -155,8 +155,8 @@ public final class Constants {
         public static final double ElevatorLowestPosition = -23.5;
         public static final double ElevatorHighestPosition = 8.8;
         public static final double ElevatorLevelZeroHeight = 0;
-        public static final double ElevatorLevelOneHeight = -161;
-        public static final double ElevatorLevelTwoHeight = -380;
+        public static final double ElevatorLevelOneHeight = -175;
+        public static final double ElevatorLevelTwoHeight = -362;
         public static final double ElevatorHalfPosition = (ElevatorHighestPosition - ElevatorLowestPosition) / 2 + ElevatorLowestPosition;
         public static final double ElevatorMaxHeight = -610;
     }
@@ -164,6 +164,7 @@ public final class Constants {
     public static final class AprilTags {
         // x, area, yaw
         public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
+        public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
     }
 
     // XBox Controller

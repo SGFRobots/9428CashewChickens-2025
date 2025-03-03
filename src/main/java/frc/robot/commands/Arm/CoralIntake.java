@@ -21,7 +21,7 @@ public class CoralIntake extends Command{
     @Override 
     public void execute() {
         // mCoral.setPower(.5);
-        System.out.println("Coral Sensor Broken" + mCoral.getInSensorBroken());
+        System.out.println("Coral Sensor Broken " + mCoral.getInSensorBroken());
         // if (mCoral.getInSensorBroken()){
         //     mCoral.coralIn = true;
         // }

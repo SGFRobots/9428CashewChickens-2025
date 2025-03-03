@@ -64,7 +64,7 @@ public class AprilTagLock2 extends Command {
 
         SmartDashboard.putNumber("ySpeed", yaw-targetYaw);
         SmartDashboard.putNumber("xSpeed", yaw);
-        turningSpeed = yaw == 0 ? 0: rotationSpeed * (yaw - targetYaw);
+        turningSpeed = yaw == 0 ? 0: rotationSpeed * (targetYaw - yaw);
         SmartDashboard.putNumber("turningSpeed", turningSpeed);
         ySpeed *= area == 0 ? 0: driveSpeed;
         xSpeed *= x == 0 ? 0: strafeSpeed;
