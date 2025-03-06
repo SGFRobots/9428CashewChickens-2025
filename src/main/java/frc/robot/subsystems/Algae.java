@@ -29,6 +29,11 @@ public class Algae extends SubsystemBase{
 
     public void stop() {
         positionMotor.set(0);
+        wheelMotor.set(0);
+    }
+
+    public double getPosition() {
+        return positionMotor.getPosition().getValueAsDouble();
     }
 
     public void telemetry() {

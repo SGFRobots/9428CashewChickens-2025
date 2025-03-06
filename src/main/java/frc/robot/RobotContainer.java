@@ -39,10 +39,11 @@ import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Algae;
 import frc.robot.Constants.Controllers.XBox;
-import frc.robot.commands.Arm.AlgaeIntake;
+import frc.robot.commands.Arm.AlgaeControl;
 import frc.robot.commands.Arm.AlgaeWheel;
 import frc.robot.commands.Arm.CoralIntake;
 import frc.robot.commands.Arm.CoralScore;
+import frc.robot.commands.Arm.CoralOuttake;
 import frc.robot.commands.Arm.ElevatorControl;
 import frc.robot.commands.Arm.ElevatorDesiredPosition;
 import frc.robot.commands.Auto.Auto;
@@ -75,8 +76,11 @@ public class RobotContainer {
   private final Elevator mElevator;
   private final Coral mCoral;
   private final Algae mAlgae;
-  private final AlgaeIntake mAlgaeIntake;
+  private final AlgaeControl mAlgaeIntake;
   private final AlgaeWheel mAlgaeWheel;
+  private final CoralOuttake mCoralOuttake;
+
+
 
   // private final CoralScore mCoralScore;
   // private final ElevatorControl mElevatorControl;
@@ -99,25 +103,35 @@ public class RobotContainer {
     // mAprilTagLock2 = new AprilTagLock2(mSwerveSubsystem, mLimelight, 5, 5, -40);
     mAprilTagScore = new AprilTagScore(mSwerveSubsystem, mLimelight, mDroneComtroller);
     mCoral = new Coral();
-    mCoral.setDefaultCommand(new CoralScore(mCoral, mDroneComtroller));
+    mCoral.setDefaultCommand(new CoralScore(mCoral, mXBoxController));
     mCoralIntake = new CoralIntake(mCoral);
+    mCoralOuttake = new CoralOuttake(mCoral);
     mElevator = new Elevator();
-    mElevator.setDefaultCommand(new ElevatorControl(mElevator, mXBoxController));
     mElevatorDesiredPosition = new ElevatorDesiredPosition(mElevator, mCoral);
+    mElevator.setDefaultCommand(mElevatorDesiredPosition);
+
+
+
+
+
     mAutoScoreRight = new AutoScore(mSwerveSubsystem, mLimelight, "right");
     mAutoScoreLeft = new AutoScore(mSwerveSubsystem, mLimelight, "left");
     mAlgae = new Algae();
-    mAlgaeIntake = new AlgaeIntake(mAlgae);
+    mAlgaeIntake = new AlgaeControl(mAlgae, mXBoxController);
     mAlgaeWheel = new AlgaeWheel(mAlgae, mDroneComtroller);
-    mAlgae.setDefaultCommand(mAlgaeWheel);
+    mAlgae.setDefaultCommand(mAlgaeIntake);
+
+
 
     // mElevatorControl = new ElevatorControl(elevatorSubsystem, mDroneComtroller); // Come back to this
     
     // Autonomous
     // Auto commands
     new EventTrigger("lockOn").onTrue(Commands.runOnce(()->{System.out.println("Locking on");}));
-    // NamedCommands.registerCommand("goToLevel4", mElevatorPosition3);
-    // NamedCommands.registerCommand("goToSourceLevel", mElevatorPosition1);
+    NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition(3, mSwerveSubsystem))));
+    NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition(1, mSwerveSubsystem)))); 
+    NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition(2, mSwerveSubsystem))));
+    NamedCommands.registerCommand("goToSourceLevel", (new InstantCommand(() -> mElevator.setDesiredPosition(0, mSwerveSubsystem))));
     NamedCommands.registerCommand("coralScoreLeft", mAutoScoreLeft);
     NamedCommands.registerCommand("coralScoreRight", mAutoScoreRight);
     NamedCommands.registerCommand("coralIntake", mCoralIntake);
@@ -138,14 +152,15 @@ public class RobotContainer {
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonMinues).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.UpperC).whileTrue(mSpeeds.fast);
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.LowerC).whileTrue(mSpeeds.slow);
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonB).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(0)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonY).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(1)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonA).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(2)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonX).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(3)));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonB).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(0, mSwerveSubsystem)));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonY).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(1, mSwerveSubsystem)));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonA).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(2, mSwerveSubsystem)));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonX).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(3, mSwerveSubsystem)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonPlus).toggleOnTrue(new InstantCommand(() -> mElevator.setOverride(!mElevator.getOverride())));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftBumper).toggleOnTrue(mAprilTagLock);
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightBumper).toggleOnTrue(mAprilTagLock2);
     new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).whileTrue(mAlgaeIntake);
+    // new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightTriggerPort).whileTrue(mCoralOuttake);
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonDPort).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(3)));
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.UpperC).onTrue(mCoralScore);
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.LowerC).onTrue(mCoralScore);
@@ -170,4 +185,9 @@ public class RobotContainer {
   public void displayLimelightData(){
     mLimelight.displayData();
   }
+
+  public double getAlgePos() {
+    return mAlgae.getPosition();
+  }
+
 }

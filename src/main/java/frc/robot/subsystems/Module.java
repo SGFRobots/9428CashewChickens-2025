@@ -67,6 +67,8 @@ public class Module {
             // P = Proportional error
             // I = Integral of errors
             // D = Derivative (rate of change) of P (slow when get closer)
+            fast = true;
+            slow = false;
 
             currentSpeeds = new SwerveModuleState(Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond, new Rotation2d(getCurrentAngleRad()));
             PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));

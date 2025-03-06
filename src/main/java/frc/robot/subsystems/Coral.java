@@ -34,7 +34,7 @@ public class Coral extends SubsystemBase {
     }
 
     public void setPower(double power) {
-        leftMotor.set(power*0.5);
+        leftMotor.set(power*0.45);
         rightMotor.set(power);
     }
 

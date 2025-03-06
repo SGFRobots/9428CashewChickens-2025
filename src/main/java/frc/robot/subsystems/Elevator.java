@@ -64,8 +64,15 @@ public class Elevator extends SubsystemBase {
         return desiredPosition;
     }
     
-    public void setDesiredPosition(int level){
+    public void setDesiredPosition(int level, SwerveSubsystem driveSubsystem){
         desiredPosition = positionsList[level];
+        boolean fast = level <= 1;
+        driveSubsystem.toggleFastMode(fast);
+        boolean slow = level == 3;
+        driveSubsystem.toggleSlowMode(slow);
+    }
+    public double getPositionInList(int level){
+        return positionsList[level];
     }
 
     public void setDesiredPosition(double height){

@@ -162,9 +162,11 @@ public final class Constants {
     }
 
     public static final class AprilTags {
-        // x, area, yaw
-        public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
-        public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
+        // x, distance, yaw
+        // public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
+        public static final double[] leftCoral = {16.0436, 0.253, -45.2725};
+        // public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
+        public static final double[] rightCoral = {-16.5014, 0.227, -45.1693};
     }
 
     // XBox Controller

@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
+import com.revrobotics.Rev2mDistanceSensor;
+import com.revrobotics.Rev2mDistanceSensor.Port;
+import com.revrobotics.Rev2mDistanceSensor.Unit;
 
 public class Limelight extends SubsystemBase{
     private int id;
@@ -14,6 +16,7 @@ public class Limelight extends SubsystemBase{
     private double yaw;
     private double hi;
     private NetworkTable table;
+    private Rev2mDistanceSensor sensor;
 
     public Limelight() {
         table = NetworkTableInstance.getDefault().getTable("limelight-scoring");  
@@ -22,6 +25,10 @@ public class Limelight extends SubsystemBase{
         y = 0;
         yaw = 0;
         area = 0;  
+        sensor = new Rev2mDistanceSensor(Port.kOnboard);
+        sensor.setDistanceUnits(Unit.kMillimeters);
+        sensor.setAutomaticMode(true);
+        sensor.setEnabled(true);
     }
     
     public void displayData(){
@@ -45,6 +52,8 @@ public class Limelight extends SubsystemBase{
         SmartDashboard.putNumber("LimelightArea", area);
         SmartDashboard.putNumber("LimelightID", id);
         SmartDashboard.putNumber("LimelightYaw", yaw);
+        SmartDashboard.putNumber("Distance", getDistance());
+        SmartDashboard.putBoolean("distanceenable", sensor.isEnabled());
         // SmartDashboard.putData("hi", table.getEntry("targetpose_cameraspace"));
 
 
@@ -68,5 +77,9 @@ public class Limelight extends SubsystemBase{
     
     public double getYaw() {
         return yaw;
+    }
+
+    public double getDistance() {
+        return sensor.getRange(Unit.kMillimeters)/1000;
     }
 }

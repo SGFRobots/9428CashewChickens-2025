@@ -3,10 +3,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Coral;
 
 
-public class CoralOutake extends Command{
+public class CoralOuttake extends Command{
     private final Coral mCoral;
 
-    public CoralOutake(Coral pCoral) {
+    public CoralOuttake(Coral pCoral) {
         mCoral = pCoral;
     }
 
@@ -17,6 +17,7 @@ public class CoralOutake extends Command{
 
     @Override 
     public void execute() {
+        System.out.println("Shooting");
         mCoral.setPower(.5);
     }
     
@@ -27,10 +28,10 @@ public class CoralOutake extends Command{
     
     @Override
     public boolean isFinished() {
-        if (!mCoral.getOutSensorBroken()){
-            mCoral.coralIn = false;
-            return true;
-        }
+        // if (!mCoral.getOutSensorBroken()){
+        //     mCoral.coralIn = false;
+        //     return true;
+        // }
         return false;
     }
 }

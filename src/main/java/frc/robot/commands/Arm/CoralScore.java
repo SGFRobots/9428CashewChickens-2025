@@ -15,7 +15,7 @@ public class CoralScore extends Command {
     public CoralScore(Coral pCoral, GenericHID pController) {
         mCoral = pCoral;
         mController = pController;
-        power = 1;
+        power = 1.5;
 
         addRequirements(mCoral);
     }
@@ -28,9 +28,15 @@ public class CoralScore extends Command {
 
     @Override 
     public void execute() {
-        double joystick = -mController.getRawAxis(Constants.Controllers.selected.SwitchB);
-        joystick = (Math.abs(joystick) < 0.01) ? 0 : joystick/2;
-        mCoral.setPower(joystick);
+        double triggerShootValue = mController.getRawAxis(Constants.Controllers.XBox.RightTriggerPort);
+        double triggerIntakeValue = mController.getRawAxis(Constants.Controllers.XBox.LeftTriggerPort);
+        if (Math.abs(triggerShootValue) > 0.05){ 
+            mCoral.setPower(.5);
+        } else if (Math.abs(triggerIntakeValue) > 0.05){ 
+            mCoral.setPower(.05);
+        } else{
+            mCoral.stop();
+        }
     }
 
     @Override
