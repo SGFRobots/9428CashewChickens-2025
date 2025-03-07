@@ -10,6 +10,8 @@ public class ElevatorControl extends Command {
     private final GenericHID mController;
 
     public ElevatorControl(Elevator pElevator, GenericHID pController) {
+        // Initialize variables
+        System.out.println("Initialize Elevator");
         mElevator = pElevator;
         mController = pController;
         addRequirements(mElevator);
@@ -17,18 +19,19 @@ public class ElevatorControl extends Command {
 
     @Override
     public void execute() {
-            double joystick = mController.getRawAxis(Constants.Controllers.XBox.RightYPort);
-            joystick = (Math.abs(joystick) < 0.01) ? 0 : joystick/2;
-            // System.out.println(joystick);
-            if (joystick != 0){
-                mElevator.setPower(joystick);
-                mElevator.setDesiredPosition(mElevator.getPosition());
-            }
+        // Set power to elevator based on joystick position
+        double joystick = mController.getRawAxis(Constants.Controllers.XBox.RightYPort);
+        joystick = (Math.abs(joystick) < 0.01) ? 0 : joystick/2;
+        if (joystick != 0){
+            mElevator.setPower(joystick);
+            mElevator.setDesiredPosition(mElevator.getPosition());
+        }
+        System.out.println(joystick);
     }
 
     @Override
     public void end(boolean interrupted) {
-        mElevator.stop();
+        System.out.println("Done Elvevator");
     }
 
     @Override

@@ -5,28 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Blue Left Start to Reef2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "goToLevel4"
-                }
-              }
-            ]
+            "pathName": "Blue Left Start to Reef2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralScoreLeft"
+            "name": "reefAlignLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "goToLevel4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScore"
           }
         },
         {
@@ -55,7 +54,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -67,16 +66,22 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "reefAlignRight"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "goToLevel4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralScore"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralScoreRight"
           }
         },
         {
@@ -105,7 +110,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -117,16 +122,22 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "reefAlignLeft"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "goToLevel4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralScore"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralScoreLeft"
           }
         }
       ]

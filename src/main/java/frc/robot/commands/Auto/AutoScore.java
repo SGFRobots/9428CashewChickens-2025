@@ -1,60 +1,45 @@
 package frc.robot.commands.Auto;
 
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.commands.Limelight.AprilTagLock;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.SwerveSubsystem;
+import edu.wpi.first.wpilibj.Timer;
+import frc.robot.subsystems.Coral;
 
 public class AutoScore extends Command{
-    private final Limelight mLimelight;
-    private double initialX;
-    private double initialArea;
-    private double initialYaw;
-    private double scoringX;
-    private double scoringArea;
-    private double scoringYaw;
-    private AprilTagLock initialAprilTagLock;
-    private AprilTagLock scoringAprilTagLock;
-    private final SwerveSubsystem mSwerveSubsystem;
-
-    /*Lock on to april tag
-    Store starting location
-    Go to the left or the right reef depending on the parameter
-    Score
-    Go back to starting location
-    */
-    public AutoScore(SwerveSubsystem pSubsystem, Limelight pLimelight, String coralSide) {
-        mLimelight = pLimelight;
-        mSwerveSubsystem = pSubsystem;
-        scoringX = (coralSide == "right") ? -1 : 13.8;
-        scoringYaw = (coralSide == "right") ? 12 : -142.5;        
-        scoringArea = (coralSide == "right") ? 20 : 2.6;
-        scoringAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, scoringX, scoringArea, scoringYaw);
+    private Timer timer;
+    private Coral mCoral;
+    
+    public AutoScore(Coral pCoral) {
+        // Initialize variables
+        timer = new Timer();
+        mCoral = pCoral;
     }
 
     @Override
     public void initialize() {
-        initialYaw = mLimelight.getYaw();
-        initialX = mLimelight.getX();
-        initialArea = mLimelight.getA();
-        initialAprilTagLock = new AprilTagLock(mSwerveSubsystem, mLimelight, initialX, initialArea, initialYaw);
+        // Reset timer value to zero
+        timer.restart();
     }
-
+    
     @Override 
     public void execute() {
-        scoringAprilTagLock.schedule();
-        System.out.println("Score");
-        // initialAprilTagLock.schedule();
+        // Apply power to the coral shooter
+        mCoral.setPower(0.5);
     }
 
     @Override
     public void end(boolean isFinished) {
+        // Stop the coral shooter
+        mCoral.stop();
+        // Stop the timer
+        timer.stop();
     }
 
     @Override
     public boolean isFinished() {
+        // Stop the command after 0.75 seconds
+        if (timer.get() > 0.75){
+            return true;
+        }
         return false;
     }
 }

@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Translation2d;
  */
 public final class Constants {        
     public static final String ModuleNameSim = "Swerve Modules";
+    public static final boolean fieldOriented = false;
     
     public static final class MotorPorts {
         // CAN IDs of driving motors
@@ -159,6 +160,9 @@ public final class Constants {
         public static final double ElevatorLevelTwoHeight = -362;
         public static final double ElevatorHalfPosition = (ElevatorHighestPosition - ElevatorLowestPosition) / 2 + ElevatorLowestPosition;
         public static final double ElevatorMaxHeight = -610;
+
+        // LED
+        public static final int LEDChannel = 0;
     }
 
     public static final class AprilTags {
@@ -167,9 +171,14 @@ public final class Constants {
         public static final double[] leftCoral = {16.0436, 0.253, -45.2725};
         // public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
         public static final double[] rightCoral = {-16.5014, 0.227, -45.1693};
+        // public static final double[] rightCoral = {-12.0838, 0.227, -45.3921};
+
+        public static final double xErrorAllowed = 0.75;
+        public static final double distanceErrorAllowed = 0.02;
+        public static final double yawErrorAllowed = 1.5;
     }
 
-    // XBox Controller
+    // Controller ports
     public static final class Controllers {
         // Controller ports
         public static final int DrivingControllerPort = 0;
@@ -246,6 +255,11 @@ public final class Constants {
             public static final int buttonPlus = 8;
             public static final int buttonMinues = 7;
 
+            // D-Pad
+            public static final int DPadUp = 0;
+            public static final int DPadRight = 90;
+            public static final int DPadDown = 180;
+            public static final int DPadLeft = 270;
         }
   }
 }

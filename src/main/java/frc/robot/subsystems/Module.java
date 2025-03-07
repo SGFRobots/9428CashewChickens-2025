@@ -73,7 +73,7 @@ public class Module {
             currentSpeeds = new SwerveModuleState(Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond, new Rotation2d(getCurrentAngleRad()));
             PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
             field = new Field2d();
-            SmartDashboard.putData("Field", field);
+            // SmartDashboard.putData("Field", field);
     }
  
     // Return all data of the position of the robot - type SwerveModuleState
@@ -107,14 +107,14 @@ public class Module {
             turnOutput = turningPID.calculate(getCurrentAngleRad(), currentSpeeds.angle.getRadians()) * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond * 2;
             speedChange();
             
-            mDriveMotor.set(driveOutput/3);
+            mDriveMotor.set(driveOutput);
             mTurnMotor.set(turnOutput*2); 
             
             // Telemetry
             // SmartDashboard.putNumber("before" + mDriveMotor.getDeviceID(), pNewState.angle.getDegrees());
             // SmartDashboard.putNumber("turn " + mDriveMotor.getDeviceID() + " output", turnOutput);
             // SmartDashboard.putNumber("drive " + mDriveMotor.getDeviceID() + " output", driveOutput);
-            SmartDashboard.putString("Swerve[" + absoluteEncoder.getDeviceID() + "] state", currentSpeeds.toString());
+            // SmartDashboard.putString("Swerve[" + absoluteEncoder.getDeviceID() + "] state", currentSpeeds.toString());
             
         } else {
             // Reset wheel rotations
@@ -124,7 +124,7 @@ public class Module {
 
     public void speedChange() {
         driveOutput *= fast ? 2 : 1;
-        driveOutput *= slow ? 0.5 : 1;
+        driveOutput *= slow ? 0.15 : 1;
     } 
     
     // Read current module angle in Radians

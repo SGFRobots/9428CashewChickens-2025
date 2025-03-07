@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -9,77 +11,83 @@ import com.revrobotics.Rev2mDistanceSensor.Port;
 import com.revrobotics.Rev2mDistanceSensor.Unit;
 
 public class Limelight extends SubsystemBase{
+    // Data values
     private int id;
     private double x;
-    private double y;
-    private double area;
     private double yaw;
-    private double hi;
+    private double dist;
+
+    // Input
     private NetworkTable table;
     private Rev2mDistanceSensor sensor;
 
     public Limelight() {
+        // Set up limelight and sensor
         table = NetworkTableInstance.getDefault().getTable("limelight-scoring");  
-        id = 0;
-        x = 0;
-        y = 0;
-        yaw = 0;
-        area = 0;  
         sensor = new Rev2mDistanceSensor(Port.kOnboard);
-        sensor.setDistanceUnits(Unit.kMillimeters);
         sensor.setAutomaticMode(true);
         sensor.setEnabled(true);
+        id = 0;
+        x = 0;
+        yaw = 0;
+        dist = -1;
     }
     
-    public void displayData(){
-        // System.out.println("Network Table Initialized: " + (table != null));
+    public void update(){
+        // Get data
         NetworkTableEntry tx = table.getEntry("tx");
-        NetworkTableEntry ty = table.getEntry("ty");
-        NetworkTableEntry ta = table.getEntry("ta");
         NetworkTableEntry tid = table.getEntry("tid");
         double[] targatePose_cameraSpace = table.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]);
-        //read values periodically
         x = tx.getDouble(0.0);
-        y = ty.getDouble(0.0);
-        area = ta.getDouble(0.0);
         id = (int) tid.getInteger(0);
         yaw = targatePose_cameraSpace[4];
-        // System.out.println(yaw);
-
-        //post to smart dashboard periodically
-        SmartDashboard.putNumber("LimelightX", x);
-        SmartDashboard.putNumber("LimelightY", y);
-        SmartDashboard.putNumber("LimelightArea", area);
-        SmartDashboard.putNumber("LimelightID", id);
-        SmartDashboard.putNumber("LimelightYaw", yaw);
-        SmartDashboard.putNumber("Distance", getDistance());
-        SmartDashboard.putBoolean("distanceenable", sensor.isEnabled());
-        // SmartDashboard.putData("hi", table.getEntry("targetpose_cameraspace"));
-
-
+        dist = sensor.getRange(Unit.kMillimeters) / 1000;
     }
 
+    public void displayData() {
+        // Post to smart dashboard periodically
+        SmartDashboard.putNumber("LimelightX", x);
+        SmartDashboard.putNumber("LimelightID", id);
+        SmartDashboard.putNumber("LimelightYaw", yaw);
+        SmartDashboard.putNumber("Distance", dist);
+        SmartDashboard.putBoolean("distanceEnabled", sensor.isEnabled());
+        SmartDashboard.putBoolean("isAligned", isAligned());
+
+        // VideoSource camera = new VideoSource(5);
+        // CameraServer.startAutomaticCapture();
+        
+        
+    }
+
+    // Get ID value from Limelight
     public int getID(){
         return id;
     }
 
+    // get X value from Limelight
     public double getX(){
         return x;
     }
-
-    public double getY(){
-        return y;
-    }
-
-    public double getA(){
-        return area;
-    }
     
+    // Get Yaw value from Limelight
     public double getYaw() {
         return yaw;
     }
 
+    // Get distance from distance sensor
     public double getDistance() {
-        return sensor.getRange(Unit.kMillimeters)/1000;
+        return dist;
+    }
+
+    // check whether the robot is aligned to either scoring side
+    public boolean isAligned() {
+        double xError = Constants.AprilTags.xErrorAllowed;
+        double distError = Constants.AprilTags.distanceErrorAllowed;
+        double yawError = Constants.AprilTags.yawErrorAllowed;
+        
+        boolean alignedLeft = (Math.abs(getX() - Constants.AprilTags.leftCoral[0]) < xError) && (Math.abs(Constants.AprilTags.leftCoral[2] - getYaw()) < yawError) && (Math.abs(Constants.AprilTags.leftCoral[1] - getDistance()) < distError);
+        boolean alignedRight = (Math.abs(getX() - Constants.AprilTags.rightCoral[0]) < xError) && (Math.abs(Constants.AprilTags.rightCoral[2] - getYaw()) < yawError) && (Math.abs(Constants.AprilTags.rightCoral[1] - getDistance()) < distError);
+        
+        return alignedLeft || alignedRight;
     }
 }

@@ -7,6 +7,7 @@ public class LimeLightControl extends Command{
     private final Limelight mLimelight;
 
     public LimeLightControl(Limelight limelight) {
+        // Initialize variables
         mLimelight = limelight;
         addRequirements(mLimelight);
     }
@@ -16,6 +17,8 @@ public class LimeLightControl extends Command{
 
     @Override 
     public void execute() {
+        // Updates && displays limelight data
+        mLimelight.update();
         mLimelight.displayData();
     }
 

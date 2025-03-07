@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -17,16 +17,22 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "reefAlignLeft"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "goToLevel4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralScore"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralScoreLeft"
           }
         },
         {
@@ -55,7 +61,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -67,16 +73,22 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "reefAlignLeft"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "goToLevel4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralScore"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralScoreLeft"
           }
         },
         {
@@ -105,7 +117,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -117,16 +129,22 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "reefAlignRight"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "goToLevel4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralScore"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralScoreRight"
           }
         }
       ]

@@ -20,8 +20,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Limelight;
 
 import com.studica.frc.AHRS;
 
@@ -105,7 +103,7 @@ public class SwerveSubsystem extends SubsystemBase {
         });
         
         // Simulated field
-        SmartDashboard.putData("Field", mField2d);
+        // SmartDashboard.putData("Field", mField2d);
 
         mGyro = new AHRS(AHRS.NavXComType.kUSB1);
         
@@ -191,20 +189,20 @@ public class SwerveSubsystem extends SubsystemBase {
         mField2d.getObject(Constants.ModuleNameSim).setPoses(mModulePose);
 
         // Logs in Swerve Tab
-        double loggingState[] = {
-                modules[0].getState().angle.getDegrees(), modules[0].getState().speedMetersPerSecond,
-                modules[1].getState().angle.getDegrees(), modules[1].getState().speedMetersPerSecond,
-                modules[2].getState().angle.getDegrees(), modules[2].getState().speedMetersPerSecond,
-                modules[3].getState().angle.getDegrees(), modules[3].getState().speedMetersPerSecond
-        };
+        // double loggingState[] = {
+        //         modules[0].getState().angle.getDegrees(), modules[0].getState().speedMetersPerSecond,
+        //         modules[1].getState().angle.getDegrees(), modules[1].getState().speedMetersPerSecond,
+        //         modules[2].getState().angle.getDegrees(), modules[2].getState().speedMetersPerSecond,
+        //         modules[3].getState().angle.getDegrees(), modules[3].getState().speedMetersPerSecond
+        // };
 
         // Debug telemetry
         SmartDashboard.putNumber("Robot Heading", getHeading());
-        // SmartDashboard.putString("Gyro", getGyroRotation2d().toString());
-        // SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
         SmartDashboard.putNumber("xSpeed", getRobotRelativeSpeeds().vxMetersPerSecond);
         SmartDashboard.putNumber("ySpeed", getRobotRelativeSpeeds().vyMetersPerSecond);
         SmartDashboard.putNumber("turningSpeed", getRobotRelativeSpeeds().omegaRadiansPerSecond);
+        // SmartDashboard.putString("Gyro", getGyroRotation2d().toString());
+        // SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
         // SmartDashboard.putNumberArray("SwerveModuleLOGGINGStates", loggingState);
     }
 
@@ -224,7 +222,7 @@ public class SwerveSubsystem extends SubsystemBase {
         }
     }
 
-    // DRIVE the robot
+    // Drive the robot
     public void drive(ChassisSpeeds newChassisSpeed) {
         this.chassisSpeeds = newChassisSpeed;
         // Convert chassis speeds to each module states
@@ -292,13 +290,4 @@ public class SwerveSubsystem extends SubsystemBase {
     public boolean getFindingPos() {
         return findingPos;
     }
-
-    // Lock on to an april tag
-    // If x is greater or less than a desired value (range around 0) rotate until it reaches value
-    // public void apriltagLockOn(){
-    //     ChassisSpeeds speed;
-    //     Limelight visionSensor = new Limelight();
-        
-        
-    // }
 }

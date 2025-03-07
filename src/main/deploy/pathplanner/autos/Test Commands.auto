@@ -13,7 +13,31 @@
         {
           "type": "named",
           "data": {
-            "name": "goToLevel2"
+            "name": "reefAlignRight"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "goToLevel4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.9
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScore"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "gotToSourceLevel"
           }
         }
       ]
