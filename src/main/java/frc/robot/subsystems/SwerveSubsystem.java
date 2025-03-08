@@ -242,8 +242,16 @@ public class SwerveSubsystem extends SubsystemBase {
         Module.fast = fastOn;
     }
 
+    public boolean getFastMode() {
+        return Module.fast;
+    }
+
     public void toggleSlowMode(boolean slowOn) {
         Module.slow = slowOn;
+    }
+
+    public boolean getSlowMode() {
+        return Module.slow;
     }
 
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {

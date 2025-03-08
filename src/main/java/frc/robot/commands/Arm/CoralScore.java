@@ -5,15 +5,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Coral;
+import frc.robot.commands.Arm.CoralIntake;
+import frc.robot.subsystems.Algae;
 
 public class CoralScore extends Command {
     private final Coral mCoral;
     private final GenericHID mController;
+    private final CoralIntake mCoralIntake;
+    private final Algae mAlgae;
 
-    public CoralScore(Coral pCoral, GenericHID pController) {
+    public CoralScore(Coral pCoral, Algae pAlgae, GenericHID pController) {
         mCoral = pCoral;
         mController = pController;
-
+        mAlgae = pAlgae;
+        mCoralIntake = new CoralIntake(mCoral, mAlgae);
         addRequirements(mCoral);
     }
     
@@ -31,7 +36,7 @@ public class CoralScore extends Command {
             if (Math.abs(triggerShootValue) > 0.05){ 
                 mCoral.setPower(.5);
             } else if (Math.abs(triggerIntakeValue) > 0.05){ 
-                mCoral.setPower(.05);
+                mCoralIntake.schedule();
             } else{
                 mCoral.stop();
             }

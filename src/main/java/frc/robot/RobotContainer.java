@@ -72,24 +72,24 @@ public class RobotContainer {
     mAprilTagLockLeft = new AprilTagAlign(mSwerveSubsystem, mLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]);
     mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]);
     
-    // Coral
-    mCoral = new Coral();
-    mCoral.setDefaultCommand(new CoralScore(mCoral, mXBoxController));
-    mAutoScore = new AutoScore(mCoral);
-    
     // Elevator
     mElevator = new Elevator();
     mElevatorDesiredPosition = new ElevatorDesiredPosition(mElevator);
     mElevatorControl = new ElevatorControl(mElevator, mXBoxController);
     mElevator.setDefaultCommand(mElevatorDesiredPosition);
-
+    
     // Speed Control
     mSpeedControl = new SpeedControl(mSwerveSubsystem, mDroneComtroller, mElevator);
-
+    
     // Algae
     mAlgae = new Algae();
     mAlgaeIntake = new AlgaeControl(mAlgae, mXBoxController);
     mAlgae.setDefaultCommand(mAlgaeIntake);
+
+    // Coral
+    mCoral = new Coral();
+    mCoral.setDefaultCommand(new CoralScore(mCoral, mAlgae, mXBoxController));
+    mAutoScore = new AutoScore(mCoral);
 
     // Autonomous commands
     // setUpAuto();

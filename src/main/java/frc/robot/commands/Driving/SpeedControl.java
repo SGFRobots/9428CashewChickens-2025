@@ -1,6 +1,7 @@
 package frc.robot.commands.Driving;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
@@ -25,16 +26,25 @@ public class SpeedControl extends Command{
     @Override 
     public void execute() {
         int level = mElevator.getDesiredLevel();
+
         // Control the speed with controller if the level is low
         if (level <= 1) {
-            boolean fast = (mController.getRawAxis(Constants.Controllers.selected.SwitchC) == 1);
+            boolean fast = (mController.getRawAxis(Constants.Controllers.selected.SwitchC) == -1);
             mSubsystem.toggleFastMode(fast);
-            boolean slow =(mController.getRawAxis(Constants.Controllers.selected.SwitchC) == -1);
+            boolean slow =(mController.getRawAxis(Constants.Controllers.selected.SwitchC) == 1);
             mSubsystem.toggleSlowMode(slow);
         // Ensure speed is slow when the level is high
+        } else if (level == 2) {
+            mSubsystem.toggleFastMode(false);
+            mSubsystem.toggleSlowMode(false);
         } else {
             mSubsystem.toggleSlowMode(true);
+            mSubsystem.toggleFastMode(false);
         }
+
+        SmartDashboard.putBoolean("FastMode", mSubsystem.getFastMode());
+        SmartDashboard.putBoolean("SlowMode", mSubsystem.getSlowMode());
+        SmartDashboard.putBoolean("NormalMode", !mSubsystem.getSlowMode() && !mSubsystem.getFastMode());
     }
 
     @Override

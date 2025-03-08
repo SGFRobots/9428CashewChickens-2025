@@ -38,8 +38,8 @@ public final class Constants {
         public static final int kRElevator = 7;
 
         // CAN IDs of Coral scorer
-        public static final int kLCoral = 6;
-        public static final int kRCoral = 5;
+        public static final int kLCoral = 5;
+        public static final int kRCoral = 6;
 
         // CAN IDs of Algae scorer
         public static final int kAlgaePosMotorID = 0;

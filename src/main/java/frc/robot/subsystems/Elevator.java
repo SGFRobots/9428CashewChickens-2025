@@ -82,9 +82,6 @@ public class Elevator extends SubsystemBase {
         // Set position
         desiredPosition = positionsList[level];
         desiredLevel = level;
-
-        // Slow speed of driving based on height of elevator
-        
     }
 
     // Get position of motor based on reef level

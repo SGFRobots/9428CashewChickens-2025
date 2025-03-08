@@ -3,6 +3,7 @@ package frc.robot.commands.Arm;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Algae;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class AlgaeControl extends Command {
     private final Algae mAlgae;
     private final GenericHID mController;
+    private final PIDController PID;
     private boolean open;
     private boolean shoot;
     private final double originalPos;
@@ -19,6 +21,7 @@ public class AlgaeControl extends Command {
         // Initialize variables
         mAlgae = pAlgae;
         mController = pController;
+        PID = new PIDController(0.03, 0, 0);
 
         // Reset state of motors
         open = false;
@@ -45,15 +48,23 @@ public class AlgaeControl extends Command {
             // Open up algae
             open  = !open;
             shoot = false;
+            // Set desired position of position motor
+            if (open) {
+                mAlgae.setDesiredPos(1);
+            } else {
+                mAlgae.setDesiredPos(0);
+            }
         } else if (pov == Constants.Controllers.XBox.DPadUp) {
             // Shoot out algae
             open = false;
             shoot = true;
+            mAlgae.setDesiredPos(0);
         } else if (pov == Constants.Controllers.XBox.DPadRight && pov != previousPOV) {
             // Disable all motors
             mAlgae.stop();
             open = false;
             shoot = false; 
+            mAlgae.setDesiredPos(0);
         } else {
             shoot = false;
         }
@@ -61,17 +72,11 @@ public class AlgaeControl extends Command {
         // Set controller inputs
         previousPOV = pov;
         
-        // Intake
-        if (open && mAlgae.getPosition() < originalPos+0.3) {
-            // Go up high power
-            mAlgae.setPosPower(0.1);
-        } else if (open && mAlgae.getPosition() < originalPos + 0.5) {
-            // Holding power
-            mAlgae.setPosPower(0.05);
-        } else {
-            // Go down / stop
-            mAlgae.setPosPower(0);
-        }
+
+        // Set position motor power to the desired position
+        double power = PID.calculate(mAlgae.getPosition(), mAlgae.getDesiredPos());
+        power = (power < 0) ? 0 : power;
+        mAlgae.setPosPower(power);
 
         // Wheel control
         if (open) {
@@ -92,7 +97,7 @@ public class AlgaeControl extends Command {
         }
 
         // Telemetry
-        SmartDashboard.putBoolean("Algeastate", open);
+        // SmartDashboard.putBoolean("Algeastate", open);
     }
 
     @Override
