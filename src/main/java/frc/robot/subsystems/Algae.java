@@ -9,16 +9,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Algae extends SubsystemBase{
     private final SparkMax positionMotor;
     private final SparkMax wheelMotor;
-    private final double originalPos;
-    private final double upPos;
+    private double originalPos;
+    private double upPos;
     private double desiredPos;
 
     public Algae() {
         // Set up motors
-        positionMotor = new SparkMax(13, MotorType.kBrushless);
+        positionMotor = new SparkMax(Constants.MotorPorts.kAlgaePosMotorID, MotorType.kBrushless);
         wheelMotor = new SparkMax(Constants.MotorPorts.kAlgaeWheelMotor, MotorType.kBrushless);
-        originalPos = getPosition();
-        upPos = originalPos + 4;
+        originalPos = getAbsolutePos();
+        upPos = originalPos + Constants.Mechanical.AlgaeUpPos;
         desiredPos = originalPos;
     }
     
@@ -50,12 +50,27 @@ public class Algae extends SubsystemBase{
         wheelMotor.set(0);
     }
 
-    public double getPosition() {
+    public double getRelativePos() {
         // Gets position motor 
+        return positionMotor.getEncoder().getPosition() - getZeroPos();
+    }
+
+    public double getAbsolutePos() {
         return positionMotor.getEncoder().getPosition();
+    }
+
+    public double getZeroPos() {
+        return originalPos;
     }
 
     public void telemetry() {
         
+    }
+
+    public void resetPos() {
+        originalPos = getAbsolutePos();
+        upPos = originalPos + Constants.Mechanical.AlgaeUpPos;
+        desiredPos = originalPos;
+        System.out.println("reset");
     }
 }

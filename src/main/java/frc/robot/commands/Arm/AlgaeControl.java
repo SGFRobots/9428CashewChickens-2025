@@ -26,7 +26,7 @@ public class AlgaeControl extends Command {
         // Reset state of motors
         open = false;
         shoot = false;
-        originalPos = mAlgae.getPosition();
+        originalPos = mAlgae.getAbsolutePos();
 
         // Reset controller inputs
         previousPOV = -1;
@@ -74,8 +74,8 @@ public class AlgaeControl extends Command {
         
 
         // Set position motor power to the desired position
-        double power = PID.calculate(mAlgae.getPosition(), mAlgae.getDesiredPos());
-        power = (power < 0) ? 0 : power;
+        double power = PID.calculate(mAlgae.getAbsolutePos(), mAlgae.getDesiredPos());
+        // power = (power < 0) ? 0 : power;
         mAlgae.setPosPower(power);
 
         // Wheel control
@@ -91,13 +91,14 @@ public class AlgaeControl extends Command {
         }
 
         // Stop wheels when low position
-        if (mAlgae.getPosition() < originalPos + 0.2){
+        if (mAlgae.getAbsolutePos() < originalPos + 0.2){
             mAlgae.setWheelPower(0);
             shoot = false;
         }
 
         // Telemetry
-        // SmartDashboard.putBoolean("Algeastate", open);
+        // SmartDashboard.putNumber("Algae Abs Pos", mAlgae.getAbsolutePos());
+        // SmartDashboard.putNumber("Algae Pos", mAlgae.getRelativePos());
     }
 
     @Override

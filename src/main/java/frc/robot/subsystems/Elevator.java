@@ -12,12 +12,15 @@ public class Elevator extends SubsystemBase {
 
     // Heights
     private double pos0;
-    private double pos1;
-    private double pos2;
-    private double pos3;
+    private double coralPos1;
+    private double coralPos2;
+    private double coralPos3;
+    private double algaePos1;
+    private double algaePos2;
     private int desiredLevel;
     private double desiredPosition;
-    private double[] positionsList;
+    private double[] coralPositionsList;
+    private double[] algaePositionsList;
     private boolean override;
 
     public Elevator() {
@@ -27,19 +30,22 @@ public class Elevator extends SubsystemBase {
 
         // Reset Heights
         pos0 = getPosition();
-        pos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
-        pos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
-        pos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
+        coralPos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
+        coralPos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
+        coralPos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
+        algaePos1 = pos0 + Constants.Mechanical.ElevatorAlgaeOneHeight;
+        algaePos2 = pos0 + Constants.Mechanical.ElevatorAlgaeTwoHeight;
         desiredLevel = 0;
         desiredPosition = pos0;
-        positionsList = new double[]{pos0, pos1, pos2, pos3};
+        coralPositionsList = new double[]{pos0, coralPos1, coralPos2, coralPos3};
+        algaePositionsList = new double[]{algaePos1, algaePos2};
         override = false;
     }
 
     // Enable elevator motors
     public void setPower(double power) {
         // Limit bottom and top height
-        if (((getPosition() < pos3) && (power < 0)) || ((getPosition() > pos0) && (power > 0))) {
+        if (((getPosition() < coralPos3) && (power < 0)) || ((getPosition() > pos0) && (power > 0))) {
             stop();
         } else {
             // Set power to motors
@@ -78,15 +84,20 @@ public class Elevator extends SubsystemBase {
     }
     
     // Set reef level to go to
-    public void setDesiredPosition(int level, SwerveSubsystem driveSubsystem){
+    public void setDesiredPosition(String gamePiece, int level, SwerveSubsystem driveSubsystem){
         // Set position
-        desiredPosition = positionsList[level];
+        if (gamePiece.equals("coral")){
+            desiredPosition = coralPositionsList[level];
+        }
+        else{
+            desiredPosition = algaePositionsList[level];
+        }
         desiredLevel = level;
     }
 
     // Get position of motor based on reef level
     public double getPositionInList(int level){
-        return positionsList[level];
+        return coralPositionsList[level];
     }
 
     // Set specific motor desired position
@@ -103,10 +114,10 @@ public class Elevator extends SubsystemBase {
     // Reset all heights
     public void resetPositions() {
         pos0 = getPosition();
-        pos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
-        pos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
-        pos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
-        positionsList = new double[]{pos0, pos1, pos2, pos3};
+        coralPos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
+        coralPos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
+        coralPos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
+        coralPositionsList = new double[]{pos0, coralPos1, coralPos2, coralPos3};
     }
 
 }

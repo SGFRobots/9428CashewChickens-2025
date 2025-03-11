@@ -34,9 +34,9 @@ public class AprilTagAlign extends Command {
 
         // Set up speed and deadzone
         driveSpeed = 0.013 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
-        xErrorAllowed = 0.75;
-        distanceErrorAllowed = 0.02;
-        yawErrorAllowed = 1.5;
+        xErrorAllowed = Constants.AprilTags.xErrorAllowed;
+        distanceErrorAllowed = Constants.AprilTags.distanceErrorAllowed;
+        yawErrorAllowed = Constants.AprilTags.yawErrorAllowed;
 
         // Target position
         targetX = pTargetX;

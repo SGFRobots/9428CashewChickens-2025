@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -27,19 +28,32 @@ public class SpeedControl extends Command{
     public void execute() {
         int level = mElevator.getDesiredLevel();
 
-        // Control the speed with controller if the level is low
-        if (level <= 1) {
-            boolean fast = (mController.getRawAxis(Constants.Controllers.selected.SwitchC) == -1);
-            mSubsystem.toggleFastMode(fast);
-            boolean slow =(mController.getRawAxis(Constants.Controllers.selected.SwitchC) == 1);
-            mSubsystem.toggleSlowMode(slow);
-        // Ensure speed is slow when the level is high
-        } else if (level == 2) {
-            mSubsystem.toggleFastMode(false);
+        // Normal mode when aligning
+        if (mSubsystem.getFindingPos()) {
+            mSubsystem.toggleFastMode(true);
             mSubsystem.toggleSlowMode(false);
-        } else {
-            mSubsystem.toggleSlowMode(true);
-            mSubsystem.toggleFastMode(false);
+
+        } else if (Robot.stage.equals("auto")) {
+            // Fast mode always during auto
+            mSubsystem.toggleFastMode(true);
+            mSubsystem.toggleSlowMode(false);
+
+        } else if (Robot.stage.equals("teleOp")) {
+            if (level <= 1) {
+                // Control speed based on controller inputs during teleOp
+                boolean fast = (mController.getRawAxis(Constants.Controllers.selected.SwitchC) == -1);
+                mSubsystem.toggleFastMode(fast);
+                boolean slow =(mController.getRawAxis(Constants.Controllers.selected.SwitchC) == 1);
+                mSubsystem.toggleSlowMode(slow);
+                
+            // Ensure speed is slow when the level is high
+            } else if (level == 2) {
+                mSubsystem.toggleFastMode(false);
+                mSubsystem.toggleSlowMode(false);
+            } else {
+                mSubsystem.toggleSlowMode(true);
+                mSubsystem.toggleFastMode(false);
+            }
         }
 
         SmartDashboard.putBoolean("FastMode", mSubsystem.getFastMode());

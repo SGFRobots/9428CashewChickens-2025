@@ -11,7 +11,6 @@ public class ElevatorControl extends Command {
 
     public ElevatorControl(Elevator pElevator, GenericHID pController) {
         // Initialize variables
-        System.out.println("Initialize Elevator");
         mElevator = pElevator;
         mController = pController;
         addRequirements(mElevator);
@@ -26,12 +25,10 @@ public class ElevatorControl extends Command {
             mElevator.setPower(joystick);
             mElevator.setDesiredPosition(mElevator.getPosition());
         }
-        System.out.println(joystick);
     }
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Done Elvevator");
     }
 
     @Override

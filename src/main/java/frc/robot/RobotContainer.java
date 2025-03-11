@@ -24,12 +24,14 @@ import frc.robot.commands.Driving.SwerveJoystick;
 import frc.robot.commands.Limelight.AprilTagAlign;
 import frc.robot.commands.Limelight.LimeLightControl;
 import frc.robot.subsystems.Coral;
+import frc.robot.commands.Arm.CoralIntake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Algae;
 import frc.robot.commands.Arm.AlgaeControl;
 import frc.robot.commands.Arm.CoralScore;
 import frc.robot.commands.Arm.ElevatorControl;
 import frc.robot.commands.Arm.ElevatorDesiredPosition;
+import frc.robot.commands.Auto.AutoAlign;
 import frc.robot.commands.Auto.AutoScore;
 
 public class RobotContainer {
@@ -57,6 +59,7 @@ public class RobotContainer {
   private final ElevatorControl mElevatorControl;
   private final AutoScore mAutoScore;
   private final AlgaeControl mAlgaeIntake;
+  private final CoralIntake mCoralIntake;
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -90,9 +93,10 @@ public class RobotContainer {
     mCoral = new Coral();
     mCoral.setDefaultCommand(new CoralScore(mCoral, mAlgae, mXBoxController));
     mAutoScore = new AutoScore(mCoral);
+    mCoralIntake = new CoralIntake(mCoral, mAlgae);
 
     // Autonomous commands
-    // setUpAuto();
+    setUpAuto();
 
     // Auto chooser
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -104,27 +108,29 @@ public class RobotContainer {
 
   // Assign buttons to commands
   private void configureButtonBindings() {
-    // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonMinues).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonB).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(0, mSwerveSubsystem)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonY).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(1, mSwerveSubsystem)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonA).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(2, mSwerveSubsystem)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonX).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition(3, mSwerveSubsystem)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonPlus).toggleOnTrue(new InstantCommand(() -> mElevator.setOverride(!mElevator.getOverride())));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftJoystickButton).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightJoystickButton).onTrue(new InstantCommand(() -> mAlgae.resetPos()));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonB).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0, mSwerveSubsystem)));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonY).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1, mSwerveSubsystem)));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonA).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2, mSwerveSubsystem)));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonX).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3, mSwerveSubsystem)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftBumper).toggleOnTrue(mAprilTagLockLeft);
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightBumper).toggleOnTrue(mAprilTagLockRight);
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonMinus).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition("algae", 0, mSwerveSubsystem)));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonPlus).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition("algae", 1, mSwerveSubsystem)));
     new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).whileTrue(mAlgaeIntake);
   }
 
   // Set up auto commands
   private void setUpAuto() {
-    NamedCommands.registerCommand("gotToSourceLevel", (new InstantCommand(() -> mElevator.setDesiredPosition(0, mSwerveSubsystem))));
-    NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition(1, mSwerveSubsystem)))); 
-    NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition(2, mSwerveSubsystem))));
-    NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition(3, mSwerveSubsystem))));
+    NamedCommands.registerCommand("gotToSourceLevel", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0, mSwerveSubsystem))));
+    NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1, mSwerveSubsystem)))); 
+    NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2, mSwerveSubsystem))));
+    NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3, mSwerveSubsystem))));
     NamedCommands.registerCommand("coralScore", mAutoScore);
     NamedCommands.registerCommand("reefAlignLeft", mAprilTagLockLeft);
-    NamedCommands.registerCommand("reefAlignRight", mAprilTagLockRight);
+    NamedCommands.registerCommand("reefAlignRight",mAprilTagLockRight);
+    NamedCommands.registerCommand("coralIntake", mCoralIntake);
 
   }
 
@@ -140,6 +146,15 @@ public class RobotContainer {
 
   public Command getSpeedControlCommand() {
     return mSpeedControl;
+  }
+
+  public void displayElevatorPosition(){
+    SmartDashboard.putNumber("Elevator Position", mElevator.getPositionRelativeToZero());
+  }
+
+  public void autoReset() {
+    mElevator.resetPositions();
+    mAlgae.resetPos();
   }
 
 }

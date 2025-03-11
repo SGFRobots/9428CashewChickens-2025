@@ -12,6 +12,7 @@ public class Coral extends SubsystemBase {
     private final SparkMax leftMotor;
     private final SparkMax rightMotor;
     private DigitalInput inBeamBreakSensor;
+    private DigitalInput outBeamBreakSensor;
     public boolean coralIn;
     private final Spark mLed;
 
@@ -20,15 +21,21 @@ public class Coral extends SubsystemBase {
         leftMotor = new SparkMax(Constants.MotorPorts.kLCoral, MotorType.kBrushless);
         rightMotor = new SparkMax(Constants.MotorPorts.kRCoral, MotorType.kBrushless);
         inBeamBreakSensor = new DigitalInput(2);
+        outBeamBreakSensor = new DigitalInput(1);
         coralIn = false;
         mLed = new Spark(Constants.Mechanical.LEDChannel);
     }
 
     public void setPower(double power) {
         // Sets power to motors
-        leftMotor.set(-power*0.45);
-        rightMotor.set(-power);
+        leftMotor.set(-power);
+        rightMotor.set(-power*0.45);
         mLed.set(0.5);
+    }
+
+    public void setIndividualPower(double rightPower, double leftPower){
+        leftMotor.set(leftPower);
+        rightMotor.set(rightPower);
     }
 
     public void stop() {
@@ -41,10 +48,15 @@ public class Coral extends SubsystemBase {
         // Checks the interior sensor
         return !inBeamBreakSensor.get();
     }
+    
+    public boolean getOutSensorBroken(){
+        // Checks the exterior sensor
+        return !outBeamBreakSensor.get();
+    }
 
     public void updateCoralStatus() {
         // Intakes coral based on sensors 
-        if (getInSensorBroken()){
+        if (getInSensorBroken() || getOutSensorBroken()){
             coralIn = true;
         }
     }

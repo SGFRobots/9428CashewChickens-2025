@@ -153,13 +153,14 @@ public final class Constants {
 
 
         // Elevator
-        public static final double ElevatorLowestPosition = -23.5;
-        public static final double ElevatorHighestPosition = 8.8;
+        // Coral Heights
         public static final double ElevatorLevelZeroHeight = 0;
         public static final double ElevatorLevelOneHeight = -175;
         public static final double ElevatorLevelTwoHeight = -362;
-        public static final double ElevatorHalfPosition = (ElevatorHighestPosition - ElevatorLowestPosition) / 2 + ElevatorLowestPosition;
         public static final double ElevatorMaxHeight = -610;
+        // Algae heights
+        public static final double ElevatorAlgaeOneHeight = -270;
+        public static final double ElevatorAlgaeTwoHeight = -475;
 
         // LED
         public static final int LEDChannel = 0;
@@ -168,12 +169,12 @@ public final class Constants {
     public static final class AprilTags {
         // x, distance, yaw
         // public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
-        public static final double[] leftCoral = {16.0436, 0.253, -45.2725};
+        public static final double[] leftCoral = {17.65, 0.22, -43};
         // public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
-        public static final double[] rightCoral = {-16.5014, 0.227, -45.1693};
+        public static final double[] rightCoral = {-20.49, 0.25, -35};
         // public static final double[] rightCoral = {-12.0838, 0.227, -45.3921};
 
-        public static final double xErrorAllowed = 0.75;
+        public static final double xErrorAllowed = 0.6;
         public static final double distanceErrorAllowed = 0.02;
         public static final double yawErrorAllowed = 1.5;
     }
@@ -238,6 +239,8 @@ public final class Constants {
             public static final int LeftYPort = 1;
             public static final int RightXPort = 4;
             public static final int RightYPort = 5;
+            public static final int LeftJoystickButton = 9;
+            public static final int RightJoystickButton = 10;
 
             // Triggers
             public static final int LeftTriggerPort = 2;
@@ -253,7 +256,7 @@ public final class Constants {
             public static final int buttonY = 3;
             public static final int buttonX = 4;
             public static final int buttonPlus = 8;
-            public static final int buttonMinues = 7;
+            public static final int buttonMinus = 7;
 
             // D-Pad
             public static final int DPadUp = 0;

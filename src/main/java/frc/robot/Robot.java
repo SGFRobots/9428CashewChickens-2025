@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    CameraServer.startAutomaticCapture();
   }
 
   /**
@@ -63,6 +64,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     stage = "auto";
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_robotContainer.autoReset();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -83,6 +85,7 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     m_elevatorCommand = m_robotContainer.getElevatorCommand();
     m_speedControl = m_robotContainer.getSpeedControlCommand();
+    m_speedControl.schedule();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -92,8 +95,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // SmartDashboard.putNumber("Algeapos", m_robotContainer.getAlgePos());
-    m_elevatorCommand.schedule();
-    m_speedControl.schedule();
+    // m_elevatorCommand.schedule();
+    m_robotContainer.displayElevatorPosition();
+    
   }
 
   @Override
