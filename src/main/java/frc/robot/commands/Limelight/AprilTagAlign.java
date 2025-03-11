@@ -33,7 +33,7 @@ public class AprilTagAlign extends Command {
         mLimelight = pLimelight;
 
         // Set up speed and deadzone
-        driveSpeed = 0.013 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
+        driveSpeed = 0.02 * Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
         xErrorAllowed = Constants.AprilTags.xErrorAllowed;
         distanceErrorAllowed = Constants.AprilTags.distanceErrorAllowed;
         yawErrorAllowed = Constants.AprilTags.yawErrorAllowed;
@@ -100,5 +100,9 @@ public class AprilTagAlign extends Command {
             return true;
         }
         return false;
+    }
+
+    public double[] getTargets() {
+        return new double[]{targetX, targetDistance, targetYaw};
     }
 }

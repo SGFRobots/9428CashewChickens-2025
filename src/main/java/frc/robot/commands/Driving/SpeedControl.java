@@ -39,7 +39,7 @@ public class SpeedControl extends Command{
             mSubsystem.toggleSlowMode(false);
 
         } else if (Robot.stage.equals("teleOp")) {
-            if (level <= 1) {
+            if (level <= 2) {
                 // Control speed based on controller inputs during teleOp
                 boolean fast = (mController.getRawAxis(Constants.Controllers.selected.SwitchC) == -1);
                 mSubsystem.toggleFastMode(fast);
@@ -47,7 +47,7 @@ public class SpeedControl extends Command{
                 mSubsystem.toggleSlowMode(slow);
                 
             // Ensure speed is slow when the level is high
-            } else if (level == 2) {
+            } else if (level == 3) {
                 mSubsystem.toggleFastMode(false);
                 mSubsystem.toggleSlowMode(false);
             } else {

@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     CameraServer.startAutomaticCapture();
   }
-
+  
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
@@ -51,14 +51,14 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
   }
-
+  
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {}
-
+  
   @Override
   public void disabledPeriodic() {}
-
+  
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
@@ -66,16 +66,22 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.autoReset();
 
+    m_speedControl = m_robotContainer.getSpeedControlCommand();
+    m_speedControl.schedule();
+    
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-  }
 
+    m_robotContainer.resetElevator();
+
+  }
+  
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {}
-
+  
   @Override
   public void teleopInit() {
     stage = "teleOp";
@@ -84,11 +90,17 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     m_elevatorCommand = m_robotContainer.getElevatorCommand();
+
     m_speedControl = m_robotContainer.getSpeedControlCommand();
-    m_speedControl.schedule();
+    if (!m_speedControl.isScheduled()) {
+      m_speedControl.schedule();
+    }
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    m_robotContainer.resetElevator();
   }
 
   /** This function is called periodically during operator control. */
@@ -97,6 +109,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("Algeapos", m_robotContainer.getAlgePos());
     // m_elevatorCommand.schedule();
     m_robotContainer.displayElevatorPosition();
+    m_robotContainer.displayCoralSensors();
     
   }
 

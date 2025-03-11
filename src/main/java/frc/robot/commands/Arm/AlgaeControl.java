@@ -84,7 +84,7 @@ public class AlgaeControl extends Command {
             mAlgae.setWheelPower(-0.8);
         } else if (shoot) {
             // Shoot out
-            mAlgae.setWheelPower(0.8);
+            mAlgae.setWheelPower(1);
         } else {
             // Stop
             mAlgae.setWheelPower(0);

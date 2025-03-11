@@ -71,6 +71,5 @@ public class Algae extends SubsystemBase{
         originalPos = getAbsolutePos();
         upPos = originalPos + Constants.Mechanical.AlgaeUpPos;
         desiredPos = originalPos;
-        System.out.println("reset");
     }
 }

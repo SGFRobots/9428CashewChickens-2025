@@ -25,6 +25,12 @@
                 "data": {
                   "name": "goToLevel4"
                 }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
               }
             ]
           }
@@ -81,6 +87,12 @@
                 "data": {
                   "name": "goToLevel4"
                 }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
               }
             ]
           }
@@ -136,6 +148,12 @@
                 "type": "named",
                 "data": {
                   "name": "goToLevel4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
                 }
               }
             ]

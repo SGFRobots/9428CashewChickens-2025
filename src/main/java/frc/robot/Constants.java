@@ -42,7 +42,7 @@ public final class Constants {
         public static final int kRCoral = 6;
 
         // CAN IDs of Algae scorer
-        public static final int kAlgaePosMotorID = 0;
+        public static final int kAlgaePosMotorID = 13;
         public static final int kAlgaeWheelMotor = 10;
         
         // CAN IDs of CANCoders
@@ -151,16 +151,19 @@ public final class Constants {
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 10;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 10;
 
-
         // Elevator
         // Coral Heights
-        public static final double ElevatorLevelZeroHeight = 0;
+        public static final double ElevatorLowestHeight = 0;
+        public static final double ElevatorLevelZeroHeight = -80;
         public static final double ElevatorLevelOneHeight = -175;
         public static final double ElevatorLevelTwoHeight = -362;
         public static final double ElevatorMaxHeight = -610;
         // Algae heights
         public static final double ElevatorAlgaeOneHeight = -270;
         public static final double ElevatorAlgaeTwoHeight = -475;
+
+        // Algae Arm positions
+        public static final double AlgaeUpPos = 6;
 
         // LED
         public static final int LEDChannel = 0;

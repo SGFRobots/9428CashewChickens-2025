@@ -6,6 +6,7 @@
     "Blue Left Start",
     "Blue Middle Start",
     "Blue Right Start",
+    "Testing",
     "Red Left Start",
     "Red Right Start"
   ],
@@ -15,7 +16,7 @@
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
-  "robotMass": 59.874,
+  "robotMass": 56.154735,
   "robotMOI": 3.952,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.051,

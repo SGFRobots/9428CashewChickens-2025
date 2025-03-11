@@ -27,6 +27,12 @@
                 }
               },
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
                 "type": "named",
                 "data": {
                   "name": "coralScore"
@@ -83,6 +89,12 @@
                 }
               },
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
                 "type": "named",
                 "data": {
                   "name": "coralScore"
@@ -136,6 +148,12 @@
                 "type": "named",
                 "data": {
                   "name": "goToLevel4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
                 }
               },
               {

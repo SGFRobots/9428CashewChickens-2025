@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "coralIntake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Command Path"
@@ -13,7 +19,7 @@
         {
           "type": "named",
           "data": {
-            "name": "reefAlignRight"
+            "name": "reefAlignLeft"
           }
         },
         {
@@ -25,7 +31,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.9
+            "waitTime": 1.5
           }
         },
         {
@@ -35,9 +41,84 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "gotToSourceLevel"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "gotToSourceLevel"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Comand Path 2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Command Path 3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "reefAlignRight"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "goToLevel4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralScore"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "gotToSourceLevel"
+                }
+              }
+            ]
           }
         }
       ]

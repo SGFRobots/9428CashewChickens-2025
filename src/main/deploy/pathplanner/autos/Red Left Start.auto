@@ -13,13 +13,25 @@
         {
           "type": "named",
           "data": {
-            "name": "goToLevel4"
+            "name": "reefAlignRight"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralScoreRight"
+            "name": "goToLevel4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScore"
           }
         },
         {
@@ -56,13 +68,25 @@
         {
           "type": "named",
           "data": {
-            "name": "goToLevel4"
+            "name": "reefAlignLeft"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralScoreLeft"
+            "name": "goToLevel4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScore"
           }
         },
         {
@@ -99,13 +123,25 @@
         {
           "type": "named",
           "data": {
-            "name": "goToLevel4"
+            "name": "reefAlignRight"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralScoreRight"
+            "name": "goToLevel4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScore"
           }
         }
       ]

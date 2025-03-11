@@ -12,6 +12,7 @@ public class Elevator extends SubsystemBase {
 
     // Heights
     private double pos0;
+    private double coralPos0;
     private double coralPos1;
     private double coralPos2;
     private double coralPos3;
@@ -30,6 +31,7 @@ public class Elevator extends SubsystemBase {
 
         // Reset Heights
         pos0 = getPosition();
+        coralPos0 = pos0 + Constants.Mechanical.ElevatorLevelZeroHeight;
         coralPos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
         coralPos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
         coralPos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
@@ -37,7 +39,7 @@ public class Elevator extends SubsystemBase {
         algaePos2 = pos0 + Constants.Mechanical.ElevatorAlgaeTwoHeight;
         desiredLevel = 0;
         desiredPosition = pos0;
-        coralPositionsList = new double[]{pos0, coralPos1, coralPos2, coralPos3};
+        coralPositionsList = new double[]{pos0, coralPos0, coralPos1, coralPos2, coralPos3};
         algaePositionsList = new double[]{algaePos1, algaePos2};
         override = false;
     }
