@@ -147,7 +147,7 @@ public class Module {
         //     // SmartDashboard.putNumber("sv: drive motor" + mDriveMotor.getDeviceID(), mDriveMotor.getSupplyVoltage().getValueAsDouble());
         //     SmartDashboard.putNumber("mv: turn motor" + mTurnMotor.getDeviceId(), turnOutput);
         //     // SmartDashboard.putNumber("drive motor" + mDriveMotor.getDeviceID(), mDriveMotor.getPosition().getValueAsDouble());
-            // SmartDashboard.putNumber("currentAngle" + mDriveMotor.getDeviceID(), absoluteEncoder.getAbsolutePosition().getValueAsDouble());
+        SmartDashboard.putNumber("currentAngle" + mDriveMotor.getDeviceID(), absoluteEncoder.getAbsolutePosition().getValueAsDouble());
         //     SmartDashboard.putBoolean("resetting", resetting);
         // }
         // SmartDashboard.putNumber("currentAngle" + mDriveMotor.getDeviceID(), Math.toDegrees(getCurrentAngleRad()));

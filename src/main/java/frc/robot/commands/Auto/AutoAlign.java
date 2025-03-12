@@ -8,6 +8,7 @@ import frc.robot.commands.Limelight.AprilTagAlign;
 import frc.robot.commands.Limelight.ReAlign;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.Robot;
 
 public class AutoAlign extends Command {
     private final Limelight mLimelight;
@@ -35,7 +36,7 @@ public class AutoAlign extends Command {
 
     @Override 
     public void execute() {
-        if ((mLimelight.getID() == -1) && !mReAlign.isScheduled()) {
+        if ((mLimelight.getID() == -1) && !mReAlign.isScheduled() && Robot.stage.equals("auto")) {
             mReAlign.schedule();
         } else if (mAlignment.isFinished() && !mLimelight.isAligned() && !mReAlign.isScheduled()) {
             mAlignment.schedule();

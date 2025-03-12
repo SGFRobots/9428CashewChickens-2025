@@ -63,6 +63,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     stage = "auto";
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.autoReset();
 
@@ -76,11 +77,14 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.resetElevator();
 
+
   }
   
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    m_robotContainer.displayAligningState();
+  }
   
   @Override
   public void teleopInit() {
@@ -100,7 +104,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    m_robotContainer.resetElevator();
+    // m_robotContainer.resetRotations();
+
   }
 
   /** This function is called periodically during operator control. */
@@ -108,8 +113,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     // SmartDashboard.putNumber("Algeapos", m_robotContainer.getAlgePos());
     // m_elevatorCommand.schedule();
-    m_robotContainer.displayElevatorPosition();
-    m_robotContainer.displayCoralSensors();
+    m_robotContainer.displayAligningState();
     
   }
 

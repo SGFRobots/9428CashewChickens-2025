@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 // Subsystems and commands
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.Driving.SpeedControl;
-// import frc.robot.commands.Driving.ResetRotations;
+import frc.robot.commands.Driving.ResetRotations;
 import frc.robot.commands.Driving.SwerveJoystick;
 import frc.robot.commands.Limelight.AprilTagAlign;
 import frc.robot.commands.Limelight.LimeLightControl;
@@ -52,7 +52,7 @@ public class RobotContainer {
   private final Algae mAlgae;
 
   // Commands
-  // private final ResetRotations mResetRotations;
+  private final ResetRotations mResetRotations;
   private final AprilTagAlign mAprilTagLockLeft;
   private final AprilTagAlign mAprilTagLockRight;
   private final ElevatorDesiredPosition mElevatorDesiredPosition;
@@ -67,7 +67,7 @@ public class RobotContainer {
     // Driving
     mSwerveSubsystem = new SwerveSubsystem();
     mSwerveSubsystem.setDefaultCommand(new SwerveJoystick(mSwerveSubsystem, mDroneComtroller));
-    // mResetRotations = new ResetRotations(mSwerveSubsystem);
+    mResetRotations = new ResetRotations(mSwerveSubsystem);
     
     // Limelight and ALignment
     mLimelight = new Limelight();
@@ -125,9 +125,9 @@ public class RobotContainer {
   // Set up auto commands
   private void setUpAuto() {
     NamedCommands.registerCommand("gotToSourceLevel", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0, mSwerveSubsystem))));
-    NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2, mSwerveSubsystem)))); 
-    NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3, mSwerveSubsystem))));
-    NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 4, mSwerveSubsystem))));
+    NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1, mSwerveSubsystem)))); 
+    NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2, mSwerveSubsystem))));
+    NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3, mSwerveSubsystem))));
     NamedCommands.registerCommand("coralScore", mAutoScore);
     NamedCommands.registerCommand("reefAlignLeft", new AutoAlign(mSwerveSubsystem, mLimelight, mAprilTagLockLeft));
     NamedCommands.registerCommand("reefAlignRight", new AutoAlign(mSwerveSubsystem, mLimelight, mAprilTagLockRight));
@@ -158,6 +158,10 @@ public class RobotContainer {
     SmartDashboard.putBoolean("Out Sensor", mCoral.getOutSensorBroken());
   }
 
+  public void displayAligningState(){
+    SmartDashboard.putBoolean("Aligning", mSwerveSubsystem.getFindingPos());
+  }
+
   public void autoReset() {
     mElevator.resetPositions();
     mAlgae.resetPos();
@@ -165,6 +169,10 @@ public class RobotContainer {
 
   public void resetElevator(){
     mElevator.setDesiredPosition("coral", 0, mSwerveSubsystem);
+  }
+
+  public void resetRotations(){
+    mResetRotations.schedule();
   }
 
 }

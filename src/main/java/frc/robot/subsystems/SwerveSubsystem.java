@@ -264,7 +264,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Test one module at a time
     public void driveIndividualModule(double speed, double rotation) {
-        modules[1].driveIndividually(speed, rotation);
+        modules[3].driveIndividually(speed, rotation);
     }
 
     // Reset modules rotations to 0
