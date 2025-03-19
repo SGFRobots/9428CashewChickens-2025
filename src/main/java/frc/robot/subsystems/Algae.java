@@ -10,7 +10,8 @@ public class Algae extends SubsystemBase{
     private final SparkMax positionMotor;
     private final SparkMax wheelMotor;
     private double originalPos;
-    private double upPos;
+    private double intakePos;
+    private double outtakePos;
     private double desiredPos;
 
     public Algae() {
@@ -18,7 +19,8 @@ public class Algae extends SubsystemBase{
         positionMotor = new SparkMax(Constants.MotorPorts.kAlgaePosMotorID, MotorType.kBrushless);
         wheelMotor = new SparkMax(Constants.MotorPorts.kAlgaeWheelMotor, MotorType.kBrushless);
         originalPos = getAbsolutePos();
-        upPos = originalPos + Constants.Mechanical.AlgaeUpPos;
+        intakePos = originalPos + Constants.Mechanical.AlgaeInPos;
+        outtakePos = originalPos + Constants.Mechanical.AlgaeOutPos;
         desiredPos = originalPos;
     }
     
@@ -30,8 +32,10 @@ public class Algae extends SubsystemBase{
     public void setDesiredPos(int pos) {
         if (pos == 0) {
             desiredPos = originalPos;
+        } else if (pos == 1) {
+            desiredPos = intakePos;
         } else {
-            desiredPos = upPos;
+            desiredPos = outtakePos;
         }
     }
 
@@ -69,7 +73,8 @@ public class Algae extends SubsystemBase{
 
     public void resetPos() {
         originalPos = getAbsolutePos();
-        upPos = originalPos + Constants.Mechanical.AlgaeUpPos;
+        intakePos = originalPos + Constants.Mechanical.AlgaeInPos;
+        outtakePos = originalPos + Constants.Mechanical.AlgaeOutPos;
         desiredPos = originalPos;
     }
 }

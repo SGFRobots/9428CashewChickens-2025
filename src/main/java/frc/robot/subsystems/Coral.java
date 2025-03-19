@@ -14,7 +14,7 @@ public class Coral extends SubsystemBase {
     private DigitalInput inBeamBreakSensor;
     private DigitalInput outBeamBreakSensor;
     public boolean coralIn;
-    private final Spark mLed;
+    // private final Spark mLed;
 
     public Coral() {
         // Initialize variables
@@ -23,14 +23,14 @@ public class Coral extends SubsystemBase {
         inBeamBreakSensor = new DigitalInput(2);
         outBeamBreakSensor = new DigitalInput(1);
         coralIn = false;
-        mLed = new Spark(Constants.Mechanical.LEDChannel);
+        // mLed = new Spark(Constants.MotorPorts.LEDChannel);
     }
 
     public void setPower(double power) {
         // Sets power to motors
-        leftMotor.set(-power);
-        rightMotor.set(-power*0.45);
-        mLed.set(0.5);
+        leftMotor.set(-power*1.8);
+        rightMotor.set(-power*0.4);
+        // mLed.set(0.5);
     }
 
     public void setIndividualPower(double rightPower, double leftPower){

@@ -103,10 +103,12 @@ public class SwerveSubsystem extends SubsystemBase {
         });
         
         // Simulated field
-        // SmartDashboard.putData("Field", mField2d);
+        SmartDashboard.putData("Field", mField2d);
 
         mGyro = new AHRS(AHRS.NavXComType.kUSB1);
-        
+        zeroHeading();
+        // mGyro.setAngleAdjustment(270);
+
         try{
             pathPlannerConfig = RobotConfig.fromGUISettings();
         } catch (Exception e) {
@@ -116,12 +118,12 @@ public class SwerveSubsystem extends SubsystemBase {
         // Configure AutoBuilder last
         AutoBuilder.configure(
             this::getPose, // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-            new PIDConstants(0.05, 0.0, 0.0), // Translation PID constants
-            new PIDConstants(0.05, 0.0, 0.0) // Rotation PID constants
+            new PIDConstants(0.5, 0.0, 0.0), // Translation PID constants
+            new PIDConstants(0.5, 0.0, 0.0) // Rotation PID constants
             ),
             pathPlannerConfig, // The robot configuration
             () -> {
@@ -152,7 +154,7 @@ public class SwerveSubsystem extends SubsystemBase {
         return mGyro.getRotation2d();
     }
 
-    public Rotation2d geRotation2d() {
+    public Rotation2d getRotation2d() {
         return Rotation2d.fromDegrees(getHeading());
     }
 
@@ -168,7 +170,7 @@ public class SwerveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // Update modules' positions
-        mOdometer.update(new Rotation2d(), new SwerveModulePosition[] {
+        mOdometer.update(getRotation2d(), new SwerveModulePosition[] {
                 modules[0].getPosition(),
                 modules[1].getPosition(),
                 modules[2].getPosition(),
@@ -202,8 +204,9 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("ySpeed", getRobotRelativeSpeeds().vyMetersPerSecond);
         SmartDashboard.putNumber("turningSpeed", getRobotRelativeSpeeds().omegaRadiansPerSecond);
         // SmartDashboard.putString("Gyro", getGyroRotation2d().toString());
-        // SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+        SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
         // SmartDashboard.putNumberArray("SwerveModuleLOGGINGStates", loggingState);
+        SmartDashboard.putData("Field", mField2d);
     }
 
     // Reset odometer

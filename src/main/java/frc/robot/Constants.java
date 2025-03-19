@@ -50,9 +50,15 @@ public final class Constants {
         public static final int kBLDriveAbsoluteEncoderID = 5;
         public static final int kFRDriveAbsoluteEncoderID = 7;
         public static final int kBRDriveAbsoluteEncoderID = 6;
-
+        
         // Gyro
         public static final int kGyroPort = 2;
+
+        // LEDs
+        public static final int LEDChannel = 8;
+
+        public static final String kLeftLimelightKey = "limelight-left";
+        public static final String kRightLimelightKey = "limelight-right";
     }
 
     // Reversed motors
@@ -80,7 +86,7 @@ public final class Constants {
         public static final boolean kBLDriveEncoderReversed = true;
         public static final boolean kFRDriveEncoderReversed = true;
         public static final boolean kBRDriveEncoderReversed = false;
-    
+        
         // CANCoders
         public static final boolean kFLDriveAbsoluteEncoderReversed = false;
         public static final boolean kBLDriveAbsoluteEncoderReversed = false;
@@ -154,31 +160,34 @@ public final class Constants {
         // Elevator
         // Coral Heights
         public static final double ElevatorLowestHeight = 0;
-        public static final double ElevatorLevelZeroHeight = -80;
+        public static final double ElevatorLevelZeroHeight = -50;
         public static final double ElevatorLevelOneHeight = -175;
-        public static final double ElevatorLevelTwoHeight = -362;
+        public static final double ElevatorLevelTwoHeight = -345;
         public static final double ElevatorMaxHeight = -610;
         // Algae heights
         public static final double ElevatorAlgaeOneHeight = -270;
         public static final double ElevatorAlgaeTwoHeight = -475;
 
         // Algae Arm positions
-        public static final double AlgaeUpPos = 6;
+        public static final double AlgaeInPos = 4;
+        public static final double AlgaeOutPos = 4.5;
+
+        // Cage positions
+        public static final double CageUpPos = -5.33;
 
         // LED
-        public static final int LEDChannel = 0;
     }
 
     public static final class AprilTags {
         // x, distance, yaw
         // public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
-        public static final double[] leftCoral = {17.65, 0.22, -43};
+        public static final double[] leftCoral = {10.4684, 1.66, -2.8976};
         // public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
-        public static final double[] rightCoral = {-20.49, 0.25, -35};
-        // public static final double[] rightCoral = {-12.0838, 0.227, -45.3921};
+        // public static final double[] rightCoral = {-17.84, 0.22, -32};
+        public static final double[] rightCoral = {-0.8353, 1.64, 0.6321};
 
         public static final double xErrorAllowed = 0.6;
-        public static final double distanceErrorAllowed = 0.02;
+        public static final double distanceErrorAllowed = 0.1;
         public static final double yawErrorAllowed = 1.5;
     }
 
@@ -187,6 +196,7 @@ public final class Constants {
         // Controller ports
         public static final int DrivingControllerPort = 0;
         public static final int XBoxControllerPort = 1;
+        public static final int BackupDriveControllerPort = 2;
 
         // Black drone controller
         public static final class backup {
@@ -266,6 +276,18 @@ public final class Constants {
             public static final int DPadRight = 90;
             public static final int DPadDown = 180;
             public static final int DPadLeft = 270;
+        }
+
+        public static final class XBoxBackup {
+            public static final int LeftXPort = 0;
+            public static final int LeftYPort = 1;
+            public static final int RightXPort = 4;
+            public static final int RightYPort = 5;
+
+            public static final int ButtonA = 1;
+            public static final int ButtonB = 2;
+            public static final int ButtonX = 3;
+            public static final int ButtonY = 4;
         }
   }
 }

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -84,7 +85,7 @@ public class Module {
     // Return all data of the position of the robot - type SwerveModulePosition
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            driveDistance, new Rotation2d(turnDistance)
+            driveDistance, new Rotation2d(getTurningPositionRad())
         );
     }
 
@@ -104,11 +105,16 @@ public class Module {
 
             // Set power to motor
             driveOutput = (currentSpeeds.speedMetersPerSecond * Math.cos(turningPID.getError())) / Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
-            turnOutput = turningPID.calculate(getCurrentAngleRad(), currentSpeeds.angle.getRadians()) * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond * 2;
-            speedChange();
+            turnOutput = turningPID.calculate(getCurrentAngleRad(), currentSpeeds.angle.getRadians()) * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond;
             
+            if (true) {
+                driveOutput *= 2;
+                turnOutput *= 3;
+                speedChange();
+            }
+
             mDriveMotor.set(driveOutput);
-            mTurnMotor.set(turnOutput*2); 
+            mTurnMotor.set(turnOutput); 
             
             // Telemetry
             // SmartDashboard.putNumber("before" + mDriveMotor.getDeviceID(), pNewState.angle.getDegrees());
@@ -132,6 +138,13 @@ public class Module {
         double angle = absoluteEncoder.getAbsolutePosition().getValueAsDouble() * Math.PI * 2;
         angle *= (AbsoluteEncoderReversed) ? -1 : 1;
         return MathUtil.angleModulus(angle - (absoluteEncoderOffset * Math.PI * 2));
+    }
+
+    public double getTurningPositionRad() {
+        double angle = absoluteEncoder.getAbsolutePosition().getValueAsDouble() * Math.PI * 2;
+        angle *= (AbsoluteEncoderReversed) ? -1 : 1;
+        angle %= (2*Math.PI);
+        return angle;
     }
     
     // Test one module at a time

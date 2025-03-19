@@ -11,14 +11,12 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class SpeedControl extends Command{
     private final SwerveSubsystem mSubsystem;
     private final GenericHID mController;
-    private final Elevator mElevator;
 
     public SpeedControl(SwerveSubsystem subsystem, GenericHID pController, Elevator pElevator) {
         // slow = new SlowMode(subsystem);
         // fast = new FastMode(subsystem);
         mController = pController;
         mSubsystem = subsystem;
-        mElevator = pElevator;
     }
 
     @Override
@@ -26,7 +24,6 @@ public class SpeedControl extends Command{
 
     @Override 
     public void execute() {
-        int level = mElevator.getDesiredLevel();
 
         // Normal mode when aligning
         if (mSubsystem.getFindingPos()) {
@@ -39,7 +36,10 @@ public class SpeedControl extends Command{
             mSubsystem.toggleSlowMode(false);
 
         } else if (Robot.stage.equals("teleOp")) {
-            if (level <= 2) {
+            // if (level <= 2) {
+                // mSubsystem.toggleFastMode(true);
+                // mSubsystem.toggleSlowMode(false);
+
                 // Control speed based on controller inputs during teleOp
                 boolean fast = (mController.getRawAxis(Constants.Controllers.selected.SwitchC) == -1);
                 mSubsystem.toggleFastMode(fast);
@@ -47,13 +47,13 @@ public class SpeedControl extends Command{
                 mSubsystem.toggleSlowMode(slow);
                 
             // Ensure speed is slow when the level is high
-            } else if (level == 3) {
-                mSubsystem.toggleFastMode(false);
-                mSubsystem.toggleSlowMode(false);
-            } else {
-                mSubsystem.toggleSlowMode(true);
-                mSubsystem.toggleFastMode(false);
-            }
+            // } else if (level == 3) {
+            //     mSubsystem.toggleFastMode(false);
+            //     mSubsystem.toggleSlowMode(false);
+            // } else {
+            //     mSubsystem.toggleSlowMode(true);
+            //     mSubsystem.toggleFastMode(false);
+            // }
         }
 
         SmartDashboard.putBoolean("FastMode", mSubsystem.getFastMode());
@@ -67,5 +67,23 @@ public class SpeedControl extends Command{
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    public void fastModeOn() {
+        mSubsystem.toggleFastMode(true);
+        mSubsystem.toggleSlowMode(false);
+        System.out.println("fast");
+    }
+
+    public void slowModeOn() {
+        mSubsystem.toggleFastMode(false);
+        mSubsystem.toggleSlowMode(true);
+        System.out.println("slow");
+    }
+
+    public void normalModeOn() {
+        mSubsystem.toggleFastMode(false);
+        mSubsystem.toggleSlowMode(false);
+        System.out.println("normal");
     }
 }

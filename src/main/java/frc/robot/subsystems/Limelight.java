@@ -16,16 +16,19 @@ public class Limelight extends SubsystemBase{
     private int id;
     private double x;
     private double yaw;
-    private double dist;
+    private static double dist;
 
     // Input
     private NetworkTable table;
-    private Rev2mDistanceSensor sensor;
+    private static Rev2mDistanceSensor sensor = new Rev2mDistanceSensor(Port.kOnboard);
 
-    public Limelight() {
+    // Limelight name
+    private String name;
+
+    public Limelight(String limelightKey) {
         // Set up limelight and sensor
-        table = NetworkTableInstance.getDefault().getTable("limelight-scoring");  
-        sensor = new Rev2mDistanceSensor(Port.kOnboard);
+        name = limelightKey.substring(10);
+        table = NetworkTableInstance.getDefault().getTable(limelightKey);  
         sensor.setAutomaticMode(true);
         sensor.setEnabled(true);
         id = 0;
@@ -42,14 +45,14 @@ public class Limelight extends SubsystemBase{
         x = tx.getDouble(0.0);
         id = (int) tid.getInteger(0);
         yaw = targatePose_cameraSpace[4];
-        dist = sensor.getRange(Unit.kMillimeters) / 1000;
+        dist = sensor.getRange(Unit.kMillimeters) / 100;
     }
 
     public void displayData() {
         // Post to smart dashboard periodically
-        SmartDashboard.putNumber("LimelightX", x);
-        SmartDashboard.putNumber("LimelightID", id);
-        SmartDashboard.putNumber("LimelightYaw", yaw);
+        SmartDashboard.putNumber(name + "X", x);
+        SmartDashboard.putNumber(name + "ID", id);
+        SmartDashboard.putNumber(name + "Yaw", yaw);
         SmartDashboard.putNumber("Distance", dist);
         SmartDashboard.putBoolean("distanceEnabled", sensor.isEnabled());
         SmartDashboard.putBoolean("isAligned", isAligned());

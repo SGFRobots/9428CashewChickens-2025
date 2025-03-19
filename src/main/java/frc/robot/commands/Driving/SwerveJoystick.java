@@ -34,10 +34,15 @@ public class SwerveJoystick extends Command {
     public void execute() {
         if (!mSwerveSubsystem.getFindingPos()) {
             // Get joystick inputs
+            // double xSpeed = -mController.getRawAxis(Constants.Controllers.XBoxBackup.LeftYPort);
+            // double ySpeed = -mController.getRawAxis(Constants.Controllers.XBoxBackup.LeftXPort);
+            // double turningSpeed = -mController.getRawAxis(Constants.Controllers.XBoxBackup.RightXPort) / 2; 
+            
             double xSpeed = mController.getRawAxis(Constants.Controllers.selected.LeftYPort);
             double ySpeed = -mController.getRawAxis(Constants.Controllers.selected.LeftXPort);
             double turningSpeed = -mController.getRawAxis(Constants.Controllers.selected.RightXPort) / 2; 
-            
+
+
             // Calculate joystick hypotenuse for speed
             double joystickHypotense = Math.sqrt((Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2)));
             

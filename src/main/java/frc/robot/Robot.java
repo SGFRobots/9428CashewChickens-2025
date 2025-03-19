@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -20,6 +21,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private Command m_elevatorCommand;
   private Command m_speedControl;
+  private Spark mLED;
 
   private RobotContainer m_robotContainer;
   public static String stage;
@@ -34,6 +36,10 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     CameraServer.startAutomaticCapture();
+    mLED = new Spark(Constants.MotorPorts.LEDChannel);
+    
+
+
   }
   
   /**
@@ -50,6 +56,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    mLED.set(0.51);
+
   }
   
   /** This function is called once each time the robot enters Disabled mode. */
@@ -70,6 +78,7 @@ public class Robot extends TimedRobot {
     m_speedControl = m_robotContainer.getSpeedControlCommand();
     m_speedControl.schedule();
     
+    // m_robotContainer.resetRotations();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -103,6 +112,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    m_robotContainer.resetElevator();
+
 
     // m_robotContainer.resetRotations();
 

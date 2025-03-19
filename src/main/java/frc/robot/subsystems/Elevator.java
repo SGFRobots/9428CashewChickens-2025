@@ -86,7 +86,7 @@ public class Elevator extends SubsystemBase {
     }
     
     // Set reef level to go to
-    public void setDesiredPosition(String gamePiece, int level, SwerveSubsystem driveSubsystem){
+    public void setDesiredPosition(String gamePiece, int level){
         // Set position
         if (gamePiece.equals("coral")){
             desiredPosition = coralPositionsList[level];
@@ -95,6 +95,10 @@ public class Elevator extends SubsystemBase {
             desiredPosition = algaePositionsList[level];
         }
         desiredLevel = level;
+    }
+
+    public int getArraySize() {
+        return coralPositionsList.length;
     }
 
     // Get position of motor based on reef level
@@ -119,7 +123,7 @@ public class Elevator extends SubsystemBase {
         coralPos1 = pos0 + Constants.Mechanical.ElevatorLevelOneHeight;
         coralPos2 = pos0 + Constants.Mechanical.ElevatorLevelTwoHeight;
         coralPos3 = pos0 + Constants.Mechanical.ElevatorMaxHeight;
-        coralPositionsList = new double[]{pos0, coralPos1, coralPos2, coralPos3};
+        coralPositionsList = new double[]{pos0, coralPos0, coralPos1, coralPos2, coralPos3};
     }
 
 }

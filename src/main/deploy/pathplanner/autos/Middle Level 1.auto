@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Blue Middle Start to Reef3"
+            "pathName": "Middle to Reef6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "goToLevel2"
           }
         },
         {
@@ -17,21 +23,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Blue Reef3 to Bottom Source"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Reef3 to Bottom Source Rotation"
+            "name": "coralScore"
           }
         }
       ]

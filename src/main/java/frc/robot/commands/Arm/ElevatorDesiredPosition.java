@@ -35,6 +35,7 @@ public class ElevatorDesiredPosition extends Command {
 
         SmartDashboard.putNumber("elevatorpowet", power);
         SmartDashboard.putNumber("elevator level", mElevator.getDesiredLevel());
+        SmartDashboard.putNumber("el", mElevator.getArraySize());
     }
 
     @Override

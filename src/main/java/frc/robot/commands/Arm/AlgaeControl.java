@@ -58,7 +58,7 @@ public class AlgaeControl extends Command {
             // Shoot out algae
             open = false;
             shoot = true;
-            mAlgae.setDesiredPos(0);
+            mAlgae.setDesiredPos(2);
         } else if (pov == Constants.Controllers.XBox.DPadRight && pov != previousPOV) {
             // Disable all motors
             mAlgae.stop();
@@ -90,15 +90,9 @@ public class AlgaeControl extends Command {
             mAlgae.setWheelPower(0);
         }
 
-        // Stop wheels when low position
-        if (mAlgae.getAbsolutePos() < originalPos + 0.2){
-            mAlgae.setWheelPower(0);
-            shoot = false;
-        }
-
         // Telemetry
         // SmartDashboard.putNumber("Algae Abs Pos", mAlgae.getAbsolutePos());
-        // SmartDashboard.putNumber("Algae Pos", mAlgae.getRelativePos());
+        SmartDashboard.putNumber("Algae Pos", mAlgae.getRelativePos());
     }
 
     @Override
