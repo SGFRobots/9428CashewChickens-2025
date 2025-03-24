@@ -63,7 +63,7 @@ public class Module {
             absoluteEncoderOffset = pAbsoluteEncoderOffset;
             
             //PID Controller - change PID values when get feedback
-            turningPID = new PIDController(0.008, 0, 0);
+            turningPID = new PIDController(0.03, 0, 0);
             turningPID.enableContinuousInput(-Math.PI, Math.PI); // minimize rotations to 180
             // P = Proportional error
             // I = Integral of errors
@@ -79,14 +79,28 @@ public class Module {
  
     // Return all data of the position of the robot - type SwerveModuleState
     public SwerveModuleState getState() {
-        return currentSpeeds;
+        return new SwerveModuleState(krakenToMPS(mDriveMotor.getVelocity().getValueAsDouble()), getAngle());
     }
 
     // Return all data of the position of the robot - type SwerveModulePosition
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            driveDistance, new Rotation2d(getTurningPositionRad())
+            krakenToMeters(mDriveMotor.getPosition().getValueAsDouble()), getAngle()
         );
+    }
+
+    public Rotation2d getAngle() {
+        return Rotation2d.fromRotations(getCurrentAngleRot());
+    }
+
+    public double krakenToMeters(double rot) {
+        return rot / 6.12 * Constants.Mechanical.kWheelCircumferenceMeters;
+    }
+
+    public double krakenToMPS(double krakenRPS) {
+        double wheelrps = krakenRPS / 6.12;
+        double wheelMPS = wheelrps * Constants.Mechanical.kWheelDiameterMeters;
+        return wheelMPS;
     }
 
     // Move module
@@ -107,9 +121,9 @@ public class Module {
             driveOutput = (currentSpeeds.speedMetersPerSecond * Math.cos(turningPID.getError())) / Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
             turnOutput = turningPID.calculate(getCurrentAngleRad(), currentSpeeds.angle.getRadians()) * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond;
             
-            if (true) {
+            if (Robot.stage.equals("teleOp")) {
                 driveOutput *= 2;
-                turnOutput *= 3;
+            //     turnOutput *= 3;
                 speedChange();
             }
 
@@ -140,6 +154,11 @@ public class Module {
         return MathUtil.angleModulus(angle - (absoluteEncoderOffset * Math.PI * 2));
     }
 
+    public double getCurrentAngleRot() {
+        double angle = absoluteEncoder.getPosition().getValueAsDouble() - absoluteEncoderOffset;
+        return MathUtil.inputModulus(angle, 0, 1);
+    }
+
     public double getTurningPositionRad() {
         double angle = absoluteEncoder.getAbsolutePosition().getValueAsDouble() * Math.PI * 2;
         angle *= (AbsoluteEncoderReversed) ? -1 : 1;
@@ -165,6 +184,7 @@ public class Module {
         // }
         // SmartDashboard.putNumber("currentAngle" + mDriveMotor.getDeviceID(), Math.toDegrees(getCurrentAngleRad()));
         // System.out.println("drive: " + mDriveMotor.getDeviceID() + "  turn: " + mTurnMotor.getDeviceId() + "  encoder: " + absoluteEncoder.getDeviceID());
+        SmartDashboard.putNumber("velocity" + mDriveMotor.getDeviceID(), krakenToMPS(mDriveMotor.getVelocity().getValueAsDouble()));
     }
 
     // Turn module back to 0 position

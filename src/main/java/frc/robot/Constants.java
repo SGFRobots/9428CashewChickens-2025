@@ -125,10 +125,10 @@ public final class Constants {
         public static final double kRobotLengthMeters = 0.6731;
 
         // CANCoders' offsets
-        public static final double kFLDriveAbsoluteEncoderOffset = -0.20215; 
-        public static final double kBLDriveAbsoluteEncoderOffset = -0.48193;
-        public static final double kFRDriveAbsoluteEncoderOffset = -0.16211; 
-        public static final double kBRDriveAbsoluteEncoderOffset = -0.28857; 
+        public static final double kFLDriveAbsoluteEncoderOffset = 0.7974; 
+        public static final double kBLDriveAbsoluteEncoderOffset = 0.5253;
+        public static final double kFRDriveAbsoluteEncoderOffset = 0.8394; 
+        public static final double kBRDriveAbsoluteEncoderOffset = 0.7114; 
 
         // Module Positions on Robot
         public static final Translation2d[] kModulePositions = {
@@ -173,7 +173,8 @@ public final class Constants {
         public static final double AlgaeOutPos = 4.5;
 
         // Cage positions
-        public static final double CageUpPos = -5.33;
+        public static final double CageHangPos = -1.1;
+        public static final double CageUpPos = -4.9;
 
         // LED
     }
@@ -181,7 +182,7 @@ public final class Constants {
     public static final class AprilTags {
         // x, distance, yaw
         // public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
-        public static final double[] leftCoral = {10.4684, 1.66, -2.8976};
+        public static final double[] leftCoral = {11.8777, 1.98, -9.2803};
         // public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
         // public static final double[] rightCoral = {-17.84, 0.22, -32};
         public static final double[] rightCoral = {-0.8353, 1.64, 0.6321};

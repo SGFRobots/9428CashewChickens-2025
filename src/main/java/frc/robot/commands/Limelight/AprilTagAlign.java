@@ -51,9 +51,9 @@ public class AprilTagAlign extends Command {
 
         // Speed PID
         // speedPID = new PIDController(0.005, 0.0002, 0.0000005);
-        speedPID = new PIDController(0.0085, 0, 0);
-        xPID = new PIDController(0.005, 0, 0.000075);
-        yPID = new PIDController(0.04, 0, 0);
+        // speedPID = new PIDController(0.0085, 0, 0);
+        xPID = new PIDController(0.003, 0, 0.00009);
+        yPID = new PIDController(0.03, 0, 0);
         turnPID = new PIDController(0.008, 0, 0);
     }
 
@@ -112,23 +112,23 @@ public class AprilTagAlign extends Command {
         SmartDashboard.putNumber("yawPID", turningSpeed);
         SmartDashboard.putNumber("distPID",ySpeed);
         
-        yaw = (Math.abs(targetYaw - yaw) > yawErrorAllowed) ? yaw : 0;
-        x = (Math.abs(x - targetX) > xErrorAllowed) ? x : 0;
-        distance = (Math.abs(targetDistance - distance) > distanceErrorAllowed) ? distance : 0;
-        SmartDashboard.putNumber("yaw after error", yaw);
-        SmartDashboard.putNumber("x after error", x);
-        SmartDashboard.putNumber("dist after error", distance);
-        turningSpeed *= yaw == 0 ? 0: smallSpeed;
-        xSpeed *= x == 0 ? 0: smallSpeed;
-        ySpeed *= distance == 0 ? 0: smallSpeed;
+        // yaw = (Math.abs(targetYaw - yaw) > yawErrorAllowed) ? yaw : 0;
+        // x = (Math.abs(x - targetX) > xErrorAllowed) ? x : 0;
+        // distance = (Math.abs(targetDistance - distance) > distanceErrorAllowed) ? distance : 0;
+        // SmartDashboard.putNumber("yaw after error", yaw);
+        // SmartDashboard.putNumber("x after error", x);
+        // SmartDashboard.putNumber("dist after error", distance);
+        // turningSpeed *= yaw == 0 ? 0: smallSpeed;
+        // xSpeed *= x == 0 ? 0: smallSpeed;
+        // ySpeed *= distance == 0 ? 0: smallSpeed;
 
-        turningSpeed = (Math.abs(targetYaw - yaw) > yawErrorAllowed) ? turningSpeed : 0;
-        xSpeed = (Math.abs(x - targetX) > xErrorAllowed) ? xSpeed : 0;
-        ySpeed = (Math.abs(targetDistance - distance) > distanceErrorAllowed) ? ySpeed : 0;
+        // turningSpeed = (Math.abs(targetYaw - yaw) > yawErrorAllowed) ? turningSpeed : 0;
+        // xSpeed = (Math.abs(x - targetX) > xErrorAllowed) ? xSpeed : 0;
+        // ySpeed = (Math.abs(targetDistance - distance) > distanceErrorAllowed) ? ySpeed : 0;
 
-        SmartDashboard.putNumber("yaw difference", yaw-targetYaw);
-        SmartDashboard.putNumber("x difference", targetX - x);
-        SmartDashboard.putNumber("dist difference", targetDistance-distance);
+        // SmartDashboard.putNumber("yaw difference", yaw-targetYaw);
+        // SmartDashboard.putNumber("x difference", targetX - x);
+        // SmartDashboard.putNumber("dist difference", targetDistance-distance);
 
         // xSpeed = turningSpeed == 0 ? xSpeed : 0;
         // ySpeed = turningSpeed == 0 ? ySpeed : 0;

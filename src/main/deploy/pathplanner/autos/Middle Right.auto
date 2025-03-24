@@ -7,55 +7,61 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Blue Middle Start to Reef3"
+            "pathName": "Middle Start to Reef3"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Blue Reef3 to Bottom Source"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "name": "coralScoreRight"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Blue Bottom Source to Reef5"
+            "pathName": "Reef3 to Bottom Source"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Blue Reef5 to Bottom Source"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "name": "coralIntake"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Blue Bottom Source to Reef5"
+            "pathName": "bottom source to reef5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScoreRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "reef5 to bottom source"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "bottom source to reef5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScoreLeft"
           }
         }
       ]

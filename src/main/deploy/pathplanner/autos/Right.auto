@@ -13,13 +13,55 @@
         {
           "type": "named",
           "data": {
-            "name": "reefAlignLeft"
+            "name": "coralScoreRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Reef4 to Bottom Source"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralScore"
+            "name": "coralIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "bottom source to reef5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScoreRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "reef5 to bottom source"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "bottom source to reef5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScoreLeft"
           }
         }
       ]

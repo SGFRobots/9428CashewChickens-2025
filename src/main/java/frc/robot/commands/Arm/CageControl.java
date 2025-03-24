@@ -1,8 +1,10 @@
 package frc.robot.commands.Arm;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Cage;
 
 public class CageControl extends Command {
@@ -20,10 +22,18 @@ public class CageControl extends Command {
 
     @Override 
     public void execute() {
-        double power = posPID.calculate(mCage.getRelativePos(), mCage.getDesiredPos());
+        double power = posPID.calculate(mCage.getAbsolutePos(), mCage.getDesiredPos());
+
+        if ((mCage.getDesiredIndex() == 1) && mCage.getAbsolutePos() < mCage.getDesiredPos()) {
+            power = 1;
+        }
+        System.out.println(power);
         mCage.setPower(power);
         SmartDashboard.putNumber("PID error", posPID.getError());
         // System.out.println(mCage.getAbsolutePos());
+        SmartDashboard.putNumber("Cage desired pos", mCage.getDesiredPos());
+        SmartDashboard.putNumber("Cage pos", mCage.getRelativePos());
+        SmartDashboard.putNumber("Cage 0", mCage.getDownPos());
         SmartDashboard.putNumber("Cage rel pos", mCage.getAbsolutePos());
     }
 

@@ -10,8 +10,10 @@ import frc.robot.Constants;
 public class Cage extends SubsystemBase{
     private SparkMax mMotor;
     private double downPos;
+    private double hangPos;
     private double upPos;
     private double desiredPos;
+    private int desiredIndex;
 
     public Cage() {
         mMotor = new SparkMax(15, MotorType.kBrushless);
@@ -26,12 +28,20 @@ public class Cage extends SubsystemBase{
         return desiredPos;
     }
 
+    public int getDesiredIndex() {
+        return desiredIndex;
+    }
+
     public double getDownPos() {
         return downPos;
     }
 
     public double getupPos() {
         return upPos;
+    }
+
+    public double getHangPos() {
+        return hangPos;
     }
 
     public double getAbsolutePos() {
@@ -43,13 +53,22 @@ public class Cage extends SubsystemBase{
     }
 
     public void setDesiredPos(int pos) {
-        desiredPos = pos == 0 ? downPos : upPos;
+        desiredIndex = pos;
+        if (pos == 0) {
+            desiredPos = downPos;
+        } else if (pos == 1) {
+            desiredPos = hangPos;
+        } else {
+            desiredPos = upPos;
+        }
     }
 
     public void resetPos() {
         downPos = mMotor.getEncoder().getPosition()-0.25;
+        hangPos = downPos + Constants.Mechanical.CageHangPos;
         upPos = downPos + Constants.Mechanical.CageUpPos;
         desiredPos = downPos;
+        desiredIndex = 0;
     }
 
     public SparkMax getMotor() {
