@@ -247,7 +247,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
         // Move each module
         for (int i = 0; i < modules.length; i++) {
-            modules[i].setDesiredState(moduleStates[i]);
+            modules[i].setDesiredState(moduleStates[i], getFindingPos());
         }
     }
 

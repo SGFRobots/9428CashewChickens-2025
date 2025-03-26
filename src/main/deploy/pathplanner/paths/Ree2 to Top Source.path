@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.446,
-        "y": 7.111
+        "x": 1.1166385135135135,
+        "y": 7.157516891891891
       },
       "prevControl": {
-        "x": 2.0654857555280404,
-        "y": 6.884245547832277
+        "x": 1.736124269041554,
+        "y": 6.930762439724169
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef2"
+      "linkedName": "Blue Top Source"
     }
   ],
   "rotationTargets": [],

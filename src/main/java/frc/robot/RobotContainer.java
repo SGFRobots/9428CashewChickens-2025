@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 // Subsystems and commands
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.Driving.SpeedControl;
@@ -43,6 +43,7 @@ import frc.robot.commands.Auto.AutoCoralScore;
 import frc.robot.commands.Auto.AutoScore;
 import frc.robot.commands.Auto.Driving.AutoPath;
 import frc.robot.commands.Auto.Driving.AutoDrive;
+import frc.robot.commands.Auto.AutoScore;
 
 public class RobotContainer {
 
@@ -62,7 +63,7 @@ public class RobotContainer {
   private final Elevator mElevator;
   private final Coral mCoral;
   private final Algae mAlgae;
-  private final Cage mCage;
+  // private final Cage mCage;
 
   // Commands
   private final ResetRotations mResetRotations;
@@ -114,14 +115,14 @@ public class RobotContainer {
     mCoralIntake = new CoralIntake(mCoral, mElevator);
 
     // Cage
-    mCage = new Cage();
-    mCage.setDefaultCommand(new CageControl(mCage));
+    // mCage = new Cage();
+    // mCage.setDefaultCommand(new CageControl(mCage));
 
     // Autonomous commands
     mAutoPath = new AutoPath(mSwerveSubsystem);
     mAutoDrive = new AutoDrive(mSwerveSubsystem, new ChassisSpeeds(0,1,0), 1);
-    mAutoScoreLeft = new AutoScore(mRightLimelight, mElevator, mCoral, mSwerveSubsystem, mAprilTagLockLeft);
-    mAutoScoreRight = new AutoScore(mLeftLimelight, mElevator, mCoral, mSwerveSubsystem, new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]));
+    mAutoScoreLeft = new AutoScore(mElevator, mCoral, new AprilTagAlign(mSwerveSubsystem, mRightLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]));
+    mAutoScoreRight = new AutoScore(mElevator, mCoral, new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]));
     setUpAuto();
 
     // Auto chooser
@@ -147,8 +148,8 @@ public class RobotContainer {
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightBumper).toggleOnTrue(mAprilTagLockRight);
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonMinus).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition("algae", 0)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonPlus).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition("algae", 1)));
-    new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).onTrue(new InstantCommand(() -> mCage.setDesiredPos(2)));
-    new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).onFalse(new InstantCommand(() -> mCage.setDesiredPos(1)));
+    // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).onTrue(new InstantCommand(() -> mCage.setDesiredPos(1)));
+    // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).onFalse(new InstantCommand(() -> mCage.setDesiredPos(0)));
     
     // new JoystickButton(mDriveController, Constants.Controllers.XBoxBackup.ButtonA).onTrue(new InstantCommand(() -> mSpeedControl.slowModeOn()));
     // new JoystickButton(mDriveController, Constants.Controllers.XBoxBackup.ButtonB).onTrue(new InstantCommand(() -> mSpeedControl.normalModeOn()));
@@ -159,16 +160,27 @@ public class RobotContainer {
 
   // Set up auto commands
   private void setUpAuto() {
-    NamedCommands.registerCommand("gotToSourceLevel", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0))));
-    NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1)))); 
-    NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2))));
-    NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3))));
+    // NamedCommands.registerCommand("gotToSourceLevel", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0))));
+    // NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1)))); 
+    // NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2))));
+    // NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3))));
     NamedCommands.registerCommand("reefAlignLeft", mAprilTagLockLeft);
     NamedCommands.registerCommand("reefAlignRight", mAprilTagLockRight);
-    NamedCommands.registerCommand("coralIntake", mCoralIntake);
+    // NamedCommands.registerCommand("coralIntake", mCoralIntake);
     NamedCommands.registerCommand("coralScoreLeft", mAutoScoreLeft);
     NamedCommands.registerCommand("coralScoreRight", mAutoScoreRight);
-    NamedCommands.registerCommand("TimeBased", mAutoPath);
+    // NamedCommands.registerCommand("TimeBased", mAutoPath);
+
+    // NamedCommands.registerCommand("gotToSourceLevel", new WaitCommand(1));
+    // NamedCommands.registerCommand("goToLevel2", new WaitCommand(1)); 
+    // NamedCommands.registerCommand("goToLevel3", new WaitCommand(1));
+    // NamedCommands.registerCommand("goToLevel4", new WaitCommand(1));
+    // NamedCommands.registerCommand("reefAlignLeft", new WaitCommand(1));
+    // NamedCommands.registerCommand("reefAlignRight", new WaitCommand(1));
+    // NamedCommands.registerCommand("coralIntake", new WaitCommand(1));
+    // NamedCommands.registerCommand("coralScoreLeft", new WaitCommand(1));
+    // NamedCommands.registerCommand("coralScoreRight", new WaitCommand(1));
+    // NamedCommands.registerCommand("TimeBased", new WaitCommand(1));
   }
 
   // get selected auto

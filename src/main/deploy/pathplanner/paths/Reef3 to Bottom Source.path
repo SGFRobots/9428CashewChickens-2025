@@ -8,36 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.611074938574938,
-        "y": 3.232258522727273
+        "x": 7.19391891891892,
+        "y": 3.619847972972973
       },
       "isLocked": false,
       "linkedName": "Blue Reef3"
     },
     {
       "anchor": {
-        "x": 5.662246621621622,
-        "y": 2.414273648648649
+        "x": 5.682010135135134,
+        "y": 2.384628378378378
       },
       "prevControl": {
-        "x": 5.974474585544625,
-        "y": 2.64697184817617
+        "x": 5.994238099058137,
+        "y": 2.617326577905899
       },
       "nextControl": {
-        "x": 4.605257985257986,
-        "y": 1.6265179668304675
+        "x": 4.625021498771498,
+        "y": 1.5968726965601965
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.4458806818181815,
-        "y": 0.88893465909091
+        "x": 1.2451013513513514,
+        "y": 0.6750844594594594
       },
       "prevControl": {
-        "x": 2.1217928439803426,
-        "y": 0.9633622542997543
+        "x": 1.9210135135135122,
+        "y": 0.7495120546683037
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,11 +48,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.6434108527131779,
+      "minWaypointRelativePos": 1.8,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 5.0,
-        "maxAcceleration": 1.5,
+        "maxVelocity": 4.7,
+        "maxAcceleration": 2.0,
         "maxAngularVelocity": 500.0,
         "maxAngularAcceleration": 200.0,
         "nominalVoltage": 11.0,

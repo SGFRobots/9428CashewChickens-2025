@@ -173,8 +173,9 @@ public final class Constants {
         public static final double AlgaeOutPos = 4.5;
 
         // Cage positions
-        public static final double CageHangPos = -1.1;
-        public static final double CageUpPos = -4.9;
+        public static final double CagePullieDownPos = 0;
+        public static final double CagePullieUpPos = 45.69;
+        public static final double CageLiftyUpPos = 0.2857;
 
         // LED
     }
@@ -182,12 +183,12 @@ public final class Constants {
     public static final class AprilTags {
         // x, distance, yaw
         // public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
-        public static final double[] leftCoral = {11.8777, 1.98, -9.2803};
+        public static final double[] leftCoral = {5.81, 1.41, 3};
         // public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
         // public static final double[] rightCoral = {-17.84, 0.22, -32};
         public static final double[] rightCoral = {-0.8353, 1.64, 0.6321};
 
-        public static final double xErrorAllowed = 0.6;
+        public static final double xErrorAllowed = 0.65;
         public static final double distanceErrorAllowed = 0.1;
         public static final double yawErrorAllowed = 1.5;
     }

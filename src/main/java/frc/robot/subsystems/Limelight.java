@@ -9,7 +9,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import com.revrobotics.Rev2mDistanceSensor;
 import com.revrobotics.Rev2mDistanceSensor.Port;
 import com.revrobotics.Rev2mDistanceSensor.Unit;
-import edu.wpi.first.cameraserver.CameraServer;
 
 public class Limelight extends SubsystemBase{
     // Data values

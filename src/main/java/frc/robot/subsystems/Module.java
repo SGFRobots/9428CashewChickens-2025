@@ -42,8 +42,6 @@ public class Module {
     // turning and driving power/distance
     private double turnOutput;
     private double driveOutput;
-    private double driveDistance;
-    private double turnDistance;
     public Field2d field;
 
     // Constructores
@@ -104,7 +102,7 @@ public class Module {
     }
 
     // Move module
-    public void setDesiredState(SwerveModuleState pNewState) {
+    public void setDesiredState(SwerveModuleState pNewState, boolean aligning) {
         // If normal
         if (!resetting) {
             // Don't move back to 0 after moving
@@ -121,8 +119,9 @@ public class Module {
             driveOutput = (currentSpeeds.speedMetersPerSecond * Math.cos(turningPID.getError())) / Constants.Mechanical.kPhysicalMaxSpeedMetersPerSecond;
             turnOutput = turningPID.calculate(getCurrentAngleRad(), currentSpeeds.angle.getRadians()) * Constants.Mechanical.kPhysicalMaxAngularSpeedRadiansPerSecond;
             
-            if (Robot.stage.equals("teleOp")) {
+            if (Robot.stage.equals("teleOp") || aligning) {
                 driveOutput *= 2;
+                System.out.println("speed chanige");
             //     turnOutput *= 3;
                 speedChange();
             }

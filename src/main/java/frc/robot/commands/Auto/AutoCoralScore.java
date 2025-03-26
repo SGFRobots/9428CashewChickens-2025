@@ -18,12 +18,14 @@ public class AutoCoralScore extends Command{
     public void initialize() {
         // Reset timer value to zero
         timer.restart();
+        System.out.println("start shoot");
     }
     
     @Override 
     public void execute() {
         // Apply power to the coral shooter
-        mCoral.setPower(0.3);    
+        mCoral.setPower(0.3);  
+        System.out.println("shooting");  
     }
 
     @Override
@@ -32,6 +34,7 @@ public class AutoCoralScore extends Command{
         mCoral.stop();
         // Stop the timer
         timer.stop();
+        System.out.println("shoot done");
     }
 
     @Override
