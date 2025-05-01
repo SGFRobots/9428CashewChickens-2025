@@ -107,9 +107,6 @@ public class SwerveSubsystem extends SubsystemBase {
         // Simulated field
         SmartDashboard.putData("Field", mField2d);
 
-        // mGyro.zeroYaw();
-        // mGyro.setAngleAdjustment(270);
-
         poseEstimator = new SwerveDrivePoseEstimator(Constants.Mechanical.kDriveKinematics, getRotation2d(), getModulePositions(), getPose());
 
         pathPlannerConfig = new RobotConfig(56.155, 7.396, new ModuleConfig(0.051, 4.7, 0.96, DCMotor.getKrakenX60(1), 6.12, 60, 1), kModulePositions);
@@ -148,7 +145,8 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void zeroHeading() {
-        mGyro.reset();
+        mGyro.zeroYaw();
+        mGyro.setAngleAdjustment(90);
     }
 
     public double getAngle() {
@@ -206,6 +204,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
         // Debug telemetry
         SmartDashboard.putNumber("Robot Heading", getHeading());
+        SmartDashboard.putNumber("Robot Angle", mGyro.getAngle());
         SmartDashboard.putNumber("xSpeed", getRobotRelativeSpeeds().vxMetersPerSecond);
         SmartDashboard.putNumber("ySpeed", getRobotRelativeSpeeds().vyMetersPerSecond);
         SmartDashboard.putNumber("turningSpeed", getRobotRelativeSpeeds().omegaRadiansPerSecond);

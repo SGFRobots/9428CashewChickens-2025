@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.1166385135135135,
-        "y": 7.157516891891891
+        "x": 0.82,
+        "y": 7.631
       },
       "prevControl": {
-        "x": 2.1834794226044227,
-        "y": 6.409854960073709
+        "x": 1.8868409090909095,
+        "y": 6.883338068181818
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Blue Top Source"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

@@ -11,15 +11,15 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "waitForCoral"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Comand Path 2"
+            "name": "coralIntake"
           }
         }
       ]

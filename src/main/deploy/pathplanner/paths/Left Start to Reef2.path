@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 7.548494318181818,
-        "y": 6.183849431818182
+        "y": 6.134
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.535833093158123,
-        "y": 6.233705286222275
+        "y": 6.183855854404094
       },
       "isLocked": false,
       "linkedName": "Blue Left Start"
     },
     {
       "anchor": {
-        "x": 5.49434659090909,
-        "y": 5.685269886363637
+        "x": 5.394630681818183,
+        "y": 5.585553977272727
       },
       "prevControl": {
-        "x": 5.983064338102422,
-        "y": 5.954563338898736
+        "x": 5.883348429011515,
+        "y": 5.854847429807826
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,7 +29,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.8660022148394277,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 4.7,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 500.0,
+        "maxAngularAcceleration": 200.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -37,8 +51,8 @@
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 200.0,
-    "nominalVoltage": 11.0,
-    "unlimited": false
+    "nominalVoltage": 12.0,
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,
@@ -50,5 +64,5 @@
     "velocity": 0,
     "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

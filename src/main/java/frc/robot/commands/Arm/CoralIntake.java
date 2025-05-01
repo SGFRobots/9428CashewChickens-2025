@@ -18,7 +18,7 @@ public class CoralIntake extends Command{
     
     @Override
     public void initialize() {
-        power = 0.1;
+        power = 0.075;
         coralIn = false;
         mElevator.setDesiredPosition("coral", 0);
     }

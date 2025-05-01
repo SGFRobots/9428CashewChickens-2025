@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import java.util.function.BooleanSupplier;
 import java.util.jar.Attributes.Name;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -41,9 +42,11 @@ import frc.robot.commands.Arm.ElevatorDesiredPosition;
 import frc.robot.commands.Auto.AutoAlign;
 import frc.robot.commands.Auto.AutoCoralScore;
 import frc.robot.commands.Auto.AutoScore;
+import frc.robot.commands.Auto.WaitForCoral;
 import frc.robot.commands.Auto.Driving.AutoPath;
 import frc.robot.commands.Auto.Driving.AutoDrive;
 import frc.robot.commands.Auto.AutoScore;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class RobotContainer {
 
@@ -135,17 +138,18 @@ public class RobotContainer {
 
   // Assign buttons to commands
   private void configureButtonBindings() {
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftJoystickButton).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
+    // new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftJoystickButton).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftJoystickButton).onTrue(new InstantCommand(() -> mSwerveSubsystem.zeroHeading()));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightJoystickButton).onTrue(new InstantCommand(() -> mAlgae.resetPos()));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonB).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0)));
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonFPort).onTrue(new AutoPath(mSwerveSubsystem));
     new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonFPort).onTrue(mResetRotations);
-    // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonFPort).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1)));
+    new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonFPort).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonY).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonA).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonX).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 4)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftBumper).toggleOnTrue(mAprilTagLockLeft);
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightBumper).toggleOnTrue(mAprilTagLockRight);
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftBumper).whileTrue(mAprilTagLockLeft);
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightBumper).whileTrue(mAprilTagLockRight);
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonMinus).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition("algae", 0)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonPlus).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition("algae", 1)));
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).onTrue(new InstantCommand(() -> mCage.setDesiredPos(1)));
@@ -160,15 +164,16 @@ public class RobotContainer {
 
   // Set up auto commands
   private void setUpAuto() {
-    // NamedCommands.registerCommand("gotToSourceLevel", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0))));
-    // NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1)))); 
-    // NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2))));
-    // NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3))));
+    NamedCommands.registerCommand("gotToSourceLevel", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0))));
+    NamedCommands.registerCommand("goToLevel2",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1)))); 
+    NamedCommands.registerCommand("goToLevel3",(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2))));
+    NamedCommands.registerCommand("goToLevel4", (new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3))));
     NamedCommands.registerCommand("reefAlignLeft", mAprilTagLockLeft);
     NamedCommands.registerCommand("reefAlignRight", mAprilTagLockRight);
-    // NamedCommands.registerCommand("coralIntake", mCoralIntake);
+    NamedCommands.registerCommand("coralIntake", mCoralIntake);
     NamedCommands.registerCommand("coralScoreLeft", mAutoScoreLeft);
     NamedCommands.registerCommand("coralScoreRight", mAutoScoreRight);
+    NamedCommands.registerCommand("waitForCoral", new WaitForCoral(mCoral));
     // NamedCommands.registerCommand("TimeBased", mAutoPath);
 
     // NamedCommands.registerCommand("gotToSourceLevel", new WaitCommand(1));
@@ -225,9 +230,9 @@ public class RobotContainer {
   }
 
   public static boolean driveControllerMoving() {
-    boolean leftX = Math.abs(mDroneComtroller.getRawAxis(Constants.Controllers.XBoxBackup.LeftXPort)) >= Constants.Mechanical.kDeadzone;
-    boolean leftY = Math.abs(mDroneComtroller.getRawAxis(Constants.Controllers.XBoxBackup.LeftYPort)) >= Constants.Mechanical.kDeadzone;
-    boolean rightX = Math.abs(mDroneComtroller.getRawAxis(Constants.Controllers.XBoxBackup.RightXPort)) >= Constants.Mechanical.kDeadzone;
+    boolean leftX = Math.abs(mDroneComtroller.getRawAxis(Constants.Controllers.selected.LeftXPort)) >= Constants.Mechanical.kDeadzone;
+    boolean leftY = Math.abs(mDroneComtroller.getRawAxis(Constants.Controllers.selected.LeftYPort)) >= Constants.Mechanical.kDeadzone;
+    boolean rightX = Math.abs(mDroneComtroller.getRawAxis(Constants.Controllers.selected.RightXPort)) >= Constants.Mechanical.kDeadzone;
 
     return leftX || leftY || rightX;
   }

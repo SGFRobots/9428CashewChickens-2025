@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1166385135135135,
-        "y": 7.157516891891891
+        "x": 1.156,
+        "y": 7.4144425675675665
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0538487407862416,
-        "y": 6.509570869164619
+        "x": 2.0932102272727278,
+        "y": 6.766496544840294
       },
       "isLocked": false,
       "linkedName": "Blue Top Source"
@@ -48,7 +48,7 @@
   "folder": "Middle Start",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -54.5
+    "rotation": -57.72
   },
   "useDefaultConstraints": true
 }

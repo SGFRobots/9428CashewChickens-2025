@@ -18,7 +18,7 @@ import edu.wpi.first.math.geometry.Translation2d;
  */
 public final class Constants {        
     public static final String ModuleNameSim = "Swerve Modules";
-    public static final boolean fieldOriented = false;
+    public static final boolean fieldOriented = true;
     
     public static final class MotorPorts {
         // CAN IDs of driving motors
@@ -163,7 +163,7 @@ public final class Constants {
         public static final double ElevatorLevelZeroHeight = -50;
         public static final double ElevatorLevelOneHeight = -175;
         public static final double ElevatorLevelTwoHeight = -345;
-        public static final double ElevatorMaxHeight = -610;
+        public static final double ElevatorMaxHeight = -615;
         // Algae heights
         public static final double ElevatorAlgaeOneHeight = -270;
         public static final double ElevatorAlgaeTwoHeight = -475;
@@ -182,15 +182,12 @@ public final class Constants {
 
     public static final class AprilTags {
         // x, distance, yaw
-        // public static final double[] leftCoral = {16.6807, 2.5845, -41.7339};
-        public static final double[] leftCoral = {5.81, 1.41, 3};
-        // public static final double[] rightCoral = {-19.2193, 15.10175, -44.1119};
-        // public static final double[] rightCoral = {-17.84, 0.22, -32};
-        public static final double[] rightCoral = {-0.8353, 1.64, 0.6321};
+        public static final double[] leftCoral = {2.52, 30.11, 1};
+        public static final double[] rightCoral = {-4.35, 16.98, 2};
 
         public static final double xErrorAllowed = 0.65;
-        public static final double distanceErrorAllowed = 0.1;
-        public static final double yawErrorAllowed = 1.5;
+        public static final double distanceErrorAllowed = 0.3;
+        public static final double yawErrorAllowed = 1;
     }
 
     // Controller ports

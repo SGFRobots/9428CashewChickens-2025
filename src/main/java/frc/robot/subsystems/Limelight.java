@@ -16,6 +16,7 @@ public class Limelight extends SubsystemBase{
     private double x;
     private double yaw;
     private static double dist;
+    private double area;
 
     // Input
     private NetworkTable table;
@@ -34,17 +35,20 @@ public class Limelight extends SubsystemBase{
         x = 0;
         yaw = 0;
         dist = -1;
+        area = 0;
     }
     
     public void update(){
         // Get data
         NetworkTableEntry tx = table.getEntry("tx");
         NetworkTableEntry tid = table.getEntry("tid");
+        NetworkTableEntry ta = table.getEntry("ta");
         double[] targatePose_cameraSpace = table.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]);
         x = tx.getDouble(0.0);
         id = (int) tid.getInteger(0);
         yaw = targatePose_cameraSpace[4];
         dist = sensor.getRange(Unit.kMillimeters) / 100;
+        area = ta.getDouble(0);
     }
 
     public void displayData() {
@@ -52,10 +56,11 @@ public class Limelight extends SubsystemBase{
         SmartDashboard.putNumber(name + "X", x);
         SmartDashboard.putNumber(name + "ID", id);
         SmartDashboard.putNumber(name + "Yaw", yaw);
+        SmartDashboard.putNumber(name + "Area", area);
         SmartDashboard.putNumber("Distance", dist);
         SmartDashboard.putBoolean("distanceEnabled", sensor.isEnabled());
         SmartDashboard.putBoolean("isAligned", isAligned());
-
+        SmartDashboard.putBoolean(name + " Valid", hasValidData());
         // VideoSource camera = new VideoSource(5);
                 
         
@@ -76,6 +81,10 @@ public class Limelight extends SubsystemBase{
         return yaw;
     }
 
+    public double getArea() {
+        return area;
+    }
+
     // Get distance from distance sensor
     public double getDistance() {
         return dist;
@@ -91,5 +100,9 @@ public class Limelight extends SubsystemBase{
         boolean alignedRight = (Math.abs(getX() - Constants.AprilTags.rightCoral[0]) < xError) && (Math.abs(Constants.AprilTags.rightCoral[2] - getYaw()) < yawError) && (Math.abs(Constants.AprilTags.rightCoral[1] - getDistance()) < distError);
         
         return alignedLeft || alignedRight;
+    }
+
+    public boolean hasValidData() {
+        return getID() != -1;
     }
 }

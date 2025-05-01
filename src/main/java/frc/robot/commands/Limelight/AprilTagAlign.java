@@ -2,6 +2,7 @@ package frc.robot.commands.Limelight;
 
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -9,10 +10,12 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 public class AprilTagAlign extends Command {
     private final SwerveSubsystem mSubsystem;
     private final Limelight mLimelight;
+    private final Timer timer;
     private double x;
     private double yaw;
     private double distance;
@@ -28,6 +31,8 @@ public class AprilTagAlign extends Command {
     private PIDController xPID;
     private PIDController yPID;
     private PIDController turnPID;
+    private double targetArea;
+    private double area;
 
     public AprilTagAlign(SwerveSubsystem pSubsystem, Limelight pLimelight, double pTargetX, double pTargetDistance, double pTargetYaw) {
         // Set up subsystems
@@ -42,24 +47,22 @@ public class AprilTagAlign extends Command {
         // Target position
         targetX = pTargetX;
         targetDistance = pTargetDistance;
-        targetYaw = pTargetYaw;
+        // targetYaw = pTargetYaw;
+        targetArea = pTargetDistance;
+
+        timer = new Timer();
+
     }
 
     @Override
     public void initialize() {
         mSubsystem.toggleFindingPos();
-        // if (Robot.stage.equals("teleOp")){
-            xPID = new PIDController(0.007, 0, 0.0001);
-            yPID = new PIDController(0.1005, 0, 0.0001);
-            turnPID = new PIDController(0.008, 0, 0);
-            // System.out.println("teleOp");
-        // }
-        // else{
-        //     xPID = new PIDController(0.026, 0, 0.00015);
-        //     yPID = new PIDController(0.3015, 0, 0.0001);
-        //     turnPID = new PIDController(0.015, 0, 0);
-        //     System.out.println("auto");
-        // }
+        xPID = new PIDController(0.007, 0, 0.0001);
+        // yPID = new PIDController(0.1005, 0, 0.0001);
+        yPID = new PIDController(0.015005, 0, 0.0001);
+        turnPID = new PIDController(0.01, 0, 0);
+
+        timer.restart();
     }
 
     @Override 
@@ -70,11 +73,14 @@ public class AprilTagAlign extends Command {
         yaw = mLimelight.getYaw();
         x = mLimelight.getX();
         distance = mLimelight.getDistance();
+        area = mLimelight.getArea();
 
         // Calculate Speeds
         xSpeed = xPID.calculate(x, targetX);
-        ySpeed = yPID.calculate(distance, targetDistance);
+        // ySpeed = yPID.calculate(distance, targetDistance);
         turningSpeed = turnPID.calculate(yaw, targetYaw);
+
+        ySpeed = -yPID.calculate(area, targetArea);
         
         // Update SmartDashboard
         SmartDashboard.putNumber("xPID", xSpeed);
@@ -102,7 +108,7 @@ public class AprilTagAlign extends Command {
     @Override
     public boolean isFinished() {
         // End method when aligned
-        if (((Math.abs(mLimelight.getX() - targetX) < xErrorAllowed) && (Math.abs(targetYaw - mLimelight.getYaw()) < yawErrorAllowed) && (Math.abs(targetDistance - mLimelight.getDistance()) < distanceErrorAllowed)) || (Math.abs(xSpeed) < 0.02 && Math.abs(ySpeed) < 0.02) && Math.abs(turningSpeed) < 0.02) {
+        if ((timer.get() >= 5) || (RobotContainer.driveControllerMoving()) || (((Math.abs(mLimelight.getX() - targetX) < xErrorAllowed) && (Math.abs(targetYaw - mLimelight.getYaw()) < yawErrorAllowed) && (Math.abs(targetDistance - mLimelight.getDistance()) < distanceErrorAllowed)) || (Math.abs(xSpeed) < 0.02 && Math.abs(ySpeed) < 0.02) && Math.abs(turningSpeed) < 0.02) || (mLimelight.getID() == -1)) {
             return true;
         }
         return false;

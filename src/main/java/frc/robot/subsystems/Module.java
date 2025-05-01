@@ -121,7 +121,6 @@ public class Module {
             
             if (Robot.stage.equals("teleOp") || aligning) {
                 driveOutput *= 2;
-                System.out.println("speed chanige");
             //     turnOutput *= 3;
                 speedChange();
             }
