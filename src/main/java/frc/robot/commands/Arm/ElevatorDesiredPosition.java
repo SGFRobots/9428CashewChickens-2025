@@ -2,9 +2,6 @@ package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
-
-import java.lang.reflect.Member;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,9 +30,8 @@ public class ElevatorDesiredPosition extends Command {
         }
         mElevator.setPower(power);
 
-        SmartDashboard.putNumber("elevatorpowet", power);
-        SmartDashboard.putNumber("elevator level", mElevator.getDesiredLevel());
-        SmartDashboard.putNumber("el", mElevator.getArraySize());
+        SmartDashboard.putNumber("Elevator power", power);
+        SmartDashboard.putNumber("Elevator level", mElevator.getDesiredLevel());
     }
 
     @Override

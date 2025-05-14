@@ -18,7 +18,7 @@ import edu.wpi.first.math.geometry.Translation2d;
  */
 public final class Constants {        
     public static final String ModuleNameSim = "Swerve Modules";
-    public static final boolean fieldOriented = true;
+    public static final boolean fieldOriented = false;
     
     public static final class MotorPorts {
         // CAN IDs of driving motors
@@ -44,6 +44,10 @@ public final class Constants {
         // CAN IDs of Algae scorer
         public static final int kAlgaePosMotorID = 13;
         public static final int kAlgaeWheelMotor = 10;
+
+        // CAN IDs of Cage hanging
+        public static final int kCagePullieID = 15;
+        public static final int kCageLiftyID = 16;
         
         // CAN IDs of CANCoders
         public static final int kFLDriveAbsoluteEncoderID = 8;
@@ -186,7 +190,7 @@ public final class Constants {
         public static final double[] rightCoral = {-4.35, 16.98, 2};
 
         public static final double xErrorAllowed = 0.65;
-        public static final double distanceErrorAllowed = 0.3;
+        public static final double distanceErrorAllowed = 0.03;
         public static final double yawErrorAllowed = 1;
     }
 

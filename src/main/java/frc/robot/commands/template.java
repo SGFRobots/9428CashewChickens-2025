@@ -15,5 +15,7 @@ public class template extends Command {
     public void end(boolean isFinished) {}
 
     @Override
-    public boolean isFinished() {return false;}
+    public boolean isFinished() {
+        return false;
+    }
 }

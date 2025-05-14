@@ -17,8 +17,8 @@ public class Cage extends SubsystemBase{
     private double liftyDownPos;
 
     public Cage() {
-        mPullieMotor = new SparkMax(15, MotorType.kBrushless);
-        mLiftyMotor = new SparkMax(16, MotorType.kBrushless);
+        mPullieMotor = new SparkMax(Constants.MotorPorts.kCagePullieID, MotorType.kBrushless);
+        mLiftyMotor = new SparkMax(Constants.MotorPorts.kCageLiftyID, MotorType.kBrushless);
         resetPos();
     }
 

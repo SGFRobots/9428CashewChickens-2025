@@ -9,7 +9,6 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.math.controller.PIDController;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class AprilTagAlign extends Command {
@@ -31,8 +30,6 @@ public class AprilTagAlign extends Command {
     private PIDController xPID;
     private PIDController yPID;
     private PIDController turnPID;
-    private double targetArea;
-    private double area;
 
     public AprilTagAlign(SwerveSubsystem pSubsystem, Limelight pLimelight, double pTargetX, double pTargetDistance, double pTargetYaw) {
         // Set up subsystems
@@ -47,8 +44,8 @@ public class AprilTagAlign extends Command {
         // Target position
         targetX = pTargetX;
         targetDistance = pTargetDistance;
-        // targetYaw = pTargetYaw;
-        targetArea = pTargetDistance;
+        targetYaw = pTargetYaw;
+        // targetArea = pTargetDistance;
 
         timer = new Timer();
 
@@ -57,9 +54,8 @@ public class AprilTagAlign extends Command {
     @Override
     public void initialize() {
         mSubsystem.toggleFindingPos();
-        xPID = new PIDController(0.007, 0, 0.0001);
-        // yPID = new PIDController(0.1005, 0, 0.0001);
-        yPID = new PIDController(0.015005, 0, 0.0001);
+        xPID = new PIDController(0.8, 0, 0);
+        yPID = new PIDController(0.5, 0, 0);
         turnPID = new PIDController(0.01, 0, 0);
 
         timer.restart();
@@ -67,20 +63,25 @@ public class AprilTagAlign extends Command {
 
     @Override 
     public void execute() {
+
         ChassisSpeeds chassisSpeeds;
 
         // Get data from limelight
         yaw = mLimelight.getYaw();
         x = mLimelight.getX();
         distance = mLimelight.getDistance();
-        area = mLimelight.getArea();
+        // area = mLimelight.getArea();
 
         // Calculate Speeds
         xSpeed = xPID.calculate(x, targetX);
         // ySpeed = yPID.calculate(distance, targetDistance);
         turningSpeed = turnPID.calculate(yaw, targetYaw);
 
-        ySpeed = -yPID.calculate(area, targetArea);
+        ySpeed = -yPID.calculate(distance, targetDistance);
+
+        xSpeed = (Math.abs(xSpeed) > 0.02) ? xSpeed : 0;
+        ySpeed = (Math.abs(ySpeed) > 0.02) ? ySpeed : 0;
+        turningSpeed = (Math.abs(turningSpeed) > 0.02) ? turningSpeed : 0;
         
         // Update SmartDashboard
         SmartDashboard.putNumber("xPID", xSpeed);
@@ -89,7 +90,8 @@ public class AprilTagAlign extends Command {
         
 
         // Drive the robot
-        chassisSpeeds = new ChassisSpeeds(-ySpeed,xSpeed,turningSpeed);
+        chassisSpeeds = new ChassisSpeeds(ySpeed,xSpeed,turningSpeed);
+        // chassisSpeeds = new ChassisSpeeds(ySpeed,0,0);
         mSubsystem.drive(chassisSpeeds);
         
         // Update SmartDashboard
@@ -108,9 +110,9 @@ public class AprilTagAlign extends Command {
     @Override
     public boolean isFinished() {
         // End method when aligned
-        if ((timer.get() >= 5) || (RobotContainer.driveControllerMoving()) || (((Math.abs(mLimelight.getX() - targetX) < xErrorAllowed) && (Math.abs(targetYaw - mLimelight.getYaw()) < yawErrorAllowed) && (Math.abs(targetDistance - mLimelight.getDistance()) < distanceErrorAllowed)) || (Math.abs(xSpeed) < 0.02 && Math.abs(ySpeed) < 0.02) && Math.abs(turningSpeed) < 0.02) || (mLimelight.getID() == -1)) {
-            return true;
-        }
+        // if ((timer.get() >= 5) || (RobotContainer.driveControllerMoving()) || (((Math.abs(mLimelight.getX() - targetX) < xErrorAllowed) && (Math.abs(targetYaw - mLimelight.getYaw()) < yawErrorAllowed) && (Math.abs(targetDistance - mLimelight.getDistance()) < distanceErrorAllowed)) || (Math.abs(xSpeed) < 0.02 && Math.abs(ySpeed) < 0.02) && Math.abs(turningSpeed) < 0.02) || (mLimelight.getID() == -1)) {
+        //     return true;
+        // }
         return false;
     }
 

@@ -19,6 +19,7 @@ public class WaitForCoral extends Command{
     public void end(boolean isFinished) {}
 
     @Override
-    public boolean isFinished() {return mCoral.getInSensorBroken();
+    public boolean isFinished() {
+        return mCoral.getInSensorBroken();
     }
 }

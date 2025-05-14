@@ -95,7 +95,9 @@ public class RobotContainer {
     mRightLimelight = new Limelight(Constants.MotorPorts.kRightLimelightKey);
     mRightLimelight.setDefaultCommand(new LimeLightControl(mRightLimelight));
     mAprilTagLockLeft = new AprilTagAlign(mSwerveSubsystem, mRightLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]);
-    mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]);
+    
+    mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, 0, 0.38, 0);
+    // mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]);
     mTestAlign = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]);
     
     // Elevator
@@ -140,6 +142,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftJoystickButton).onTrue(new InstantCommand(() -> mElevator.resetPositions()));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftJoystickButton).onTrue(new InstantCommand(() -> mSwerveSubsystem.zeroHeading()));
+
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightJoystickButton).onTrue(new InstantCommand(() -> mAlgae.resetPos()));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonB).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0)));
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonFPort).onTrue(new AutoPath(mSwerveSubsystem));
@@ -148,8 +151,8 @@ public class RobotContainer {
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonY).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonA).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonX).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 4)));
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftBumper).whileTrue(mAprilTagLockLeft);
-    new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightBumper).whileTrue(mAprilTagLockRight);
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.LeftBumper).toggleOnTrue(mAprilTagLockLeft);
+    new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightBumper).toggleOnTrue(mAprilTagLockRight);
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonMinus).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition("algae", 0)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonPlus).toggleOnTrue(new InstantCommand(() -> mElevator.setDesiredPosition("algae", 1)));
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonEPort).onTrue(new InstantCommand(() -> mCage.setDesiredPos(1)));

@@ -23,6 +23,6 @@ public class AutoScore extends SequentialCommandGroup{
             new WaitCommand(1.25),
             mCoralScore,
             new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0))
-            );
+        );
     }
 }

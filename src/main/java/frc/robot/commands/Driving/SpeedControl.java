@@ -13,8 +13,6 @@ public class SpeedControl extends Command{
     private final GenericHID mController;
 
     public SpeedControl(SwerveSubsystem subsystem, GenericHID pController, Elevator pElevator) {
-        // slow = new SlowMode(subsystem);
-        // fast = new FastMode(subsystem);
         mController = pController;
         mSubsystem = subsystem;
     }
