@@ -6,6 +6,7 @@ import frc.robot.Constants;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+
 import com.revrobotics.Rev2mDistanceSensor;
 import com.revrobotics.Rev2mDistanceSensor.Port;
 
@@ -66,6 +67,11 @@ public class Limelight extends SubsystemBase{
         // VideoSource camera = new VideoSource(5);
                 
         
+    }
+
+    // Get name of Limelight
+    public String getName() {
+        return name;
     }
 
     // Get ID value from Limelight

@@ -53,10 +53,17 @@ public class AprilTagAlign extends Command {
 
     @Override
     public void initialize() {
+        String name = mLimelight.getName();
         mSubsystem.toggleFindingPos();
-        xPID = new PIDController(0.8, 0, 0);
-        yPID = new PIDController(0.5, 0, 0);
-        turnPID = new PIDController(0.01, 0, 0);
+        if (name.equals("left")) {
+            xPID = Constants.PIDAlignment.leftXPID;
+            yPID = Constants.PIDAlignment.leftYPID;
+            turnPID = Constants.PIDAlignment.leftTurnPID;
+        } else if (name.equals("right")) {
+            xPID = Constants.PIDAlignment.rightXPID;
+            yPID = Constants.PIDAlignment.rightYPID;
+            turnPID = Constants.PIDAlignment.rightTurnPID;
+        }
 
         timer.restart();
     }
@@ -113,7 +120,8 @@ public class AprilTagAlign extends Command {
         // if ((timer.get() >= 5) || (RobotContainer.driveControllerMoving()) || (((Math.abs(mLimelight.getX() - targetX) < xErrorAllowed) && (Math.abs(targetYaw - mLimelight.getYaw()) < yawErrorAllowed) && (Math.abs(targetDistance - mLimelight.getDistance()) < distanceErrorAllowed)) || (Math.abs(xSpeed) < 0.02 && Math.abs(ySpeed) < 0.02) && Math.abs(turningSpeed) < 0.02) || (mLimelight.getID() == -1)) {
         //     return true;
         // }
-        return false;
+        return (xSpeed == 0) && (ySpeed == 0) && (turningSpeed == 0);
+        // return false;
     }
 
     public double[] getTargets() {

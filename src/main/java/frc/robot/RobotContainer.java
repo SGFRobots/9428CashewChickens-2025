@@ -94,9 +94,10 @@ public class RobotContainer {
     mLeftLimelight.setDefaultCommand(new LimeLightControl(mLeftLimelight));
     mRightLimelight = new Limelight(Constants.MotorPorts.kRightLimelightKey);
     mRightLimelight.setDefaultCommand(new LimeLightControl(mRightLimelight));
-    mAprilTagLockLeft = new AprilTagAlign(mSwerveSubsystem, mRightLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]);
+    // mAprilTagLockLeft = new AprilTagAlign(mSwerveSubsystem, mRightLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]);
+    mAprilTagLockLeft = new AprilTagAlign(mSwerveSubsystem, mRightLimelight, -0.04, 0.34, 0);
     
-    mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, 0, 0.38, 0);
+    mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, 0, 0.3, 0);
     // mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]);
     mTestAlign = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]);
     

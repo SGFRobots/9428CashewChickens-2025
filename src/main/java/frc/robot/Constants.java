@@ -6,6 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
+
+import com.pathplanner.lib.config.PIDConstants;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 
 /**
@@ -192,6 +196,16 @@ public final class Constants {
         public static final double xErrorAllowed = 0.65;
         public static final double distanceErrorAllowed = 0.03;
         public static final double yawErrorAllowed = 1;
+    }
+
+    public static final class PIDAlignment {
+        public static final PIDController leftXPID = new PIDController(0.8, 0, 0);
+        public static final PIDController leftYPID = new PIDController(0.6, 0, 0);
+        public static final PIDController leftTurnPID = new PIDController(0.03, 0, 0);
+
+        public static final PIDController rightXPID = new PIDController(0.8, 0, 0);
+        public static final PIDController rightYPID = new PIDController(0.6, 0, 0);
+        public static final PIDController rightTurnPID = new PIDController(0.03, 0, 0);
     }
 
     // Controller ports

@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.Limelight.LimelightHelpers;
 
 import com.studica.frc.AHRS;
 
@@ -143,43 +144,46 @@ public class SwerveSubsystem extends SubsystemBase {
         this // Reference to this subsystem to set requirements
         );
     }
-
+    
     public void zeroHeading() {
         mGyro.zeroYaw();
         mGyro.setAngleAdjustment(90);
     }
-
+    
     public double getAngle() {
         return -mGyro.getAngle();
     }
-
+    
     public double getHeading() {
         return Math.IEEEremainder(mGyro.getAngle(), 360);
         // return MathUtil.inputModulus(mGyro.getAngle(), 0, 360);
     }
-
+    
     public Rotation2d getGyroRotation2d() {
         return mGyro.getRotation2d();
     }
-
+    
     public Rotation2d getRotation2d() {
         return Rotation2d.fromDegrees(getAngle());
     }
-
+    
     // Get position of robot based on odometer
     public Pose2d getPose() {
         return mOdometer.getPoseMeters();
     }
-
+    
     public void resetPose(Pose2d pose) {
         mOdometer.resetPose(pose);
     }
-
+    
     @Override
     public void periodic() {
         // Update modules' positions
         mOdometer.update(getRotation2d(), getModulePositions());
-        poseEstimator.update(getRotation2d(), getModulePositions());
+        // resetOdometry(poseEstimator.getEstimatedPosition());
+        SmartDashboard.putNumber("Odometry x", mOdometer.getPoseMeters().getX());
+        SmartDashboard.putNumber("Odometry y", mOdometer.getPoseMeters().getY());
+
         // Update Pose for swerve modules - Position of the rotation and the translation matters
         for (int i = 0; i < modules.length; i++) {
             // No gyro - new Rotation2d() instead
@@ -192,7 +196,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
         // Sets robot and modules positions on the field
         mField2d.setRobotPose(getPose());
-        mField2d.getObject(Constants.ModuleNameSim).setPoses(mModulePose);
+        // mField2d.setRobotPose(poseEstimator.getEstimatedPosition());
+        // mField2d.getObject(Constants.ModuleNameSim).setPoses(mModulePose);
 
         // Logs in Swerve Tab
         // double loggingState[] = {
@@ -217,6 +222,16 @@ public class SwerveSubsystem extends SubsystemBase {
     // Reset odometer
     public void resetOdometry(Pose2d pose) {
         mOdometer.resetPosition(getRotation2d(), getModulePositions(), pose);
+    }
+
+    // Update odometry based on limelight
+    public void updateOdometry() {
+        // boolean update = ()
+    }
+    
+    public void getLeftLimelightPose() {
+        LimelightHelpers.SetRobotOrientation("limelight-left", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+        LimelightHelpers.PoseEstimate what = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-left");
     }
 
     public SwerveModulePosition[] getModulePositions() {
