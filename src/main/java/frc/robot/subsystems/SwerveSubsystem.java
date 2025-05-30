@@ -106,7 +106,7 @@ public class SwerveSubsystem extends SubsystemBase {
         mGyro = new AHRS(AHRS.NavXComType.kUSB1);
         zeroHeading();
 
-        mOdometer = new SwerveDriveOdometry(Constants.Mechanical.kDriveKinematics, getRotation2d(), getModulePositions());
+        mOdometer = new SwerveDriveOdometry(Constants.Mechanical.kDriveKinematics, getRotation2d(), getModulePositions(), new Pose2d(7.598, 4.070, getRotation2d()));
 
         LimelightHelpers.setPipelineIndex("limelight-left", 0);
         LimelightHelpers.setPipelineIndex("limelight-right", 0);
@@ -132,7 +132,7 @@ public class SwerveSubsystem extends SubsystemBase {
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                new PIDConstants(5, 0.0, 0.0), // Translation PID constants
+                new PIDConstants(1, 0.0, 0.0), // Translation PID constants
                 new PIDConstants(1, 0.0, 0.0) // Rotation PID constants
             ),
             pathPlannerConfig, // The robot configuration
@@ -153,7 +153,7 @@ public class SwerveSubsystem extends SubsystemBase {
     
     public void zeroHeading() {
         mGyro.zeroYaw();
-        mGyro.setAngleAdjustment(90);
+        mGyro.setAngleAdjustment(315);
     }
     
     public double getAngle() {

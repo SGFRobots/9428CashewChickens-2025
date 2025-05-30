@@ -241,4 +241,8 @@ public class RobotContainer {
     return leftX || leftY || rightX;
   }
 
+  public void resetHeading() {
+    mSwerveSubsystem.zeroHeading();
+  }
+
 }

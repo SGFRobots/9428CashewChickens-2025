@@ -30,7 +30,7 @@ public class SpeedControl extends Command{
 
         } else if (Robot.stage.equals("auto")) {
             // Fast mode always during auto
-            mSubsystem.toggleFastMode(true);
+            mSubsystem.toggleFastMode(false);
             mSubsystem.toggleSlowMode(false);
 
         } else if (Robot.stage.equals("teleOp")) {

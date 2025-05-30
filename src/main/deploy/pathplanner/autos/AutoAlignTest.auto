@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Command Path"
+            "pathName": "Command Path 4"
           }
         },
         {
@@ -20,6 +20,12 @@
           "type": "named",
           "data": {
             "name": "coralIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "reefAlignRight"
           }
         }
       ]
