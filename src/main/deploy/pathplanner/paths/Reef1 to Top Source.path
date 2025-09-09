@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 0.82,
-        "y": 7.631
+        "x": 1.156,
+        "y": 7.4144425675675665
       },
       "prevControl": {
-        "x": 1.8868409090909095,
-        "y": 6.883338068181818
+        "x": 2.2228409090909094,
+        "y": 6.666780635749384
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Blue Top Source"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -54.5
+    "rotation": -57.72
   },
   "reversed": false,
   "folder": "Middle Start",

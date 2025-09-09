@@ -48,6 +48,10 @@ public class Algae extends SubsystemBase{
         wheelMotor.set(power);
     }
 
+    public double getWheelPower() {
+        return wheelMotor.get();
+    }
+
     public void stop() {
         // Stops motors
         positionMotor.set(0);

@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Start to Reef2"
+            "pathName": "Red Right Start to Reef1"
           }
         },
         {
@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Ree2 to Top Source"
+            "pathName": "Red Reef1 to Top Source"
           }
         },
         {
@@ -41,7 +41,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Top Source to Reef1"
+                  "pathName": "Red Top Source to Reef2"
                 }
               }
             ]
@@ -56,7 +56,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Reef1 to Top Source"
+            "pathName": "Red Reef2 to Top Source"
           }
         },
         {
@@ -78,7 +78,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Top Source to Reef1"
+                  "pathName": "Red Top Source to Reef2"
                 }
               }
             ]

@@ -153,7 +153,12 @@ public class SwerveSubsystem extends SubsystemBase {
     
     public void zeroHeading() {
         mGyro.zeroYaw();
-        mGyro.setAngleAdjustment(315);
+        var alliance = DriverStation.getAlliance();
+        if (alliance.get() == DriverStation.Alliance.Blue) {
+            mGyro.setAngleAdjustment(180);
+        } else {
+            mGyro.setAngleAdjustment(0);
+        }
     }
     
     public double getAngle() {
@@ -185,9 +190,9 @@ public class SwerveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // Update modules' positions
-        // mOdometer.update(getRotation2d(), getModulePositions());
-        updateOdometry();
-        resetOdometry(poseEstimator.getEstimatedPosition());
+        mOdometer.update(getRotation2d(), getModulePositions());
+        // updateOdometry();
+        // resetOdometry(poseEstimator.getEstimatedPosition());
         SmartDashboard.putNumber("Odometry x", mOdometer.getPoseMeters().getX());
         SmartDashboard.putNumber("Odometry y", mOdometer.getPoseMeters().getY());
 
@@ -268,8 +273,9 @@ public class SwerveSubsystem extends SubsystemBase {
     }
     
     public Pair<Pose2d,Double> getLimelightPose(String limelightName) {
+        var alliance = DriverStation.getAlliance();
         LimelightHelpers.SetRobotOrientation(limelightName, poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-        LimelightHelpers.PoseEstimate megaTag2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
+        LimelightHelpers.PoseEstimate megaTag2 = (alliance.get() == DriverStation.Alliance.Blue) ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
         if ((megaTag2 != null) && (Math.abs(mGyro.getRawGyroZ()) < 720) && (megaTag2.tagCount != 0)) {
             poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
             return Pair.of(megaTag2.pose, megaTag2.timestampSeconds);

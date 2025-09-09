@@ -171,9 +171,9 @@ public final class Constants {
         public static final double ElevatorLevelZeroHeight = -50;
         public static final double ElevatorLevelOneHeight = -175;
         public static final double ElevatorLevelTwoHeight = -345;
-        public static final double ElevatorMaxHeight = -615;
+        public static final double ElevatorMaxHeight = -610;
         // Algae heights
-        public static final double ElevatorAlgaeOneHeight = -270;
+        public static final double ElevatorAlgaeOneHeight = -278;
         public static final double ElevatorAlgaeTwoHeight = -475;
 
         // Algae Arm positions
@@ -186,12 +186,16 @@ public final class Constants {
         public static final double CageLiftyUpPos = 0.2857;
 
         // LED
+
+        // ronin was here B) 
     }
 
     public static final class AprilTags {
         // x, distance, yaw
-        public static final double[] leftCoral = {2.52, 30.11, 1};
-        public static final double[] rightCoral = {-4.35, 16.98, 2};
+        public static final double[] leftCoral = {0.04, 0.23, 1};
+        // public static final double[] leftCoral = {2.52, 30.11, 1};
+        public static final double[] rightCoral = {0, 0.28, 1};
+        // public static final double[] rightCoral = {-4.35, 16.98, 2};
 
         public static final double xErrorAllowed = 0.65;
         public static final double distanceErrorAllowed = 0.03;

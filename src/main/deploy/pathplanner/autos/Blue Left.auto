@@ -1,0 +1,99 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Start to Reef2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScoreRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Ree2 to Top Source"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "waitForCoral"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Top Source to Reef1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScoreLeft"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Reef1 to Top Source"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "waitForCoral"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "coralIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Top Source to Reef1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralScoreRight"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

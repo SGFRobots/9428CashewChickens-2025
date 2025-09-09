@@ -120,7 +120,7 @@ public class AprilTagAlign extends Command {
         // if ((timer.get() >= 5) || (RobotContainer.driveControllerMoving()) || (((Math.abs(mLimelight.getX() - targetX) < xErrorAllowed) && (Math.abs(targetYaw - mLimelight.getYaw()) < yawErrorAllowed) && (Math.abs(targetDistance - mLimelight.getDistance()) < distanceErrorAllowed)) || (Math.abs(xSpeed) < 0.02 && Math.abs(ySpeed) < 0.02) && Math.abs(turningSpeed) < 0.02) || (mLimelight.getID() == -1)) {
         //     return true;
         // }
-        return (xSpeed == 0) && (ySpeed == 0) && (turningSpeed == 0);
+        return ((xSpeed == 0) && (ySpeed == 0) && (turningSpeed == 0)) || RobotContainer.driveControllerMoving();
         // return false;
     }
 

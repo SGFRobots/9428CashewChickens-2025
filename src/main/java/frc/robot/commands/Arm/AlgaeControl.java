@@ -93,6 +93,9 @@ public class AlgaeControl extends Command {
         // Telemetry
         // SmartDashboard.putNumber("Algae Abs Pos", mAlgae.getAbsolutePos());
         SmartDashboard.putNumber("Algae Pos", mAlgae.getRelativePos());
+
+        // mAlgae.setWheelPower(mController.getRawAxis(Constants.Controllers.XBox.LeftYPort));
+        // SmartDashboard.putNumber("Algea", mAlgae.getWheelPower());
     }
 
     @Override
