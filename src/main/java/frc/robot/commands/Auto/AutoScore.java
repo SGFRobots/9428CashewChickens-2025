@@ -7,6 +7,7 @@ import frc.robot.commands.Limelight.AprilTagAlign;
 import frc.robot.subsystems.Elevator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
+// Sequence of aligning, elevator, and shooting for autonomous
 public class AutoScore extends SequentialCommandGroup{
     private Elevator mElevator;
     private AprilTagAlign mScoringAlign;

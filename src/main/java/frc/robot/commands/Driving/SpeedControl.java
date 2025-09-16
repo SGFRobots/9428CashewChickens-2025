@@ -39,9 +39,9 @@ public class SpeedControl extends Command{
                 // mSubsystem.toggleSlowMode(false);
 
                 // Control speed based on controller inputs during teleOp
-                boolean fast = (mController.getRawAxis(Constants.Controllers.selected.SwitchC) == -1);
+                boolean fast = (mController.getRawAxis(Constants.Controllers.selected.SwitchF) == -1);
                 mSubsystem.toggleFastMode(fast);
-                boolean slow =(mController.getRawAxis(Constants.Controllers.selected.SwitchC) == 1);
+                boolean slow =(mController.getRawAxis(Constants.Controllers.selected.SwitchF) == 1);
                 mSubsystem.toggleSlowMode(slow);
                 
             // Ensure speed is slow when the level is high

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.Coral;
 
+// Shoot coral for 0.75 seconds
 public class AutoCoralScore extends Command{
     private Timer timer;
     private Coral mCoral;

@@ -7,8 +7,6 @@ package frc.robot;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
 
-import com.pathplanner.lib.config.PIDConstants;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 
@@ -220,7 +218,7 @@ public final class Constants {
         public static final int BackupDriveControllerPort = 2;
 
         // Black drone controller
-        public static final class backup {
+        public static final class selected {
             // Joysticks and triggers
             public static final int LeftXPort = 0;
             public static final int LeftYPort = 1;
@@ -247,7 +245,7 @@ public final class Constants {
         }
         
         // White drone controller
-        public static final class selected {
+        public static final class backup {
             // Joysticks and triggers
             public static final int LeftXPort = 3;
             public static final int LeftYPort = 2;

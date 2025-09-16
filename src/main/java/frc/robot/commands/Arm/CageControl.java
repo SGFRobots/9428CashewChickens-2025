@@ -33,7 +33,7 @@ public class CageControl extends Command {
         liftyPower *= liftyUpPos < liftyAbsPos ? -1 : 1;
         
         mCage.setPulliePower(pulliePower);
-        // mCage.setLiftyPower(liftyPower);
+        mCage.setLiftyPower(liftyPower);
         
         // Telemetry
         SmartDashboard.putNumber("Pullie abs pos", pullieAbsPos);

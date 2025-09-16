@@ -1,6 +1,5 @@
 package frc.robot.commands.Limelight;
 
-
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,6 +10,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.RobotContainer;
 
+// Official Aligning to April Tag with Limelight
 public class AprilTagAlign extends Command {
     private final SwerveSubsystem mSubsystem;
     private final Limelight mLimelight;
@@ -70,7 +70,6 @@ public class AprilTagAlign extends Command {
 
     @Override 
     public void execute() {
-
         ChassisSpeeds chassisSpeeds;
 
         // Get data from limelight
@@ -79,13 +78,13 @@ public class AprilTagAlign extends Command {
         distance = mLimelight.getDistance();
         // area = mLimelight.getArea();
 
-        // Calculate Speeds
+        // Calculate Speeds with PID
         xSpeed = xPID.calculate(x, targetX);
-        // ySpeed = yPID.calculate(distance, targetDistance);
         turningSpeed = turnPID.calculate(yaw, targetYaw);
-
         ySpeed = -yPID.calculate(distance, targetDistance);
+        // ySpeed = yPID.calculate(distance, targetDistance);
 
+        // Apply Deadzones to speed
         xSpeed = (Math.abs(xSpeed) > 0.02) ? xSpeed : 0;
         ySpeed = (Math.abs(ySpeed) > 0.02) ? ySpeed : 0;
         turningSpeed = (Math.abs(turningSpeed) > 0.02) ? turningSpeed : 0;
@@ -116,10 +115,12 @@ public class AprilTagAlign extends Command {
 
     @Override
     public boolean isFinished() {
-        // End method when aligned
+        // End method when aligned (if timedout, controller moved, limelight within errorAllowed, speed <0.02, or tag ID invalid)
         // if ((timer.get() >= 5) || (RobotContainer.driveControllerMoving()) || (((Math.abs(mLimelight.getX() - targetX) < xErrorAllowed) && (Math.abs(targetYaw - mLimelight.getYaw()) < yawErrorAllowed) && (Math.abs(targetDistance - mLimelight.getDistance()) < distanceErrorAllowed)) || (Math.abs(xSpeed) < 0.02 && Math.abs(ySpeed) < 0.02) && Math.abs(turningSpeed) < 0.02) || (mLimelight.getID() == -1)) {
         //     return true;
         // }
+
+        // If speed is 0 or controller moved
         return ((xSpeed == 0) && (ySpeed == 0) && (turningSpeed == 0)) || RobotContainer.driveControllerMoving();
         // return false;
     }

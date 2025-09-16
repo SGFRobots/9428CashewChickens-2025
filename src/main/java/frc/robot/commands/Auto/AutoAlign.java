@@ -11,6 +11,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
+// AprilTagAlign + ReAlign until aligned
 public class AutoAlign extends Command {
     private final Limelight mLimelight;
     private final AprilTagAlign mAlignment;

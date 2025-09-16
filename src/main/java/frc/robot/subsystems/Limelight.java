@@ -40,7 +40,7 @@ public class Limelight extends SubsystemBase{
     
     public void update(){
         // Get data
-        NetworkTableEntry tx = table.getEntry("tx");
+        // NetworkTableEntry tx = table.getEntry("tx");
         NetworkTableEntry tid = table.getEntry("tid");
         NetworkTableEntry ta = table.getEntry("ta");
         double[] targatePose_cameraSpace = table.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]);
@@ -65,8 +65,6 @@ public class Limelight extends SubsystemBase{
         SmartDashboard.putBoolean("isAligned", isAligned());
         SmartDashboard.putBoolean(name + " Valid", hasValidData());
         // VideoSource camera = new VideoSource(5);
-                
-        
     }
 
     // Get name of Limelight

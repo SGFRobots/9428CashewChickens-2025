@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
 
+// Drive based on chassisspeeds for certain time limit
 public class AutoDrive extends Command {
     private Timer timer;
     private final SwerveSubsystem mSubsystem;

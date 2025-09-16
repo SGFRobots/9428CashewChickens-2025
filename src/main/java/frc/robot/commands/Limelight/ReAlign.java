@@ -6,17 +6,18 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
+// Backup from April Tag to realign
 public class ReAlign extends Command {
     private double xSpeed;
     private double ySpeed;
     private double turningSpeed;
     private final SwerveSubsystem mSubsystem;
-    private final Limelight mLimelight;
+    // private final Limelight mLimelight;
     private final Timer timer;
 
     public ReAlign(SwerveSubsystem pSubsystem, Limelight pLimelight, String side) {
         mSubsystem = pSubsystem;
-        mLimelight = pLimelight;
+        // mLimelight = pLimelight;
         timer = new Timer();
         ySpeed = -0.25;
         xSpeed  = side.equals("left") ? -0.25 : 0.25;

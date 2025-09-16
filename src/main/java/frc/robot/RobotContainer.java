@@ -4,13 +4,8 @@
 
 package frc.robot;
 
-
-import java.util.function.BooleanSupplier;
-import java.util.jar.Attributes.Name;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.events.EventTrigger;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -21,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+
 // Subsystems and commands
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.Driving.SpeedControl;
@@ -39,14 +34,10 @@ import frc.robot.commands.Arm.CageControl;
 import frc.robot.commands.Arm.CoralScore;
 import frc.robot.commands.Arm.ElevatorControl;
 import frc.robot.commands.Arm.ElevatorDesiredPosition;
-import frc.robot.commands.Auto.AutoAlign;
-import frc.robot.commands.Auto.AutoCoralScore;
 import frc.robot.commands.Auto.AutoScore;
 import frc.robot.commands.Auto.WaitForCoral;
 import frc.robot.commands.Auto.Driving.AutoPath;
 import frc.robot.commands.Auto.Driving.AutoDrive;
-import frc.robot.commands.Auto.AutoScore;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class RobotContainer {
 
@@ -96,7 +87,6 @@ public class RobotContainer {
     mRightLimelight.setDefaultCommand(new LimeLightControl(mRightLimelight));
     mAprilTagLockLeft = new AprilTagAlign(mSwerveSubsystem, mRightLimelight, Constants.AprilTags.leftCoral[0], Constants.AprilTags.leftCoral[1], Constants.AprilTags.leftCoral[2]);
     // mAprilTagLockLeft = new AprilTagAlign(mSwerveSubsystem, mRightLimelight, -0.04, 0.34, 0);
-    
     // mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, 0, 0.3, 0);
     mAprilTagLockRight = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]);
     mTestAlign = new AprilTagAlign(mSwerveSubsystem, mLeftLimelight, Constants.AprilTags.rightCoral[0], Constants.AprilTags.rightCoral[1], Constants.AprilTags.rightCoral[2]);
@@ -147,8 +137,8 @@ public class RobotContainer {
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.RightJoystickButton).onTrue(new InstantCommand(() -> mAlgae.resetPos()));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonB).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 0)));
     // new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonFPort).onTrue(new AutoPath(mSwerveSubsystem));
-    new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonFPort).onTrue(mResetRotations);
-    new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonFPort).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1)));
+    new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonAPort).onTrue(mResetRotations);
+    new JoystickButton(mDroneComtroller, Constants.Controllers.selected.ButtonAPort).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 1)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonY).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 2)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonA).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 3)));
     new JoystickButton(mXBoxController, Constants.Controllers.XBox.buttonX).onTrue(new InstantCommand(() -> mElevator.setDesiredPosition("coral", 4)));
